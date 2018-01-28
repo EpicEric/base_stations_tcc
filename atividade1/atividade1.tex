@@ -55,12 +55,19 @@ requisitados é essencial para o projeto.
 
 \subsection{Interface Web}
 
-%@TODO: Definições da interface web (ex.: responsividade, simplicidade,
-%OpenStreetMap)
-\lipsum[6-7]
+Para interação com o usuário, criaremos um front-end de uma aplicação Web que
+permita selecionar a região na qual se pretende instalar alguma ERB.
+Esta interface se comunicará com o back-end do SIG, para obter e calcular os
+dados desejados.
 
-%Para interação com o usuário, criaremos uma aplicação Web que o
-%permita selecionar a região na qual ele pretende instalar alguma antena.
+O design deverá ser responsivo, podendo ser utilizado em plataformas mobile
+ou desktop, e simples, com opções simples para apenas verificar a posição ótima
+de instalação de antenas em determinada área escolhida pelo usuário. Para isso,
+a interface deverá exibir um mapa, como por exemplo o da plataforma
+OpenStreetMap, com as informações do SIG, que permita ao usuário selecionar uma
+área desejada. Os dados serão calculados no back-end e exibidos ao usuário na
+tela. Para isso, será necessário desenvolver um front-end possivelmente
+dinâmico.
 
 \end{document}
 
