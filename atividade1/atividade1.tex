@@ -10,7 +10,7 @@
 \title{Sistema Web para Instalação de ERBs}
 \author{Mateus Nakajo de Mendonça  \\
 	Eric Rodrigues Pires  \\
-    Orientador: Bruno de Carvalho Albertini
+	\em{Orientador: Bruno de Carvalho Albertini}
 	}
 
 \date{28 de janeiro de 2018}
@@ -26,13 +26,21 @@
 \end{abstract}
 
 \section{Introdução}
+Na revolução da informação que vivemos hoje, em que cada vez mais pessoas estão
+conectadas à rede, o acesso à Internet tem se tornado cada vez mais essencial
+no dia-a-dia, até mesmo a populações consideradas isoladas. Empresas bem
+conhecidas, como Vivo e Claro, vêm se empenhando para garantir melhor acesso a
+mais pessoas, mas se deparam com problemas de engenharia quanto a isso.
 
-%@TODO: Explicar motivações (setor de instalação de ERBs no Brasil, em especial
-%para aluguel, e necessidade de automação de seus estudos)
-\lipsum[2-3]
+A extensão territorial e a densidade demográfica desigual do Brasil são dois
+dentre vários fatores que tornam problemas de telecomunicação mais complexos.
+A dimensão deste problema gera um grande potencial de mercado para empresas
+terceirizadas, voltadas à instalação de Estações Rádio-Base (ERBs) para
+compartilhamento ou aluguel de células telefônicas às grandes empresas de
+telecomunicação. Dessa forma, há demanda do mercado por ferramentas que
+simplifiquem e/ou automatizem a tarefa de estudo de localização de ERBs.
 
 \section{Objetivo}
-
 O objetivo deste projeto de formatura é criar um sistema que permita calcular
 posições para a instalação de antenas de telefonia de forma a maximizar o
 alcance delas. Com esse fim, levaremos em conta dados geográficos para
@@ -59,7 +67,6 @@ estamos diante de um problema de otimização cuja função a ser otimizada
 é linear em relação às variáveis de entrada.
 
 \subsection{Interface Web}
-
 Para interação com o usuário, criaremos um front-end de uma aplicação Web que
 permita selecionar a região na qual se pretende instalar alguma ERB.
 Esta interface se comunicará com o back-end do SIG, para obter e calcular os
@@ -75,4 +82,3 @@ tela. Para isso, será necessário desenvolver um front-end possivelmente
 dinâmico.
 
 \end{document}
-
