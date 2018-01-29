@@ -2,7 +2,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage[brazilian]{babel}
 \usepackage{indentfirst}
-\usepackage{lipsum}
 
 \setlength{\parskip}{0.5em}
 \renewcommand{\baselinestretch}{1.1}
@@ -19,23 +18,28 @@
 \maketitle
 
 \begin{abstract}
-
-%@TODO: Resumo
-\lipsum[1]
-
+Este projeto de formatura tem como objetivo criar um sistema capaz de calcular
+posições para a instalação de Estações Radiobase (ERBs) de forma que a área
+coberta pela rede de ERBs seja máxima. A partir da região dada como entrada, o
+sistema obterá seus dados geográficos através de um software SIG e utilizará
+programação linear para a otimização da posição de instalação. Para interface
+com o usuário do sistema, criaremos uma aplicação Web responsiva que permita
+selecionar a região na qual se pretende instalar uma ERB e mostra as posições
+ideais para instalação.
 \end{abstract}
 
 \section{Introdução}
-Na revolução da informação que vivemos hoje, em que cada vez mais pessoas estão
-conectadas à rede, o acesso à Internet tem se tornado cada vez mais essencial
-no dia-a-dia, até mesmo a populações consideradas isoladas. Empresas bem
-conhecidas, como Vivo e Claro, vêm se empenhando para garantir melhor acesso a
-mais pessoas, mas se deparam com problemas de engenharia quanto a isso.
+Na revolução da informação em que vivemos hoje, em que cada vez mais pessoas
+estão conectadas à rede, o acesso à Internet tem se tornado cada vez mais
+essencial no dia-a-dia, até mesmo a populações consideradas isoladas. Empresas
+bem conhecidas, como Vivo e Claro, vêm se empenhando para garantir melhor
+acesso a mais pessoas, mas se deparam com problemas de engenharia nesta
+tarefa.
 
 A extensão territorial e a densidade demográfica desigual do Brasil são dois
 dentre vários fatores que tornam problemas de telecomunicação mais complexos.
 A dimensão deste problema gera um grande potencial de mercado para empresas
-terceirizadas, voltadas à instalação de Estações Rádio-Base (ERBs) para
+terceirizadas, voltadas à instalação de Estações Radiobase (ERBs) para
 compartilhamento ou aluguel de células telefônicas às grandes empresas de
 telecomunicação. Dessa forma, há demanda do mercado por ferramentas que
 simplifiquem e/ou automatizem a tarefa de estudo de localização de ERBs.
@@ -82,3 +86,4 @@ tela. Para isso, será necessário desenvolver um front-end possivelmente
 dinâmico.
 
 \end{document}
+
