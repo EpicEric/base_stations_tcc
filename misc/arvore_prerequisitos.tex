@@ -1,0 +1,38 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{qtree}
+\begin{document}
+
+\small{
+\qtreeshowframes
+\frame{
+\Tree
+[.100\\Sistema
+    [.35\\Interface~web
+        [.15\\Mapa
+            10\\Antenas
+            3\\Estatísticas
+            2\\Relevo ]
+        [.20\\UX
+            9\\Responsividade
+            7\\Entrada~de~usuário
+            4\\Páginas~dinâmicas ]]
+    [.65\\Backend 
+        [.20\\GIS
+            2\\BD
+            10\\Antenas
+            5\\Relevo
+            3\\População ]
+        [.10\\API 
+            4\\Interface~com~GIS
+            3\\Autenticação
+            3\\Estrutura~dos~dados ]
+        [.35\\Programação~linear
+            20\\Modelagem
+            2\\GIS
+            2\\API
+            11\\Programa ]]]
+}}
+
+\end{document}
