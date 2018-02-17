@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[brazilian]{babel}
 \usepackage{indentfirst}
+\usepackage{pdfpages}
 
 \setlength{\parskip}{0.5em}
 \renewcommand{\baselinestretch}{1.1}
@@ -54,6 +55,10 @@ Também é de grande importância que tal sistema tenha uma interface prática
 para os usuários. Portanto, uma interface web que apresente os dados
 requisitados é essencial para o projeto.
 
+Outras possíveis ramificações do projeto para showcase ao público geral, que não
+é o público-alvo, é a localização de antenas a partir do próprio celular do
+usuário, e a estimativa de posição do dispositivo pelas antenas encontradas.
+
 \subsection{Sistema de Informação Geográfica}
 SIG (Sistema de Informação Geográfica) é um sistema computacional capaz de
 obter, gravar, gerir, analisar e visualizar dados geográficos. Seu uso permite
@@ -70,6 +75,12 @@ Para tanto, aplicaremos técnicas de programação linear, uma vez que
 estamos diante de um problema de otimização cuja função a ser otimizada
 é linear em relação às variáveis de entrada.
 
+O SIG utilizado será integrado à plataforma web Django, pelo módulo GeoDjango,
+que utiliza como banco de dados o PostGIS (baseado em Postgres). Seram armazenados
+dados públicos de localização de ERBs, relevo e densidade populacional. Ele
+será também responsável pelos cálculos realizados para a localização de novas
+antenas.
+
 \subsection{Interface Web}
 Para interação com o usuário, criaremos um front-end de uma aplicação Web que
 permita selecionar a região na qual se pretende instalar alguma ERB.
@@ -84,6 +95,45 @@ OpenStreetMap, com as informações do SIG, que permita ao usuário selecionar u
 área desejada. Os dados serão calculados no back-end e exibidos ao usuário na
 tela. Para isso, será necessário desenvolver um front-end possivelmente
 dinâmico.
+
+No projeto, para facilidade de desenvolvimento, utilizaremos o framework Django,
+escrito em Python. A integração de single-page com o back-end deverá ser feita
+com o módulo de API REST do Django.
+
+\section{Desenvolvimento}
+
+Para iniciar o desenvolvimento, definimos a árvore de pré-requisitos da
+Figura~\ref{fig:prerequisitos}. Decidimos priorizar o back-end com o SIG e
+deixar a interface web em segundo plano; porém, para o desenvolvimento de ambos,
+necessitaremos do Django com a extensão GeoDjango e banco PostGIS.
+
+\begin{figure*}[htp]
+    \centering
+    \includegraphics[width=1.4\textwidth, angle=270]{../misc/arvore_prerequisitos.pdf}
+	\caption{Árvore de pré-requisitos}
+	\label{fig:prerequisitos}
+\end{figure*}
+
+Depois, buscamos os dados necessários. As informações públicas de ERBs no Brasil
+foram encontrados em \cite{mapa-erb}, no formato CSV. Além disso, encontramos
+mapas de Relevo e Densidade Populacional em \cite{mapa-ibge}. Esses dados serão
+importados ao nosso GIS.
+
+\begin{thebibliography}{9}
+
+\bibitem{mapa-erb}
+Telebrasil.
+\textit{Mapa de ERBs Brasil (antenas)}.
+Disponível em: http://www.telebrasil.org.br/panorama-do-setor/mapa-de-erbs-antenas.
+Acesso em: 31 de janeiro de 2018.
+
+\bibitem{mapa-ibge}
+Instituto Brasileiro de Geografia e Estatística.
+\textit{WMS do ArcGIS}.
+Disponível em: https://mapas.ibge.gov.br/interativos/servicos/wms-do-arcgis.html.
+Acesso em: 10 de fevereiro de 2018.
+
+\end{thebibliography}
 
 \end{document}
 
