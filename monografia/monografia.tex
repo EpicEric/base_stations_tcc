@@ -19,6 +19,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
 \usepackage{graphicx,cite,enumerate}
+\usepackage{float}
 
 
 % ========== Language options ==========
@@ -241,7 +242,7 @@ verificar a que mais se adequa ao nosso caso de uso.
 Também pesquisamos serviços similares da concorrência. Um dos
 produtos encontrados, chamado Atoll, é um software de planejamento de células e
 posições de ERBs, similar ao que desejamos desenvolver, porém com 
-funcionalidades extendidas como manutenção e melhoria de locais 
+funcionalidades estendidas como manutenção e melhoria de locais 
 pré-estabelecidos, e parâmetros avançados de especificação das antenas, além de
 módulos para outras tecnologias de telecomunicação como Wi-Fi \cite{atoll}.
 Porém, a ferramenta parece muito voltada à instalação urbana e análise de
@@ -262,9 +263,9 @@ e o anuncie para as operadoras após aprovação.
 O portal então faz a intermediação entre o anunciante e a operadora.
 
 A Skysites é uma empresa que oferece soluções na área da infraestrutura de
-telecomunicação \cite{skysites}. Ela gere um portifólio de sítios para 
+telecomunicação \cite{skysites}. Ela gere um portfólio de sítios para 
 instalação de equipamentos de telecomunicação (torres, smallcells, rooftops,
-etc), além de prover soluções customisadas para empresas de telecomunicação e 
+etc), além de prover soluções customizadas para empresas de telecomunicação e 
 compartilhar torres entre diferentes empresas. Outros serviços são redes para
 cobertura \textit{indoor} e pequenas ERBs para melhorar a cobertura em ambiente
 urbano, as \textit{small cells}.
@@ -322,7 +323,7 @@ desenvolvida, tanto para requisições quanto para exibições.
 Utilizamos o Mapa de ERBs Brasil presente no portal Telebrasil \cite{mapa-erb}.
 Essa base contém uma lista de ERBs do Brasil de novembro de 2017, com
 informação de operadora, endereço, e posição geográfica de cada ERB.
-Essas infomações são essenciais para o cálculo da posição ótima da ERB para
+Essas informações são essenciais para o cálculo da posição ótima da ERB para
 maximizar a cobertura da célula.
 
 Utilizamos também o OpenCelliD, da empresa Unwired Labs \cite{opencellid}.
@@ -352,7 +353,7 @@ Para definir os requisitos do nosso sistema, foi elaborada uma árvore de
 pré-requisitos, listando a prioridade total dada a cada componente do sistema
 final na Figura~\ref{fig:arvore_prerequisitos}.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[width=5.5in]{imagens/arvore_prerequisitos}
   \caption{Árvore de pré-requisitos do sistema.}
@@ -368,6 +369,347 @@ comunicação externa de dados via API.
 Embora tenha uma ênfase menor, o front-end da interface web também será
 um requisito fundamental de projeto, separado na experiência do usuário e na
 visualização do mapa.
+
+Definido o escopo, começamos a pensar, junto ao nosso orientador, sobre os 
+requisitos do projeto. A estratégia utilizada foi o brainstorming, leitura de 
+obras de referência, e pesquisa de softwares com escopo parecido.
+A ideia inicial era ter como ator principal do sistema o funcionário cadastrado
+de uma empresa de instalação de antenas, porém depois consideramos que seria
+complementar ao projeto considerar um usuário não-comercial, assim
+como um usuário administrador. Nessa fase, perguntamo-nos como o nosso projeto
+poderia ajudar esses atores, qual informação ele deveria produzir. Esse processo
+nos levou à modelagem apresentada nas seções a seguir.
+
+\section{Atores}
+\begin{itemize}
+\item Administrador
+\item Funcionário cadastrado de Empresa de instalação de antenas
+\item Usuário comum
+\end{itemize}
+
+\section{Requisitos funcionais}
+\begin{itemize}
+\item Efetuar Login
+\item Efetuar Logout
+\item Cadastrar usuário no sistema
+\item Exibir mapa com ERBs
+\item Exibir mapa com cobertura celular estimada
+\item Exibir localização ideal para instalação de uma nova ERB
+\item Adicionar nova ERB
+\item Fazer login por OAuth2
+\item Acessar API
+\item Exibir ERBs às quais o celular do usuário está conectado
+\item Exibir mapa com qualidade do sinal por operadora
+\item Estimar geolocalização do usuário
+\item Listar usuários
+\end{itemize}
+
+\section{Requisitos não-funcionais}
+\begin{itemize}
+\item Funcionalidades e código bem documentados
+\item Interface acessível e simples
+\item Ser responsivo
+\item Ser dinâmico
+\item Ser rápido
+\item Ser seguro   
+\end{itemize}
+
+\section{Descrição dos casos de uso}
+\noindent \textbf{Caso de Uso 1}: Efetuar login no sistema. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de autenticação no sistema. \\
+\textbf{Evento iniciador:} Usuário informa seu nome de usuário e senha. \\
+\textbf{Atores:} Administrador, Funcionário ou Usuário comum. \\
+\textbf{Pré-condições:} Usuário entra na página de login. \\
+\textbf{Sequência de Eventos:}
+\begin{enumerate}
+\item Usuário informa seu nome de usuário e sua senha.
+\item Sistema autentica o usuário e senha.
+\item Sistema exibe página inicial com opções correspondentes ao nível de privilégio do usuário.
+\end{enumerate}
+\textbf{Pós-condições:} Usuário logado no sistema. \\
+\textbf{Extensões:} 
+\begin{enumerate}
+\item Usuário ou senha estão incorretos: sistema exibe mensagem de erro (passo 2).
+\item Login por OAuth2: sistema recebe token de autenticação externa para o acesso (passo 1). 
+\end{enumerate}
+\textbf{Inclusões:} - \\
+
+\noindent \textbf{Caso de Uso 2}: Efetuar logout no sistema. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de logout no sistema. \\
+\textbf{Evento iniciador}: Usuário clica no botão de logout. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário comum. \\
+\textbf{Pré-condições}: Usuário logado no sistema. \\
+\textbf{Sequência de Eventos}: 
+\begin{enumerate}
+\item Usuário clica no botão de logout.
+\item Sistema exibe página inicial para usuários não-logados.
+\end{enumerate}
+\textbf{Pós-condições}: Usuário não logado no sistema. \\
+\textbf{Extensões}: - \\
+\textbf{Inclusões}: - \\
+
+\noindent \textbf{Caso de Uso 3}: Cadastrar usuário no sistema.  \\
+\textbf{Descrição}: Este caso de uso descreve o cadastro de usuários no sistema \\
+\textbf{Evento iniciador}: Usuário clica no botão cadastrar usuário. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário comum. \\
+\textbf{Pré-condições}: Usuário não logado no sistema. \\
+\textbf{Sequência de Eventos}: 
+\begin{enumerate}
+\item Usuário clica no botão de cadastrar usuário.
+\item Sistema exibe página de cadastro.
+\item Usuário digita nome, e-mail, senha e confirmação de senha.
+\item Sistema valida dados e envia email de confirmação para usuário.
+\end{enumerate}
+\textbf{Pós-condições}: Usuário cadastrado no sistema com confirmação de e-mail pendente. \\
+\textbf{Extensões}:
+\begin{enumerate}
+\item Usuário já cadastrado: sistema exibe mensagem de erro (passo 4)
+\item Senha não é igual a confirmação de senha: sistema exibe mensagem de erro (passo 4)
+\end{enumerate}
+\textbf{Inclusões}: buscar usuário (passo 4) \\
+
+\noindent \textbf{Caso de Uso 3.1}: Confirmação de email. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de confirmação de um e-mail. \\
+\textbf{Evento iniciador}: Usuário acessa a url correspondente à confirmação de seu e-mail. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário comum. \\
+\textbf{Pré-condições}: Usuário cadastrado no sistema com e-mail não confirmado. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário acessa a url correspondente à confirmação de seu e-mail.
+\item Sistema confirma a validade do e-mail do usuário.
+\item Sistema redireciona o usuário para página inicial.
+\end{enumerate}
+\textbf{Extensões}: URL de confirmação inválida: sistema mostra uma mensagem de
+erro e redireciona o usuário para a página de login (passo 2). \\
+\textbf{Inclusões}: - \\
+
+\noindent \textbf{Caso de Uso 4}: Exibir mapa \\
+\textbf{Descrição}: Este caso de uso descreve o processo de exibição de um mapa centrado no usuário. \\
+\textbf{Evento iniciador}: Usuário requisita exibição de mapa. \\
+\textbf{Pré-condições}: Usuário logado no sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário requisita exibição de mapa.
+\item Sistema pede que o usuário permita-o acessar sua geolocalização.
+\item Usuário permite que sistema acesse sua geolocalização.
+\item Sistema mostra um mapa centrado no usuário.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs apresentado. \\
+\textbf{Extensões}: Usuário não permite: sistema mostra mapa centrado numa localização padrão. (passo 4) \\
+\textbf{Inclusões}: busca de mapa no OpenStreetMap (passo 4) \\
+
+\noindent \textbf{Caso de Uso 5}: Exibir mapa com ERBs. \\
+\textbf{Descrição}: Este caso de uso descreve a exibição das ERBs em um mapa. \\
+\textbf{Evento iniciador}: Usuário clica na opção Mapa de ERBs. \\
+\textbf{Atores}: Administrador, Funcionário. \\
+\textbf{Pré-condições}: Usuário logado no sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção Mapa de ERBs.
+\item Sistema busca ERBs na região do mapa.
+\item Sistema exibe mapa com ERBs.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs apresentado. \\
+\textbf{Extensões}: - \\
+\textbf{Inclusões}: Caso de uso Exibir mapa (passo 3) \\
+
+\noindent \textbf{Caso de Uso 5.1}: Exibir mapa centrado em localização dada \\
+\textbf{Descrição}: Este caso de uso descreve a exibição do mapa com ERBs 
+centrado em uma localização dada pelo usuário.  \\
+\textbf{Evento iniciador}: Usuário insere a latitude e longitude e clica em buscar. \\
+\textbf{Atores}: Administrador, Funcionário. \\
+\textbf{Pré-condições}: Usuário logado no sistema e na página com mapa de ERBs. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário insere a latitude e longitude e clica em buscar.
+\item Sistema mostra o mapa de ERBs centrado na localização dada.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs centrado na localização dada apresentado. \\
+\textbf{Extensões}: Latitude ou longitude inválida: sistema mostra uma mensagem de erro (passo 2) \\
+\textbf{Inclusões}:
+\begin{enumerate}
+\item busca de mapa no OpenStreetMap (passo 2)
+\item caso de uso Exibir mapa com ERBs (pré-condição)
+\end{enumerate}
+
+\noindent \textbf{Caso de Uso 5.2}: Exibir ERBs no mapa por operadora. \\
+\textbf{Descrição}: Este caso de uso descreve a exibição do mapa com ERBs para
+uma operadora definida pelo usuário. \\
+\textbf{Evento iniciador}: Usuário seleciona uma operadora. \\
+\textbf{Atores}: Administrador, Funcionário. \\
+\textbf{Pré-condições}: Usuário logado no sistema e na página com mapa de ERBs. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário seleciona uma operadora.
+\item Sistema mostra o mapa de ERBs da operadora dada pelo usuário.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs da operadora dada. \\
+\textbf{Extensões}: - \\
+\textbf{Inclusões}: caso de uso Exibir mapa com ERBs (pré-condição) \\
+
+\noindent \textbf{Caso de Uso 6}: Encontrar local de instalação de ERBs.
+\textbf{Descrição}: Este caso de uso descreve a exibição de posições otimizadas \\
+para instalação de ERBs. 
+\textbf{Evento iniciador}: Usuário clica na opção Calcular posição para instalação. \\
+\textbf{Atores}: Administrador, Funcionário. \\
+\textbf{Pré-condições}: Usuário logado no sistema e na página Mapa de ERBs. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção Calcular posição para instalação.
+\item Sistema exibe um formulário com campos: Quantidade de ERBs a serem
+instaladas e Parâmetros a serem considerados no cálculo.
+\item Usuário preenche o formulário e clica em avançar.
+\item Sistema solicita para o usuário selecionar a região de interesse.
+\item Usuário seleciona a região de interesse.
+\item Sistema informa que operação pode demorar alguns momentos.
+\item Sistema indica os locais calculados no mapa.
+\item Sistema mostra número de usuários atendidos por nova 
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com posições otimizadas apresentado. \\
+\textbf{Extensões}: Operação demora muito tempo: sistema informa que não foi
+possível calcular a posição (passo 7) \\
+\textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (pré-condição). \\
+
+
+\noindent \textbf{Caso de Uso 7}: Adicionar nova ERB \\
+\textbf{Descrição}: Este caso de uso descreve o processo de adição de novas
+ERBs na base de dados. \\
+\textbf{Evento iniciador}: Usuário clica na opção de adicionar ERB. \\
+\textbf{Atores}: Administrador, Funcionário. \\
+\textbf{Pré-condições}: Usuário logado no sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção de Adicionar ERB e clica em um ponto no mapa.
+\item Sistema exibe formulário com dados a serem cadastrados sobre a nova ERB.
+\item Usuário preenche formulário e clica em salvar.
+\item Sistema salva nova ERB.
+\item Sistema exibe mapa com ERBs.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs apresentado e nova ERB salva na base de
+dados. \\
+\textbf{Extensões}: Dados inválidos: sistema exibe mensagem de erro e exibe 
+formulário novamente (passo 4). \\
+\textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (pré-condição e passo 5).\\
+
+
+\noindent \textbf{Caso de Uso 8}: Remover ERB \\
+\textbf{Descrição}: Este caso de uso descreve o processo de remoção de ERBs da
+base de dados. \\
+\textbf{Evento iniciador}: Usuário clica na opção de remover ERBs. \\
+\textbf{Atores}: Administrador, Funcionário. \\
+\textbf{Pré-condições}: Usuário logado no sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção de Remover ERBs e seleciona uma ERB no mapa.
+\item Sistema pergunta se usuário realmente deseja remover ERB.
+\item Usuário responde Sim.
+\item Sistema remove ERB.
+\item Sistema exibe mapa com ERBs.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs apresentado e ERB escolhida pelo usuário
+removida da base de dados. \\
+\textbf{Extensões}: - \\
+\textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (pré-condição e passo 5). \\
+
+
+\noindent \textbf{Caso de Uso 9}: Exibir ERBs às quais o celular do usuário está
+conectado \\
+\textbf{Descrição}: Este caso de uso descreve o processo de exibição de ERBs às
+quais o usuário está conectado \\
+\textbf{Evento iniciador}: Usuário clica na opção Antenas conectadas. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário Comum. \\
+\textbf{Pré-condições}: Usuário logado em um celular, na página inicial do
+sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção Antenas conectadas.
+\item Sistema exibe um mapa com as ERBs conectadas em destaque.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs conectadas apresentado. \\
+\textbf{Extensões}: Celular não está conectado a ERB nenhuma: sistema exibe 
+mensagem de erro (passo 2). \\
+\textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (passo 2). \\
+
+
+\noindent \textbf{Caso de Uso 10}: Exibir mapa com qualidade do sinal por 
+operadora. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de exibição de
+qualidade de sinal por operadora. \\
+\textbf{Evento iniciador}: Usuário clica na opção Qualidade de sinal \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário Comum. \\
+\textbf{Pré-condições}: Usuário logado, na página inicial do sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção Qualidade de sinal.
+\item Sistema exibe um mapa centrado na localização atual do usuário.
+\item Usuário clica em um ponto do mapa.
+\item Sistema exibe informações de qualidade de sinal por operadora.
+\end{enumerate}
+\textbf{Pós-condições}: Informações de qualidade de sinal apresentadas. \\
+\textbf{Extensões}: - \\
+\textbf{Inclusões}: Caso de uso Exibir mapa (passo 2) \\
+
+
+\noindent \textbf{Caso de Uso 11}: Estimar geolocalização do usuário. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de estimar a 
+geolocalização do usuário a partir das antenas às quais ele está conectado. \\
+\textbf{Evento iniciador}: Usuário clica na opção Estimar geolocalização. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário Comum. \\
+\textbf{Pré-condições}: Usuário logado em um celular, na página inicial do 
+sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção Estimar geolocalização.
+\item Sistema exibe um mapa centrado na localização estimada do usuário.
+\item Sistema mostra as antenas aos quais o usuário está conectado em destaque.
+\end{enumerate}
+\textbf{Pós-condições}: Localização estimada do usuário e antenas conectadas são
+mostradas na tela. \\
+\textbf{Extensões}:
+\begin{enumerate}
+\item Número de ERBs conectadas são insuficientes para estimar posição exata: 
+sistema exibe um mapa com a localização estimada do usuário representada por um
+círculo. (passo 2)
+\item Usuário não está conectado a nenhuma ERB: sistema exibe mensagem de erro
+(passo 2)
+\end{enumerate}
+\textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (passo 2). \\
+
+
+\noindent \textbf{Caso de Uso 12}: Listar usuários do sistema \\
+\textbf{Descrição}: Este caso de uso descreve o processo de listar usuários do 
+sistema. \\
+\textbf{Evento iniciador}: Administrador clica na opção Listar Usuários. \\
+\textbf{Atores}: Administrador \\
+\textbf{Pré-condições}: Administrador logado no sistema, na página inicial. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Administrador clica na opção Listar Usuários.
+\item Sistema busca usuários e os exibe em uma lista.
+\end{enumerate}
+\textbf{Pós-condições}: Lista de usuários apresentada. \\
+\textbf{Extensões}: - \\
+\textbf{Inclusões}: buscar usuários no sistema (passo 2) \\
+
+
+\noindent \textbf{Caso de Uso 13}: Modificar papel de usuário. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de modificar papel de
+usuário. \\
+\textbf{Evento iniciador}: Administrador seleciona a opção Funcionário no campo
+Papel do Usuário \\
+\textbf{Atores}: Administrador \\
+\textbf{Pré-condições}: Administrador logado no sistema, na página listar
+usuários. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Administrador seleciona um usuário de interesse
+\item Administrador seleciona a opção Funcionário no campo Papel do Usuário
+\item Administrador clica em Aplicar
+\item Sistema modifica usuário escolhido para ele ter papel de Funcionário
+\end{enumerate}
+\textbf{Pós-condições}: Usuário escolhido tem papel de Funcionário \\
+\textbf{Extensões}: - \\
+\textbf{Inclusões}: Caso de Uso Listar usuário do sistema (pré-condição) \\
 
 \chapter{Projeto e Implementação}
 
