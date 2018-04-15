@@ -315,6 +315,7 @@ dados públicos de localização de ERBs, relevo e densidade populacional. Ele
 será também responsável pelos cálculos realizados para a localização de novas
 antenas.
 
+Como tecnologia front-end, utilizaremos React e Redux.
 Para interação com o usuário por um mapa interativo, utilizaremos a biblioteca
 Leaflet, escrita em JavaScript. Ela se comunicará aos dados pela API REST a ser
 desenvolvida, tanto para requisições quanto para exibições.
@@ -338,6 +339,11 @@ Outra base de dados em estudo foi o Google Earth Engine, uma API específica
 para dados geográficos públicos do Google, como relevo e densidade populacional.
 Devido à extensão destes dados, será estudada a possibilidade de uma dependência
 desta base.
+
+Utilizamos também a base de dados de qualidade da Internet no Brasil do SIMET
+(Sistema de Medição de Trafego Internet) \cite{simet}. O SIMET é um projeto do
+NIC.br (Núcleo de Informação e Coordenação do Ponto BR), cujo objetivo é medir a
+qualidade da Internet de maneira independente.
 
 \chapter{Metodologia do Trabalho}
 Em uma primeira etapa, definimos com o orientador a proposta e o escopo deste
@@ -776,6 +782,13 @@ usuários. \\
     KARULKAR, S. A.; OH, JY.
     \textit{Optimal Placement of Base Station for Cellular Network Expansion}.
     Issues in Information Systems, volume 17, edição II, pg. 215-221, 2016.
+
+    \bibitem{simet}
+    NIC.br.
+    \textit{Simet - O melhor medidor de Internet}.
+    Disponível em:
+    http://simet.nic.br/mapas-app.html
+    Acesso em: 15/04/2018.
 
 \end{thebibliography}
 % ========== Apêndices (opcional) ==========
