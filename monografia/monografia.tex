@@ -161,6 +161,8 @@ System, Web~Application.
 
 \textbf{SIG:} Sistema de Informações Geográficas
 
+\textbf{TCC:} Trabalho de Conclusão de Curso
+
 \end{pretextualsection}
 
 % ========== Sumário ==========
@@ -287,6 +289,7 @@ projeto, implementação e testes.
 No capítulo ``Especificação de Requisitos do Sistema'', definiremos os
 requisitos do nosso sistema.
 
+
 \chapter{Aspectos Conceituais}
 
 \section{Algoritmos Avaliados}
@@ -302,9 +305,10 @@ a cobertura da rede. Já KARULKAR~\&~OH~(2016)~\cite{nao-linear} se baseia em
 uma abordagem de limites geográficos impostos no processo de projeto de antenas,
 utilizando programação não-linear para identificar a posição ótima.
 
+
 \chapter{Tecnologias Utilizadas}
 
-\section{Framework Web Django}
+\section{Sistema Web}
 No projeto, para facilidade de desenvolvimento, utilizaremos o framework Django,
 escrito em Python. A integração de single-page com o back-end deverá ser feita
 com o módulo de API REST do Django.
@@ -318,6 +322,10 @@ antenas.
 Para interação com o usuário por um mapa interativo, utilizaremos a biblioteca
 Leaflet, escrita em JavaScript. Ela se comunicará aos dados pela API REST a ser
 desenvolvida, tanto para requisições quanto para exibições.
+
+Optamos também pelo framework JavaScript conhecido por React, com a biblioteca
+Redux, para realizar o controle \emph{single-page app} do nosso sistema, e a
+interface gráfica Django Material para elaborar as telas do nosso sistema.
 
 \section{Bases de Dados Utilizadas}
 Utilizamos o Mapa de ERBs Brasil presente no portal Telebrasil \cite{mapa-erb}.
@@ -334,10 +342,19 @@ geolocalização que não depende de GPS. Dessa forma, com a base da OpenCelliD,
 podemos estimar a posição de um celular a partir das ERBs as quais ele está
 conectado.
 
-Outra base de dados em estudo foi o Google Earth Engine, uma API específica
-para dados geográficos públicos do Google, como relevo e densidade populacional.
-Devido à extensão destes dados, será estudada a possibilidade de uma dependência
-desta base.
+Outra base de dados em estudo foi o Google Earth Engine \cite{earthengine}, uma
+API específica para dados geográficos públicos do Google, como relevo e
+densidade populacional. Devido à extensão destes dados, e à impraticidade de
+armazenamento em banco próprio, será estudada a possibilidade de uma dependência
+desta base através de sua API.
+
+Mais duas bases de dados que serão utilizadas no projeto são: a G-Econ
+\cite{gecon}, da Universidade de Yale, que apresenta os dados de paridade de
+poder de comparar geograficamente; e o SIMET-NIC \cite{simet}, com o acesso e 
+qualidade da Internet no Brasil. Acreditamos que estas duas bases de dados, em
+conjunto com os anteriores, permitirão uma análise aprofundada de parâmetros
+ótimos para a instalação de novas antenas.
+
 
 \chapter{Metodologia do Trabalho}
 Em uma primeira etapa, definimos com o orientador a proposta e o escopo deste
@@ -348,6 +365,34 @@ em projetar a realização de cada um destes requisitos de acordo com as
 prioridades definidas, isto é, iniciar um processo de decisões definitivas para
 o andamento do trabalho.
 
+Feitas estas decisões, finalmente, realizou-se a prototipagem das nossas
+funcionalidades, dividida entre os dois integrantes do grupo de forma paralela
+para permitir o andamento de diferentes partes do sistema, com reuniões entre
+os integrantes e o orientador para avaliar o progresso. Após esta análise
+preliminar, iniciou-se o desenvolvimento definitivo do sistema na especificação
+final, etapa que levará mais tempo neste projeto.
+
+Por fim, antes de realizar a apresentação do trabalho final, será realizada uma
+bateria de testes para verificar o funcionamento correto do sistema após o
+desenvolvimento, sem a elaboração de novas funcionalidades, garantindo que
+estamos dentro das nossas previsões de projeto.
+
+Desta forma, nos organizamos para realizar a implementação do sistema, separando
+as tarefas a serem realizadas nas categorias: pesquisa, projeto, e apresentação.
+Utilizamos o cronograma oficial de TCC para elaborar um diagrama de Gantt na
+Figura~\ref{fig:gantt} com a sequência de tarefas a serem divididas pelo grupo
+ao longo do ano para cada semana. Indicamos também o período extra-escolar em
+colunas azuis, aonde haverá desenvolvimento do sistema de forma mais lenta e
+sem cronograma oficial.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{imagens/diagrama_gantt}
+    \caption{Diagrama de Gantt.}
+    \label{fig:gantt}
+  \end{figure}
+
+
 \chapter{Especificação de Requisitos do Sistema}
 Para definir os requisitos do nosso sistema, foi elaborada uma árvore de
 pré-requisitos, listando a prioridade total dada a cada componente do sistema
@@ -355,7 +400,7 @@ final na Figura~\ref{fig:arvore_prerequisitos}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=5.5in]{imagens/arvore_prerequisitos}
+  \includegraphics[width=6in]{imagens/arvore_prerequisitos}
   \caption{Árvore de pré-requisitos do sistema.}
   \label{fig:arvore_prerequisitos}
 \end{figure}
@@ -384,7 +429,7 @@ nos levou à modelagem apresentada nas seções a seguir.
 \begin{itemize}
 \item Administrador
 \item Funcionário cadastrado de Empresa de instalação de antenas
-\item Usuário comum
+\item Usuário não-comercial
 \end{itemize}
 
 \section{Requisitos funcionais}
@@ -415,10 +460,11 @@ nos levou à modelagem apresentada nas seções a seguir.
 \end{itemize}
 
 \section{Descrição dos casos de uso}
+
 \noindent \textbf{Caso de Uso 1}: Efetuar login no sistema. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de autenticação no sistema. \\
 \textbf{Evento iniciador:} Usuário informa seu nome de usuário e senha. \\
-\textbf{Atores:} Administrador, Funcionário ou Usuário comum. \\
+\textbf{Atores:} Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições:} Usuário entra na página de login. \\
 \textbf{Sequência de Eventos:}
 \begin{enumerate}
@@ -437,7 +483,7 @@ nos levou à modelagem apresentada nas seções a seguir.
 \noindent \textbf{Caso de Uso 2}: Efetuar logout no sistema. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de logout no sistema. \\
 \textbf{Evento iniciador}: Usuário clica no botão de logout. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário comum. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições}: Usuário logado no sistema. \\
 \textbf{Sequência de Eventos}: 
 \begin{enumerate}
@@ -451,7 +497,7 @@ nos levou à modelagem apresentada nas seções a seguir.
 \noindent \textbf{Caso de Uso 3}: Cadastrar usuário no sistema.  \\
 \textbf{Descrição}: Este caso de uso descreve o cadastro de usuários no sistema \\
 \textbf{Evento iniciador}: Usuário clica no botão cadastrar usuário. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário comum. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições}: Usuário não logado no sistema. \\
 \textbf{Sequência de Eventos}: 
 \begin{enumerate}
@@ -471,7 +517,7 @@ nos levou à modelagem apresentada nas seções a seguir.
 \noindent \textbf{Caso de Uso 3.1}: Confirmação de email. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de confirmação de um e-mail. \\
 \textbf{Evento iniciador}: Usuário acessa a url correspondente à confirmação de seu e-mail. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário comum. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições}: Usuário cadastrado no sistema com e-mail não confirmado. \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
@@ -570,7 +616,6 @@ instaladas e Parâmetros a serem considerados no cálculo.
 possível calcular a posição (passo 7) \\
 \textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (pré-condição). \\
 
-
 \noindent \textbf{Caso de Uso 7}: Adicionar nova ERB \\
 \textbf{Descrição}: Este caso de uso descreve o processo de adição de novas
 ERBs na base de dados. \\
@@ -591,7 +636,6 @@ dados. \\
 formulário novamente (passo 4). \\
 \textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (pré-condição e passo 5).\\
 
-
 \noindent \textbf{Caso de Uso 8}: Remover ERB \\
 \textbf{Descrição}: Este caso de uso descreve o processo de remoção de ERBs da
 base de dados. \\
@@ -611,13 +655,12 @@ removida da base de dados. \\
 \textbf{Extensões}: - \\
 \textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (pré-condição e passo 5). \\
 
-
 \noindent \textbf{Caso de Uso 9}: Exibir ERBs às quais o celular do usuário está
 conectado \\
 \textbf{Descrição}: Este caso de uso descreve o processo de exibição de ERBs às
 quais o usuário está conectado \\
 \textbf{Evento iniciador}: Usuário clica na opção Antenas conectadas. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário Comum. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições}: Usuário logado em um celular, na página inicial do
 sistema. \\
 \textbf{Sequência de Eventos}:
@@ -630,13 +673,12 @@ sistema. \\
 mensagem de erro (passo 2). \\
 \textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (passo 2). \\
 
-
 \noindent \textbf{Caso de Uso 10}: Exibir mapa com qualidade do sinal por 
 operadora. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de exibição de
 qualidade de sinal por operadora. \\
 \textbf{Evento iniciador}: Usuário clica na opção Qualidade de sinal \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário Comum. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições}: Usuário logado, na página inicial do sistema. \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
@@ -649,12 +691,11 @@ qualidade de sinal por operadora. \\
 \textbf{Extensões}: - \\
 \textbf{Inclusões}: Caso de uso Exibir mapa (passo 2) \\
 
-
 \noindent \textbf{Caso de Uso 11}: Estimar geolocalização do usuário. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de estimar a 
 geolocalização do usuário a partir das antenas às quais ele está conectado. \\
 \textbf{Evento iniciador}: Usuário clica na opção Estimar geolocalização. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário Comum. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições}: Usuário logado em um celular, na página inicial do 
 sistema. \\
 \textbf{Sequência de Eventos}:
@@ -675,7 +716,6 @@ círculo. (passo 2)
 \end{enumerate}
 \textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (passo 2). \\
 
-
 \noindent \textbf{Caso de Uso 12}: Listar usuários do sistema \\
 \textbf{Descrição}: Este caso de uso descreve o processo de listar usuários do 
 sistema. \\
@@ -690,7 +730,6 @@ sistema. \\
 \textbf{Pós-condições}: Lista de usuários apresentada. \\
 \textbf{Extensões}: - \\
 \textbf{Inclusões}: buscar usuários no sistema (passo 2) \\
-
 
 \noindent \textbf{Caso de Uso 13}: Modificar papel de usuário. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de modificar papel de
@@ -711,9 +750,12 @@ usuários. \\
 \textbf{Extensões}: - \\
 \textbf{Inclusões}: Caso de Uso Listar usuário do sistema (pré-condição) \\
 
+
 \chapter{Projeto e Implementação}
 
+
 \chapter{Testes e Avaliação}
+
 
 \chapter{Considerações Finais}
 \section{Conclusões do Projeto de Formatura}
@@ -736,20 +778,20 @@ usuários. \\
     \bibitem{atoll}
     Forsk.
     \textit{Atoll LTE / LTE-A Planning Software | Forsk}
-    Disponível em: http://www.forsk.com/ltelte-pro
+    Disponível em: http://www.forsk.com/ltelte-pro.
     Acesso em: 01º de março de 2018.
 
     \bibitem{mytower}
     MyTower.
     \textit{MyTower - Aluguel e Venda de Terrenos e Topos para
     Operadoras de Telecom}
-    Disponível em: http://www.mytower.com.br/
+    Disponível em: http://www.mytower.com.br/.
     Acesso em: 01º de março de 2018.
 
     \bibitem{skysites}
     Skysites.
     \textit{Skysites}
-    Disponível em: http://skysites.com/
+    Disponível em: http://skysites.com/.
     Acesso em: 01º de março de 2018.
 
     \bibitem{mapa-erb}
@@ -763,8 +805,26 @@ usuários. \\
     Unwired Labs.
     \textit{OpenCelliD - Largest Open Database of Cell Towers \&
     Geolocation by Unwired Labs}.
-    Disponível em: https://opencellid.org/
+    Disponível em: https://opencellid.org/.
     Acesso em: 01º de março de 2018.
+
+    \bibitem{earthengine}
+    Google Earth.
+    \textit{Google Earth Engine}.
+    Disponível em: https://earthengine.google.com/.
+    Acesso em: 16 de março de 2018.
+
+    \bibitem{gecon}
+    Yale University.
+    \textit{Geographically based Economic data -{}- Brazil}.
+    Disponível em: https://gecon.yale.edu/brazil.
+    Acesso em: 24 de março de 2018.
+
+    \bibitem{simet}
+    Núcleo de Informação e Coordenação do Ponto BR.
+    \textit{Sistema de Medição de Tráfego Internet}.
+    Disponível em: http://simet.nic.br/mapas-app.html.
+    Acesso em: 24 de março de 2018.
 
     \bibitem{evolutivo}
     LEE, S.; LEE, S.; KIM, K.; KIM, YH.
