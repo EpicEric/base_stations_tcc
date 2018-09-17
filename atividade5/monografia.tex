@@ -807,8 +807,100 @@ usuários. \\
 \chapter{Projeto e Implementação}
 
 \section{Backend}
-\section{Métodos Numéricos}
 
+\subsection{Clusterização}
+
+Um dos principais desafios na implementação foi realizar a exibição de múltiplas
+antenas como pontos em um mapa. Como muitas ERBs ficam muito próximas e,
+portanto, difíceis de serem visualizadas separadamente, utilizou-se um
+\textit{plugin} próprio da biblioteca de mapa para a clusterização de pontos,
+facilitando a identificação da quantidade de antenas em uma região, com exibição
+variável com o zoom.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=6in]{imagens/mapa_sem_clusters}
+    \caption{Mapa de ERBs sem clusterização.}
+    \label{fig:mapa_sem_clusters}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=6in]{imagens/mapa_com_clusters}
+    \caption{Mapa de ERBs com clusterização.}
+    \label{fig:mapa_com_clusters}
+  \end{figure}
+
+Com o uso desse plugin, a exibição de até cerca de 500 antenas na tela tornou-se
+possível. Porém, mais antenas do que isso causavam vários problemas relacionados
+a uma grande quantidade de dados, como demora na transmissão de dados,
+requisições intensivas ao servidor, e problemas de memória no navegador do
+cliente. Algumas medidas foram tomadas tanto no back-end quanto no front-end
+para tentar amenizar estes efeitos, mas sem gerar vantagens muito perceptíveis.
+
+Dessa forma, resolveu-se utilizar algoritmos de clusterização no back-end, e
+então realizar a integração com o front-end. A primeira tentativa envolveu a
+utilização de uma biblioteca \textit{open-source} específica para o GeoDjango,
+chamada ``Anycluster'' \cite{anycluster}. Embora tenha sido feita para uma
+configuração de servidor similar à utilizada no projeto, a instalação e
+documentação se mostraram confusas e incompletas. E mesmo com tentativas de
+ajuste manual no código, incluindo refatoração das partes não-essenciais da
+aplicação. Além disso, a análise do código indica que não há nenhuma forma de
+cache dos dados de clusterização, o que não resultaria em velocidades adequadas
+para uma aplicação de visualização em mapa.
+
+Procurou-se então uma segunda alternativa de clusterização, com implementação
+própria para este projeto. A solução envolve utilizar o tiling de grade que o
+OpenStreetMap utiliza para carregar as imagens. A clusterização foi feita com
+fórmulas do PostGIS específicas para clusterização de pontos. Para o cache dos
+clusters, utilizou o cache padrão do Django. Os resultados gerados pelo programa
+eram corretos, mas o uso alto de memória e o tempo para clusterizar antes de
+cache inviabilizam o uso no servidor. Foi realizado um aumento na capacidade
+da máquina do host, mas não houve ganhos consideráveis. Além disso, os dados
+de cluster ficam com aparência estranha, onde a separação em grids fica muito
+perceptível.
+
+A terceira tentativa utilizou a mesma ideia anterior, porém para um dado nível
+de zoom, serão utilizados os clusters para um zoom mais próximo do mapa,
+portanto usando 4 vezes mais dados. Ainda houve alguns clusters estranhos na
+visualização em mapa, embora consideravelmente melhores no geral; e o uso de
+dados muito alto tanto em processamento quanto em rede torna uma utilização com muitos clientes inviável.
+
+Em seguida, na quarta tentativa, optamos por salvar os clusters em banco de
+dados, onde são indexados por zoom como nas tentativas anteriores. Para acelerar
+o algoritmo de cálculo de clusters, utiliza-se os clusters de um zoom menor para
+gerar os de zooms maiores. Foram feitas algumas iterações com diferentes funções
+de clusterização do PostGIS para obter resultados melhores. A utilização de
+modelos ao invés de cache resultou em uma fácil integração com o front-end já
+existente, dado a facilidade do Django para lidar com modelos na API. Porém,
+os resultados obtidos foram inesperados, com clusters baseados na distância
+ponto-a-ponto ao invés de ao redor de um centro de massa. Dessa forma, lugares
+com muitas antenas lado-a-lado, em uma área com alta densidade de pontos como a
+cidade de São Paulo, aparecem como um único cluster, independente do zoom,
+deixando muits áreas vazias.
+
+A quinta tentativa se baseou nas demais, e também no conceito de geohash
+(anotação de cada região em um mapa com caracteres alfanuméricos, dividindo cada
+região sucessiva do globo em 16 partes). Foi selecionado uma precisão (i.e. um
+número de caracteres do geohash) diferente para cada zoom, seguindo-se como
+referência a biblioteca  ``django-geohash-cluster'' \cite{geohashcluster}.
+Além disso, o código do front-end foi modificado especificamente para fins de
+performance, assim obtendo clusterizações com visualização mais natural.
+Graças ao suporte do GeoDjango para inserir o geohash em queries, foi possível
+realizar a implementação em um algoritmo simples, sem escrever as queries
+manualmente. A principal desvantagem deste algoritmo foi a extrema demora para
+realizar as clusterizações em comparação com os demais algoritmos; porém, o
+resultado final com a integração de clusterização front-end e back-end foi
+melhor. Outra desvantagem foi que, como não há correspondência direta entre
+níveis de zoom do mapa e precisões de geohash, determinados níveis de zoom
+demoram mais tempo para ler os dados. Além disso, há algumas pequenas falhas
+visuais perto das bordas, que deverão ser corrigidas futuramente. Por fim,
+foram realizadas alterações na API para tornar a transição entre clusters e
+ERBs opaca para o usuário final -- ou seja, o script de exibição do mapa do
+navegador enxerga um único endpoint e não diferencia quando o servidor opta por
+antenas ao invés de clusters para zooms menores.
+
+\section{Métodos Numéricos}
 \section{Algoritmos de Minimização}
 \section{Frontend}
 
@@ -894,6 +986,18 @@ usuários. \\
     KARULKAR, S. A.; OH, JY.
     \textit{Optimal Placement of Base Station for Cellular Network Expansion}.
     Issues in Information Systems, volume 17, edição II, pg. 215-221, 2016.
+
+    \bibitem{anycluster}
+    biodiv (GitHub).
+    \textit{anycluster}.
+    Disponível em: https://github.com/biodiv/anycluster.
+    Acesso em: 6 de maio de 2018.
+
+    \bibitem{geohashcluster}
+    EvgeneOskin (GitHub).
+    \textit{django-geohash-cluster}.
+    Disponível em: https://github.com/EvgeneOskin/django-geohash-cluster.
+    Acesso em: 8 de setembro de 2018.
 
 \end{thebibliography}
 % ========== Apêndices (opcional) ==========
