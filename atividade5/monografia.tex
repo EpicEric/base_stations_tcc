@@ -864,7 +864,8 @@ A terceira tentativa utilizou a mesma ideia anterior, porém para um dado nível
 de zoom, serão utilizados os clusters para um zoom mais próximo do mapa,
 portanto usando 4 vezes mais dados. Ainda houve alguns clusters estranhos na
 visualização em mapa, embora consideravelmente melhores no geral; e o uso de
-dados muito alto tanto em processamento quanto em rede torna uma utilização com muitos clientes inviável.
+dados muito alto tanto em processamento quanto em rede torna uma utilização com
+muitos clientes inviável.
 
 Em seguida, na quarta tentativa, optamos por salvar os clusters em banco de
 dados, onde são indexados por zoom como nas tentativas anteriores. Para acelerar
@@ -883,7 +884,9 @@ A quinta tentativa se baseou nas demais, e também no conceito de geohash
 (anotação de cada região em um mapa com caracteres alfanuméricos, dividindo cada
 região sucessiva do globo em 16 partes). Foi selecionado uma precisão (i.e. um
 número de caracteres do geohash) diferente para cada zoom, seguindo-se como
-referência a biblioteca  ``django-geohash-cluster'' \cite{geohashcluster}.
+referência a biblioteca  ``django-geohash-cluster'' \cite{geohashcluster}, sendo
+que a precisão máxima é de 7 caracteres, que tem precisão de aproximadamente 76
+metros no Equador, o que é o suficiente para determinados níveis de zoom.
 Além disso, o código do front-end foi modificado especificamente para fins de
 performance, assim obtendo clusterizações com visualização mais natural.
 Graças ao suporte do GeoDjango para inserir o geohash em queries, foi possível
@@ -899,6 +902,14 @@ foram realizadas alterações na API para tornar a transição entre clusters e
 ERBs opaca para o usuário final -- ou seja, o script de exibição do mapa do
 navegador enxerga um único endpoint e não diferencia quando o servidor opta por
 antenas ao invés de clusters para zooms menores.
+
+Este algoritmo foi expandido para também permitir a filtragem por operadora de
+celular. Esta filtragem se baseia no campo MNC do identificador de cada estação
+radiobase, que distingue a empresa responsável. Para filtros mais precisos, como
+tipo de tecnologia celular, não será utilizada clusterização, com carregamento e
+exibição diretamente no mapa -- já que inclui um número menor de antenas a serem
+exibidas, e varia com o caso de uso de cada usuário, portanto sendo um processo
+menos repetitivo para o servidor que não exige pré-computação.
 
 \section{Métodos Numéricos}
 \section{Algoritmos de Minimização}
