@@ -912,8 +912,33 @@ exibidas, e varia com o caso de uso de cada usuário, portanto sendo um processo
 menos repetitivo para o servidor que não exige pré-computação.
 
 \section{Métodos Numéricos}
-\section{Algoritmos de Minimização}
+No nosso trabalho utilizamos os métodos Taguchi, Basinhopping e SLSQP.
+A função de otimização foi desacoplada da implementação do método
+numérico. Desse modo, podemos combinar quaisquer métodos numéricos implementados
+com quaisquer funções de otimização.
+
+\subsection{Método Taguchi}
+O método Taguchi foi implementado de acordo com a especificação encontrada em \cite{taguchi}.
+Os arrays ortogonais usados pelo método foram implementados como uma tabela,
+uma vez que seu cálculo é uma operação complexa, e os casos de uso preveem o uso
+de poucos parâmetros no método Taguchi.
+Usamos a biblioteca numpy para as operações com array, uma vez que ela provê
+operações eficientes nessas estruturas de dados.
+Criamos testes para verificar o método Taguchi, conforme será explicado no
+capítulo Testes e Avaliação.
+
+\subsection{Método Basinhopping}
+Usamos a implementação da biblioteca scipy para o método Basinhopping.
+
+\subsection{Método SQSQP}
+Usamos a implementação da biblioteca scipy para o método SQSQP.
+
+\section{Funções de Otimização}
+
+
 \section{Frontend}
+\subsection{Projeto de Telas}
+\subsection{Implementação com Vuetify}
 
 \chapter{Testes e Avaliação}
 
@@ -992,6 +1017,12 @@ menos repetitivo para o servidor que não exige pré-computação.
     \textit{Base Station Placement Algorithm for Large-Scale LTE
     Heterogeneous Networks}.
     PLoS ONE 10(10), 2015.
+
+    \bibitem{taguchi}
+    Wegmann, A.; Viering I.; Klein, A.
+    \textit{A Joint Optimization of Antenna Parameters in a
+    Cellular Network Using Taguchi’s Method}
+    IEEE 73rd Vehicular Technology Conference (VTC Spring), 2011.
 
     \bibitem{nao-linear}
     KARULKAR, S. A.; OH, JY.
