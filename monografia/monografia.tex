@@ -45,8 +45,8 @@
 \titulo{Sistema Web para Instalação de ERBs}
 
 % Autor
-\autor{Eric Rodrigues Pires \\%
-       Mateus Nakajo de Mendonça}
+\autor{Mateus Nakajo de Mendonça \\%
+       Eric Rodrigues Pires}
 
 % Para múltiplos autores (TCC)
 %\autor{Nome Sobrenome\\%
@@ -97,22 +97,39 @@
 
 
 % ========== Dedicatória (opcional) ==========
-\dedicatoria{Dedicatória}
+\dedicatoria{
+Dedico...
+
+-{}- Mateus
+
+\vspace{5mm}
+
+Dedico este trabalho à minha mãe Telma, ao meu pai Flávio, e ao meu irmão Caio,
+que sempre me apoiaram nos estudos e trabalhos.
+
+-{}- Eric
+}
 
 
 % ========== Agradecimentos ==========
 \begin{agradecimentos}
 
-Thanks...
+Ao Prof. Bruno de Carvalho Albertini, pela orientação constante na realização
+deste trabalho e sincero desprendimento.
+
+Ao Prof. Antonio Fischer de Toledo, pelos textos trazidos e pela disposição a
+nos ajudar.
+
+Ao SIMET do NIC.br, pelo interesse em nos auxiliar no desenvolvimento.
 
 \end{agradecimentos}
 
 
 % ========== Epígrafe (opcional) ==========
 \epigrafe{%
-    \emph{``Epígrafe''}
+    \emph{``O maior bem do Homem é uma mente inquieta.''}
     \begin{flushright}
-        -{}- Autor
+        -{}- Isaac Asimov
     \end{flushright}
 }
 
@@ -259,12 +276,13 @@ relacionados à instalação de programas no computador, como dificuldades para
 usuários menos instruídos no uso de computadores, ou políticas de TI em
 empresas.
 
-Tal projeto também pode ser de interesse ao público geral. Alguns casos de uso
-alternativos incluem a estimativa de posição do dispositivo pelas antenas
-encontradas, e a localização de antenas a partir do próprio celular do usuário.
-Eles permitiriam, respectivamente, uma geolocalização de baixa potência, ou que
-haja mais engajamento dos usuários para a melhoria de infraestrutura em sua
-região ou para avaliar alternativas dentre concorrentes.
+Um novo projeto na área de telecomunicações também pode ser de interesse ao
+público geral. Alguns casos de uso alternativos incluem a estimativa de posição
+do dispositivo pelas antenas encontradas, e a localização de antenas a partir
+do próprio celular do usuário. Eles permitiriam, respectivamente, uma
+geolocalização de baixa potência, ou que haja mais engajamento dos usuários para
+a melhoria de infraestrutura em sua região ou para avaliar alternativas dentre
+concorrentes.
 
 \section{Justificativa}
 Como discorrido anteriormente, falta uma solução voltada ao setor brasileiro de
@@ -299,36 +317,41 @@ compartilhar torres entre diferentes empresas. Outros serviços são redes para
 cobertura \textit{indoor} e pequenas ERBs para melhorar a cobertura em ambiente
 urbano, as \textit{small cells}.
 
-Dessa forma, concluímos que o MVP é essencial para
+Dessa forma, concluímos que o MVP é essencial para garantir um diferencial de
+mercado entre as várias empresas que crescem nesse setor, tanto atores
+principais quanto terceiros. A automatização desses estudos pode cortar custos
+em análise de risco e permitir um processo mais ágil de projeto de novas
+instalações.
 
 \section{Organização do Trabalho}
-Para o projeto de formatura, organizaremos este TCC em cinco capítulos:
+Para o projeto de formatura, organizaremos este TCC em oito capítulos:
 
 \begin{itemize}
-\item No capítulo ``Introdução" deste trabalho, definimos a motivação da
-realização deste sistema e o que buscamos alcançar neste projeto.
+\item No capítulo \textbf{``Introdução''} deste trabalho, definimos a motivação
+da realização deste sistema e o que buscamos alcançar neste projeto.
 
-\item No capítulo ``Aspectos Conceituais'', realizamos a contextualização
-dos conceitos empregados na área de aplicação e a revisão da literatura de base.
+\item No capítulo \textbf{``Aspectos Conceituais''}, realizamos a
+contextualização dos conceitos empregados na área de aplicação e a revisão da
+literatura de base.
 
-\item No capítulo ``Tecnologias Utilizadas'', listamos as ferramentas,
+\item No capítulo \textbf{``Tecnologias Utilizadas''}, listamos as ferramentas,
 algoritmos e dados necessários para o desenvolvimento do sistema deste trabalho.
 
-\item No capítulo ``Metodologia do Trabalho'', definimos os processos e fases
-no desenvolvimento de funcionalidades deste sistema, como concepção, estudo,
-projeto, implementação e testes.
+\item No capítulo \textbf{``Metodologia do Trabalho''}, definimos os processos e
+fases no desenvolvimento de funcionalidades deste sistema, como concepção,
+estudo, projeto, implementação e testes.
 
-\item No capítulo ``Especificação de Requisitos do Sistema'', definimos os
-requisitos do nosso sistema.
+\item No capítulo \textbf{``Especificação de Requisitos do Sistema''}, definimos
+os requisitos do nosso sistema.
 
-\item No capítulo ``Projeto e Implementação'', definimos os processos de
-implementação das tecnologias e requisitos levantados.
+\item No capítulo \textbf{``Projeto e Implementação''}, definimos os processos
+de implementação das tecnologias e requisitos levantados.
 
-\item No capítulo ``Testes e Avaliação'', estão documentados os resultados do
-sistema através de testes feitos em diversos níveis.
+\item No capítulo \textbf{``Testes e Avaliação''}, estão documentados os
+resultados do sistema através de testes feitos em diversos níveis.
 
-\item No capítulo ``Considerações Finais'', relatamos a experiência de projeto
-de TCC e questões que ficaram para avaliação futura.
+\item No capítulo \textbf{``Considerações Finais''}, relatamos a experiência de
+projeto de TCC e questões que ficaram para avaliação futura.
 
 \end{itemize}
 
@@ -415,14 +438,17 @@ próxima iteração. Além disso, o valor de $\beta_t$ é reduzido de um fator $
 
 Anteriormente, abordamos os dois componentes principais para compor nosso
 sistema: uma interface Web e um backend SIG. Além disso, utilizaremos também
-dados específicos do SIG para a implmentação de um dos algoritmos apresentados
-em ``Aspectos Conceituais''. Neste capítulo, discutimos quais as decisões do
-grupo para a implementação em si.
+dados específicos para o SIG na implmentação de um dos algoritmos apresentados
+em \textbf{``Aspectos Conceituais''}. Neste capítulo, discutimos as decisões
+tomadas pelo grupo acerca de \emph{frameworks} e bases de dados utilizadas no
+trabalho. Elas serão utilizadas no trabalho descrito pelo próximo capítulo.
 
-\section{Sistema Web}
-No projeto, para facilidade de desenvolvimento, utilizaremos o framework Django,
-escrito em Python. A integração de single-page com o back-end deverá ser feita
-com o módulo de API REST do Django.
+\section{Sistema Web e Backend}
+No projeto, utilizaremos o framework Django, escrito em Python. A principal
+razão para isso é que os integrantes já possuem familiaridade com ambos Python
+e Django, portanto facilitando o desenvolvimento pela transferência de
+conhecimentos préviso. A integração de front-end com o back-end deverá ser
+feita com o módulo de API REST do Django.
 
 O Django possui funcionalidades de SIG pelo módulo GeoDjango, que utiliza como
 banco de dados o PostGIS (baseado em Postgres). Serão armazenados
@@ -434,16 +460,17 @@ Para interação com o usuário por um mapa interativo, utilizaremos a bibliotec
 Leaflet, escrita em JavaScript. Ela se comunicará aos dados pela API REST a ser
 desenvolvida, tanto para requisições quanto para exibições.
 
-Optamos também pelo framework JavaScript conhecido por React, com a biblioteca
-Redux, para realizar o controle \emph{single-page app} do nosso sistema, e a
-interface gráfica Django Material para elaborar as telas do nosso sistema.
+Optamos também pelo framework JavaScript conhecido por Vue para realizar o
+controle \emph{single-page app} do nosso sistema, e a interface gráfica Vuetify
+para elaborar as telas do nosso sistema.
 
 \section{Bases de Dados}
-Vários dados usados para o trabalho
+Todos os dados usados para o trabalho vieram de fontes abertas e não-pagas, e
+serão utilizados no SIG, para exibição em telas ou cálculos de otimização.
 
-Utilizamos o Mapa de ERBs Brasil presente no portal Telebrasil~\cite{mapa-erb}.
-Essa base contém uma lista de ERBs do Brasil de novembro de 2017, com
-informação de operadora, endereço, e posição geográfica de cada ERB.
+Primeiramente, utilizamos o Mapa de ERBs Brasil presente no portal Telebrasil
+~\cite{mapa-erb}. Essa base contém uma lista de ERBs do Brasil de novembro de
+2017, com informação de operadora, endereço, e posição geográfica de cada ERB.
 Essas informações são essenciais para o cálculo da posição ótima da ERB para
 maximizar a cobertura da célula.
 
@@ -458,46 +485,38 @@ conectado.
 Outra base de dados em estudo foi o Google Earth Engine~\cite{earthengine}, uma
 API específica para dados geográficos públicos do Google, como relevo e
 densidade populacional. Devido à extensão destes dados, e à impraticidade de
-armazenamento em banco próprio, será estudada a possibilidade de uma dependência
-desta base através de sua API.
+armazenamento em banco próprio, será realizada dependência desta base através
+de sua API, que possui implementação em Python.
 
 \chapter{Metodologia do Trabalho}
 
-Neste capítulo, discorremos sobre como será feito o desenvolvimento do MVP da
+Neste capítulo, discorremos sobre como foi feito o desenvolvimento do MVP da
 introdução.
 
 Em uma primeira etapa, definimos com o orientador a proposta e o escopo deste
 projeto, propondo a pesquisa a ser realizada tanto da perspectiva de
 implementações quanto de requisitos necessários. Levantados tais requisitos no
-capítulo ``Especificação de Requisitos do Sistema'', a próxima etapa se baseou
-em projetar a realização de cada um destes requisitos de acordo com as
+capítulo \textbf{``Especificação de Requisitos do Sistema''}, a próxima etapa
+se baseou em projetar a realização de cada um destes requisitos de acordo com as
 prioridades definidas, isto é, iniciar um processo de decisões definitivas para
 o andamento do trabalho.
 
 Feitas estas decisões, finalmente, realizou-se a prototipagem das nossas
 funcionalidades, dividida entre os dois integrantes do grupo de forma paralela
-para permitir o andamento de diferentes partes do sistema, com reuniões entre
-os integrantes e o orientador para avaliar o progresso. Após esta análise
-preliminar, iniciou-se o desenvolvimento definitivo do sistema na especificação
-final, etapa que levará mais tempo neste projeto.
+para permitir o andamento de diferentes partes do sistema, com reuniões
+frequentes entre os integrantes e o orientador para avaliar o progresso. Após
+esta análise preliminar, iniciou-se o desenvolvimento definitivo do sistema na
+especificação final, etapa que levou mais tempo neste projeto.
 
 Junto com o desenvolvimento, foi realizado o deployment do servidor de produção
 onde os testes e as demonstrações podem ser feitos, de forma a verificar as
 condições reais de implementação do sistema. Ele foi atualizado a cada nova
 funcionalidade concluída.
 
-Por fim, antes de realizar a apresentação do trabalho final, será realizada uma
+Por fim, antes de realizar a apresentação do trabalho final, foi realizada uma
 bateria de testes para verificar o funcionamento correto do sistema após o
 desenvolvimento, sem a elaboração de novas funcionalidades, garantindo que
 estamos dentro das nossas previsões de projeto.
-
-Desta forma, nos organizamos para realizar a implementação do sistema, separando
-as tarefas a serem realizadas nas categorias: pesquisa, projeto, e apresentação.
-Utilizamos o cronograma oficial de TCC para elaborar um diagrama de Gantt na
-Figura~\ref{fig:gantt} com a sequência de tarefas a serem divididas pelo grupo
-ao longo do ano para cada semana. Indicamos também o período extra-escolar em
-colunas azuis, aonde haverá desenvolvimento do sistema de forma mais lenta e
-sem cronograma oficial.
 
 \begin{figure}[H]
     \centering
@@ -506,11 +525,19 @@ sem cronograma oficial.
     \label{fig:gantt}
 \end{figure}
 
+Desta forma, nos organizamos para realizar a implementação do sistema, separando
+as tarefas a serem realizadas nas categorias: pesquisa, projeto, e apresentação.
+Utilizamos o cronograma oficial de TCC para elaborar um diagrama de Gantt na
+Figura~\ref{fig:gantt} com a sequência de tarefas a serem divididas pelo grupo
+ao longo do ano para cada semana. Indicamos também o período extra-escolar em
+colunas azuis, aonde haverá desenvolvimento do sistema de forma mais lenta e
+sem cronograma específico.
+
 \chapter{Especificação de Requisitos do Sistema}
 
 Tomando-se como base as tecnologias anteriormente citadas, definimos com mais
 detalhe as necessidades do sistema para priorizar o trabalho descrito no
-capítulo de ``Metodologia do Trabalho''.
+capítulo de \textbf{``Metodologia do Trabalho''}.
 
 Para definir os requisitos do nosso sistema, foi elaborada uma árvore de
 pré-requisitos, listando a prioridade total dada a cada componente do sistema
@@ -544,7 +571,7 @@ como um usuário administrador. Nessa fase, perguntamo-nos como o nosso projeto
 poderia ajudar esses atores, qual informação ele deveria produzir. Esse processo
 nos levou à modelagem de diversos casos de uso de interesse do sistema. Alguns
 foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seção
-``Perspectivas de Continuidade''.
+\textbf{``Perspectivas de Continuidade''} do último capítulo.
 
 \section{Casos de Uso}
 \subsection{Atores}
@@ -707,8 +734,8 @@ possível calcular a posição (passo 7) \\
 
 Definidos os requisitos e as tecnologias a serem utilizadas, e os conceitos
 abordados em cada algoritmo, iniciaram-se as implementações conforme o capítulo
-``Metodologia do Trabalho''. As partes relevantes do sistema e as soluções
-encontradas estão mencionadas abaixo.
+\textbf{``Metodologia do Trabalho''}. As partes relevantes do sistema e as
+soluções encontradas estão mencionadas abaixo.
 
 \section{Backend}
 
@@ -832,11 +859,11 @@ Para os métodos Basinhopping e SQSQP, usamos a implementação pré-existente d
 biblioteca \textit{scipy}.
 
 Já o método Taguchi foi implementado de acordo com a especificação especificada
-no capítulo ``Aspectos Conceituais''. Os arrays ortogonais usados pelo método
-foram implementados como uma tabela, uma vez que seu cálculo é uma operação
-complexa, e os casos de uso preveem o uso de poucos parâmetros no método
-Taguchi. Usamos a biblioteca \textit{numpy} para as operações com array, uma vez
-que ela provê operações eficientes nessas estruturas de dados.
+no capítulo \textbf{``Aspectos Conceituais''}. Os arrays ortogonais usados pelo
+método foram implementados como uma tabela, uma vez que seu cálculo é uma
+operação complexa, e os casos de uso preveem o uso de poucos parâmetros no
+método Taguchi. Usamos a biblioteca \textit{numpy} para as operações com array,
+uma vez que ela provê operações eficientes nessas estruturas de dados.
 
 % TODO: Por fim, acabamos escolhendo o Método Taguchi, pois...
 
@@ -1113,6 +1140,23 @@ usuários. \\
     Disponível em: http://skysites.com/.
     Acesso em: 01º de março de 2018.
 
+    \bibitem{evolutivo}
+    LEE, S.; LEE, S.; KIM, K.; KIM, YH.
+    \textit{Base Station Placement Algorithm for Large-Scale LTE
+    Heterogeneous Networks}.
+    PLoS ONE 10(10), 2015.
+
+    \bibitem{nao-linear}
+    KARULKAR, S. A.; OH, JY.
+    \textit{Optimal Placement of Base Station for Cellular Network Expansion}.
+    Issues in Information Systems, volume 17, edição II, pg. 215-221, 2016.
+
+    \bibitem{taguchi}
+    WEGMANN, A.; VIERING I.; KLEIN, A.
+    \textit{A Joint Optimization of Antenna Parameters in a
+    Cellular Network Using Taguchi’s Method}
+    IEEE 73rd Vehicular Technology Conference (VTC Spring), 2011.
+
     \bibitem{mapa-erb}
     Telebrasil.
     \textit{Mapa de ERBs Brasil (antenas)}.
@@ -1126,7 +1170,7 @@ usuários. \\
     Geolocation by Unwired Labs}.
     Disponível em: https://opencellid.org/.
     Acesso em: 01º de março de 2018.
-
+    
     \bibitem{earthengine}
     Google Earth.
     \textit{Google Earth Engine}.
@@ -1144,23 +1188,6 @@ usuários. \\
     \textit{Sistema de Medição de Tráfego Internet}.
     Disponível em: http://simet.nic.br/mapas-app.html.
     Acesso em: 24 de março de 2018.
-
-    \bibitem{evolutivo}
-    LEE, S.; LEE, S.; KIM, K.; KIM, YH.
-    \textit{Base Station Placement Algorithm for Large-Scale LTE
-    Heterogeneous Networks}.
-    PLoS ONE 10(10), 2015.
-
-    \bibitem{taguchi}
-    WEGMANN, A.; VIERING I.; KLEIN, A.
-    \textit{A Joint Optimization of Antenna Parameters in a
-    Cellular Network Using Taguchi’s Method}
-    IEEE 73rd Vehicular Technology Conference (VTC Spring), 2011.
-
-    \bibitem{nao-linear}
-    KARULKAR, S. A.; OH, JY.
-    \textit{Optimal Placement of Base Station for Cellular Network Expansion}.
-    Issues in Information Systems, volume 17, edição II, pg. 215-221, 2016.
 
     \bibitem{anycluster}
     biodiv (GitHub).
