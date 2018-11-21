@@ -120,7 +120,9 @@ deste trabalho e sincero desprendimento.
 Ao Prof. Antonio Fischer de Toledo, pelos textos trazidos e pela disposição a
 nos ajudar.
 
-Ao SIMET do NIC.br, pelo interesse em nos auxiliar no desenvolvimento.
+Ao Dr. Wilian França Costa, pela indicação de dados utilizados no projeto.
+
+Ao SIMET do NIC.br, pelo interesse e auxílio no desenvolvimento.
 
 \end{agradecimentos}
 
@@ -271,7 +273,7 @@ Porém, a ferramenta parece muito voltada à instalação urbana e análise de
 infra-estrutura pré-existente, sem foco em uma eventual expansão. Por isso,
 vemos como que há necessidade do mercado por uma ferramenta voltada à ampliação
 de uma rede de ERBs, e que seja de fácil uso pelos instaladores de antenas do
-setor comercial. A utilização de um frontend web também contornará problemas
+setor comercial. A utilização de um front-end web também contornará problemas
 relacionados à instalação de programas no computador, como dificuldades para
 usuários menos instruídos no uso de computadores, ou políticas de TI em
 empresas.
@@ -437,7 +439,7 @@ próxima iteração. Além disso, o valor de $\beta_t$ é reduzido de um fator $
 \chapter{Tecnologias Utilizadas}
 
 Anteriormente, abordamos os dois componentes principais para compor nosso
-sistema: uma interface Web e um backend SIG. Além disso, utilizaremos também
+sistema: uma interface Web e um back-end SIG. Além disso, utilizaremos também
 dados específicos para o SIG na implmentação de um dos algoritmos apresentados
 em \textbf{``Aspectos Conceituais''}. Neste capítulo, discutimos as decisões
 tomadas pelo grupo acerca de \emph{frameworks} e bases de dados utilizadas no
@@ -542,7 +544,7 @@ capítulo de \textbf{``Metodologia do Trabalho''}.
 Para definir os requisitos do nosso sistema, foi elaborada uma árvore de
 pré-requisitos, listando a prioridade total dada a cada componente do sistema
 final na Figura~\ref{fig:arvore_prerequisitos}. A divisão do trabalho será
-feita nos componentes de frontend e backend, como discorrido anteriormente.
+feita nos componentes de front-end e back-end, como discorrido anteriormente.
 
 \begin{figure}[H]
   \centering
@@ -554,7 +556,7 @@ feita nos componentes de frontend e backend, como discorrido anteriormente.
 Como evidenciado pela figura, a ênfase deste projeto será no back-end, em
 especial na parte de modelagem e programação relacionadas ao cálculo de
 otimização da posição de antenas. As outras duas partes relevantes do
-backend tratam, respectivamente, do uso do banco de dados como SIG e da
+back-end tratam, respectivamente, do uso do banco de dados como SIG e da
 comunicação externa de dados via API.
 
 Embora tenha uma ênfase menor, o front-end da interface web também será
@@ -739,7 +741,7 @@ soluções encontradas estão mencionadas abaixo.
 
 \section{Backend}
 
-A utilização do backend no sistema foi, no geral, para a obtenção de dados
+A utilização do back-end no sistema foi, no geral, para a obtenção de dados
 existentes em banco e a computação de novas posições ótimas para as antenas.
 Apesar de não estar diretamente visível ao usuário, esta parte do sistema se
 mostrou também com dificuldades intrínsecas que nós precisamos enfrentar. Nas
@@ -848,6 +850,13 @@ exibição diretamente no mapa -- já que inclui um número menor de antenas a s
 exibidas, e varia com o caso de uso de cada usuário, portanto sendo um processo
 menos repetitivo para o servidor que não exige pré-computação.
 
+Vale notar que, para a implementação de filtragem por operadora, os clusters
+de todas as antenas utilizam um campo nulo para representar a operadora. Isso é
+importante porque, ao exibir os clusters sem filtro específico de operadora, na
+realidade, deverá ser feito filtro por operadora igual ao valor nulo. Esta
+distinção terá maior importância quando o cliente requisitar dados de clusters
+pela API, como descrito mais adiante.
+
 \section{Métodos Numéricos}
 
 Em um primeiro momento, utilizamos três métodos para comparação entre
@@ -869,11 +878,77 @@ uma vez que ela provê operações eficientes nessas estruturas de dados.
 
 \subsection{Interface de Programação de Aplicações}
 
-% TODO: Falar sobre API
+A integração do back-end com o front-end foi feita feita por uma API HTTP, que
+abstrai os dados e as funcionalidades necessários para a realização dos casos de
+uso. Resumidamente, ela deverá ser responsável por três tarefas específicas:
+
+\begin{itemize}
+\item Realizar login de usuários no sistema.
+\item Exibir dados de mapas na tela.
+\item Gerar otimização de posição de antena.
+\end{itemize}
+
+Desta forma, foram expostos endpoints para cada uma das tarefas. A utilização
+da biblioteca Django REST Framework facilitou o processo de integração da API
+ao back-end desenvolvido. O cliente de front-end poderá descobrir estes
+endpoints a partir de um outro endpoint específico que expõe estas informações,
+de forma a tornar refatorações do back-end dinâmicas.
+
+Algumas alterações tiveram que ser feitas tanto na configuração do Django quanto
+na criação de endpoints de API para a utilização da forma esperada. A primeira
+se refere ao login de usuários, pois necessitou de reconfiguração da
+autenticação do Django. Esta autenticação foi modificada para permitir que, por
+um endpoint específico de login, um usuário realize uma requisição POST com seu
+usuário e senha e receba um token, que pode ser utilizada nas requisições
+autenticadas subsequentes. Como a autenticação padrão do Django não utiliza
+tokens, mas sim parâmetros de sessão específicos, alteramos esta configuração.
+
+Outra modificação se refere à exibição de dados no mapa. Devido ao esquema de
+clusterização por geohash descrito anteriormente, optou-se por uma abordagem
+opaca na API, aonde o usuário deverá indicar apenas as coordenadas da tela, o
+tamanho de zoom atual, e o filtro de operadora. Dessa forma, foi descrita
+lógica adicional neste endpoint para converter o tamanho de zoom à precisão de
+geohash correspondente. Além disso, o filtro de operadora foi complementado com
+o caso geral de não filtrar por operadora, pois a modelagem dos clusters no
+banco de dados requer um filtro específico para clusters sem filtro de
+operadora.
 
 \subsection{Bancos de Dados Externos}
 
-% TODO: Falar sobre Google Earth Engine
+Alguns dados adicionais mencionados anteriormente, que não serão persistidos no
+banco de dados, são referentes a população e relevo. Ao longo de nossa pesquisa,
+nos deparamos com o Google Earth Engine\cite{earthengine}, que é uma plataforma
+de dados geoespaciais disponível publicamente para ferramentas de análise
+científica e pesquisa. Dentro desta plataforma, dois datasets estudados são
+\textit{``USGS/SRTMGL1\_003''} para topografia, e \textit{``WorldPop/POP''}
+para densidade populacional.
+
+O Google Earth Engine possui uma API oficial em Python, que foi estudada e
+implementada no back-end. A implementação criada permite persistir dados no
+cache do servidor, para evitar que valores frequentemente utilizados nos
+algoritmos de otimização (i.e. áreas analisadas repetidamente) sejam baixadas
+novamente a cada execução.
+
+\subsection{Instalação de Servidor}
+
+O back-end do sistema foi instalado em um servidor remoto para apresentações e
+testes. Utilizou-se o serviço DigitalOcean para a virtualização de servidor,
+onde subiu-se a instância por SSH em uma distribuição Linux. Nesta máquina,
+instalamos o repositório Python, o banco de dados PostgreSQL, e as aplicações
+necessárias para o GeoDjango/PostGIS.
+
+Neste servidor virtual, foram instalados o Nginx e o Gunicorn, para o proxy e o
+acesso HTTP, respectivamente. Também foi utilizado um nome de domínio para o
+servidor, que foi configurado no Nginx. Além disso, por questão de segurança,
+também configurou-se o acesso HTTPS ao servidor, através do Let's Encrypt e sua
+configuração para o proxy.
+
+Por fim, para facilitar o deployment da aplicação para testes, configurou-se
+o repositório local do Git como um repositório remoto, permitindo que seja
+atualizado por SSH com um único comando; e as regras de \texttt{pull} do
+repositório foram modificadas para aplicar novas alterações no código
+instantaneamente -- como migração de banco de dados, coleta de arquivos
+estáticos, novos endpoints, dentre outros.
 
 \section{Frontend}
 
@@ -889,7 +964,7 @@ uma vez que ela provê operações eficientes nessas estruturas de dados.
 
 \subsection{Integração com Backend}
 
-% TODO: Uso da API, deployment
+% TODO: Uso da API, deployment do frontend
 
 \chapter{Testes e Avaliação}
 
@@ -933,11 +1008,11 @@ a relação destes dados não cabe ao caso de uso principal. Eles serão mais
 interessantes em uma análise futura, ao trabalhar em conjunto com os
 stakeholders para análises de instalação com mais fatores.
 
-\subsection{Descrição dos casos de uso adicionais}
+\subsection{Descrição dos Casos de Uso Adicionais}
 
 Os casos de uso a seguir foram elaborados na etapa de ``Especificação de
 Requisitos do Sistema'', porém foram deixados para uma implementação futura, já
-que não afetam o MVP.
+que não afetam a demonstração do MVP.
 
 \noindent \textbf{Caso de Uso 6}: Cadastrar usuário no sistema.  \\
 \textbf{Descrição}: Este caso de uso descreve o cadastro de usuários no sistema \\
