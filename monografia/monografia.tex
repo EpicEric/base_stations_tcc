@@ -98,7 +98,8 @@
 
 % ========== Dedicatória (opcional) ==========
 \dedicatoria{
-Dedico...
+Dedico à minha família e meus amigos, que me ajudaram e incentivaram durante a
+minha graduação.
 
 -{}- Mateus
 
@@ -119,6 +120,9 @@ deste trabalho e sincero desprendimento.
 
 Ao Prof. Antonio Fischer de Toledo, pelos textos trazidos e pela disposição a
 nos ajudar.
+
+À Escola Politécnica da Universidade de São Paulo, pela oportunidade de
+realização do curso de bacharelado em Engenharia de Computação.
 
 Ao Dr. Wilian França Costa, pela indicação de dados utilizados no projeto.
 
@@ -148,24 +152,24 @@ Web responsiva que permita selecionar a região na qual se pretende instalar uma
 ERB e mostra as posições ideais para instalação.
 \\[3\baselineskip]
 %
-\textbf{Palavras-Chave} -- Estações~Radiobase, Otimização, Sistema~de~
-Informações~Geográficas, Aplicação~Web.
+\textbf{Palavras-Chave} -- Estações Radiobase, Otimização, Sistema de
+Informações Geográficas, Aplicação Web.
 \end{resumo}
 
 
 % ========== Abstract ==========
 \begin{abstract}
 This term paper intends to achieve a system capable of calculating the position
-to install cellular Base Stations (BS) so that we maximize the coverage network.
-From a given input region, the system will collect geographic data through a
-Geographical Information System (GIS) and utilize specific programming to optimize
-the placement position. For interfacing with the system user, we will develop a
-responsive Web application that allows the selection of a region on which we
-intended to place a BS, and show the ideal points for installation.
+to install cellular Base Stations (BS) in order to maximize the coverage
+network. For a given input region, the system will collect geographic data
+through a Geographical Information System (GIS) and utilize specific programming
+to optimize the placement position. For interfacing with the system user, we
+will develop a responsive Web application that allows the selection of a region
+on which we intended to place a BS, and show the ideal points for installation.
 \\[3\baselineskip]
 %
-\textbf{Keywords} -- Base~Stations, Optimization, Geographical~Information~
-System, Web~Application.
+\textbf{Keywords} -- Base Stations, Optimization, Geographical Information
+System, Web Application.
 \end{abstract}
 
 
@@ -182,6 +186,10 @@ System, Web~Application.
 
 \textbf{SIG:} Sistema de Informações Geográficas
 
+\textbf{UX:} Experiência de Usuário
+
+\textbf{TI:} Tecnologia da Informação
+
 \textbf{TCC:} Trabalho de Conclusão de Curso
 
 \end{pretextualsection}
@@ -194,12 +202,13 @@ System, Web~Application.
 % ========== Elementos textuais ==========
 
 \chapter{Introdução}
-Na revolução da informação em que vivemos hoje, em que cada vez mais pessoas
+
+Na revolução da informação em que vivemos hoje, onde cada vez mais pessoas
 estão conectadas à rede, o acesso à Internet tem se tornado cada vez mais
-essencial no dia-a-dia, até mesmo a populações consideradas isoladas. Empresas
-bem conhecidas, como Vivo e Claro, vêm se empenhando para garantir melhor
-acesso a mais pessoas, mas se deparam com problemas de engenharia nesta
-tarefa.
+essencial no dia-a-dia, até mesmo a populações fisicamente isoladas de regiões
+urbanas. Empresas bem conhecidas, como Vivo e Claro, vêm se empenhando para
+garantir melhor acesso a mais pessoas, mas se deparam com problemas de
+engenharia nesta tarefa.
 
 A extensão territorial e a densidade demográfica desigual do Brasil são dois
 dentre vários fatores que tornam problemas de telecomunicação mais complexos.
@@ -214,52 +223,59 @@ telecomunicação. Dessa forma, há demanda do mercado por ferramentas que
 simplifiquem e/ou automatizem a tarefa de estudo de localização de ERBs.
 
 \section{Objetivo}
+
 O objetivo deste projeto de formatura é criar um produto mínimo viável (MVP) de
 um sistema que permita calcular posições para a instalação de antenas de
 telefonia de forma a maximizar o alcance delas.
 
-Há dois componentes importantes para a realização deste projeto. O primeiro
-envolve coletar, apresentar e utilizar dados geográficos utilizados nos cálculos
+Há duas necessidades para a realização deste projeto. A primeiro envolve
+coletar, apresentar e utilizar dados geográficos utilizados nos cálculos
 de instalação de novas antenas. Isso pode ser realizado por um sistema de
 informações geográficas.
 
-O segundo que tal sistema tenha uma interface prática e responsiva para os
-usuários, de forma a ser utilizada tanto em escritórios quanto em campo.
-Portanto, uma interface web que apresente os dados requisitados é essencial
-para o projeto.
+A segunda necessidade seria que tal sistema tenha uma interface prática e
+responsiva para os usuários, de forma a ser utilizada tanto em computadores de
+escritório quanto em campo pelo celular. Portanto, uma interface web que
+apresente os dados requisitados é ideal para o projeto.
 
-A seguir, abordaremos com mais detalhes cada componente do sistema.
+A seguir, abordaremos com mais detalhes os dois módulos que serão utilizados
+para cumprir as necessidades do sistema.
 
 \subsection{Sistema de Informações Geográficas}
+
 Um SIG (Sistema de Informações Geográficas) é um sistema computacional capaz de
 obter, gravar, gerir, analisar e visualizar dados geográficos. Seu uso permite
 tomar decisões, analisar estatísticas e resolver problemas de otimização a
-partir de dados geográficos. O SIG pode ser usado tanto em lojas de varejo para
-decidir onde abrir uma nova filial, como em rastrear padrões de migração,
-controle e o monitoramento do desmatamento, planejamento urbano, etc.
+partir de dados geográficos. O SIG é uma base que pode ser usada tanto no
+dia-a-dia para encontrar lojas próximas, quanto para profissionais rastrearem
+padrões de migração, monitorarem desmatamento ou planejamento urbano,
+por exemplo.
 
 No nosso projeto, usaremos um framework de SIG para gravar e exibir a posição de
-ERBs (Estações Radiobase) atuais, o relevo e os consumidores atingidos pela
-rede de ERBs. Com essas informações, determinaremos as posições ótimas de
+ERBs (Estações Radiobase) atuais, o relevo e os consumidores atendidos na área
+da rede atual. Com essas informações, determinaremos as posições ótimas de
 ERBs de modo a maximizar a área de cobertura do sistema de telefonia.
 Para tanto, aplicaremos técnicas de programação linear, uma vez que
 estamos diante de um problema de otimização cuja função a ser otimizada
 é linear em relação às variáveis de entrada.
 
 \subsection{Interface Web}
+
 Para interação dos dados geográficos e de otimização com o usuário,
-desenvolveremos um front-end Web que permita selecionar a região na qual se
-pretende instalar alguma ERB. Esta interface se comunicará com o back-end do
-SIG, para obter e calcular os dados desejados.
+desenvolveremos um \textit{front-end} Web que permita selecionar a região na
+qual se pretende instalar alguma ERB. Esta interface se comunicará com o
+\textit{back-end} do SIG, para obter e calcular os dados desejados.
 
 O design deverá ser responsivo, podendo ser utilizado em plataformas mobile
-ou desktop, e simples, com controles com UX intuitiva para verificar a posição
-ótima de instalação de antenas em determinada área escolhida pelo usuário. Para
-isso, a interface deverá exibir um mapa com as informações do SIG, que permita
-ao usuário selecionar uma área desejada. Os dados serão calculados no back-end e
-exibidos ao usuário na tela. Para isso, o front-end será dinâmico.
+ou desktop, e simples, com controles com experiência de usuário (UX) intuitiva
+para verificar a posição ótima de instalação de antenas em determinada área
+escolhida pelo usuário. Para isso, a interface deverá exibir um mapa com as
+informações do SIG, que permita ao usuário selecionar uma área desejada. Os
+dados serão calculados no \textit{back-end} e exibidos ao usuário na tela. Para
+isso, o \textit{front-end} deverá obter dados e atualizar a tela dinamicamente.
 
 \section{Motivação}
+
 Com uma análise preliminar do setor, verificamos o mercado de instalação e
 aluguel de torres telefônicas no Brasil para comparar as tecnologias utilizadas
 em estudos de ERBs. Assim, pesquisamos serviços similares da concorrência. Um
@@ -273,10 +289,10 @@ Porém, a ferramenta parece muito voltada à instalação urbana e análise de
 infra-estrutura pré-existente, sem foco em uma eventual expansão. Por isso,
 vemos como que há necessidade do mercado por uma ferramenta voltada à ampliação
 de uma rede de ERBs, e que seja de fácil uso pelos instaladores de antenas do
-setor comercial. A utilização de um front-end web também contornará problemas
-relacionados à instalação de programas no computador, como dificuldades para
-usuários menos instruídos no uso de computadores, ou políticas de TI em
-empresas.
+setor comercial. A utilização de um \textit{front-end} web também contornará
+problemas relacionados à instalação de programas no computador, como
+dificuldades para usuários menos instruídos no uso de computadores, ou políticas
+de tecnologia da informação (TI) em empresas.
 
 Um novo projeto na área de telecomunicações também pode ser de interesse ao
 público geral. Alguns casos de uso alternativos incluem a estimativa de posição
@@ -284,7 +300,7 @@ do dispositivo pelas antenas encontradas, e a localização de antenas a partir
 do próprio celular do usuário. Eles permitiriam, respectivamente, uma
 geolocalização de baixa potência, ou que haja mais engajamento dos usuários para
 a melhoria de infraestrutura em sua região ou para avaliar alternativas dentre
-concorrentes.
+empresas de telecomunicação concorrentes.
 
 \section{Justificativa}
 Como discorrido anteriormente, falta uma solução voltada ao setor brasileiro de
@@ -295,16 +311,17 @@ por essa ferramenta.
 
 Como explica o presidente da consultoria Teleco, há problemas com as leis atuais
 para instalação de novas antenas e, portanto, a adoção de novas
-tecnologias~\cite{tude}. Com a chegada do 5G no Brasil, espera-se que haja
-melhor agilidade no processo de licitação de novas antenas, já que há
-necessidade dos usuários por um acesso à Internet mais amplo e melhor. Nesse
-sentido, a ferramenta pode auxiliar a acelerar a instalação de novas antenas.
+tecnologias~\cite{tude}. Com a chegada do 5G no Brasil, espera-se que haja maior
+disposição dos agentes de Estado por agilidade no processo de licitação de novas
+antenas, já que há necessidade dos usuários por um acesso à Internet melhor e
+mais veloz. Nesse sentido, a ferramenta pode acelerar a instalação de novas
+antenas.
 
 Sobre potenciais clientes, verificamos a existência de empresas no Brasil para
 localizar antenas, alugar terrenos para a instalação de antenas ou alugar
 antenas para empresas de telecomunicação. A maior parte destas empresas foca em
 um contexto urbano, enquanto que há interesse das empresas de telecomunicação
-e dos governos estaduais em expansão em áreas rurais.
+e dos governos estaduais em uma expansão também para áreas rurais.
 
 MyTower é um portal de locação e venda de imóveis para operadoras de
 telecomunicação~\cite{mytower}. Ele permite que o usuário cadastre seu imóvel
@@ -313,38 +330,38 @@ O portal então faz a intermediação entre o anunciante e a operadora.
 
 A Skysites é uma empresa que oferece soluções na área da infraestrutura de
 telecomunicação~\cite{skysites}. Ela gere um portfólio de sítios para
-instalação de equipamentos de telecomunicação (torres, smallcells, rooftops,
-etc), além de prover soluções customizadas para empresas de telecomunicação e
+instalação de equipamentos de telecomunicação (torres, \textit{small cells}, \textit{rooftops}), além de prover soluções customizadas para empresas de telecomunicação e
 compartilhar torres entre diferentes empresas. Outros serviços são redes para
 cobertura \textit{indoor} e pequenas ERBs para melhorar a cobertura em ambiente
 urbano, as \textit{small cells}.
 
 Dessa forma, concluímos que o MVP é essencial para garantir um diferencial de
-mercado entre as várias empresas que crescem nesse setor, tanto atores
-principais quanto terceiros. A automatização desses estudos pode cortar custos
-em análise de risco e permitir um processo mais ágil de projeto de novas
-instalações.
+mercado entre as várias empresas que crescem nesse setor, sejam tanto atores
+principais como as operadoras móveis, quanto terceiros. A automatização desses estudos de instalação
+pode cortar custos em análise de risco e permitir um processo mais ágil de projeto de novas
+antenas.
 
 \section{Organização do Trabalho}
+
 Para o projeto de formatura, organizaremos este TCC em oito capítulos:
 
 \begin{itemize}
-\item No capítulo \textbf{``Introdução''} deste trabalho, definimos a motivação
-da realização deste sistema e o que buscamos alcançar neste projeto.
+\item No capítulo \textbf{``Introdução''} deste trabalho, definimos o problema, a motivação
+da realização deste sistema, e o que buscamos alcançar neste projeto.
 
 \item No capítulo \textbf{``Aspectos Conceituais''}, realizamos a
-contextualização dos conceitos empregados na área de aplicação e a revisão da
-literatura de base.
+contextualização dos conceitos de suporte para a execução do trabalho e a
+revisão da literatura de base.
 
 \item No capítulo \textbf{``Tecnologias Utilizadas''}, listamos as ferramentas,
-algoritmos e dados necessários para o desenvolvimento do sistema deste trabalho.
+algoritmos e dados necessários para o desenvolvimento do sistema.
 
 \item No capítulo \textbf{``Metodologia do Trabalho''}, definimos os processos e
 fases no desenvolvimento de funcionalidades deste sistema, como concepção,
-estudo, projeto, implementação e testes.
+estudo, projeto, implementação e teste.
 
 \item No capítulo \textbf{``Especificação de Requisitos do Sistema''}, definimos
-os requisitos do nosso sistema.
+os requisitos para o desenvolvimento do sistema.
 
 \item No capítulo \textbf{``Projeto e Implementação''}, definimos os processos
 de implementação das tecnologias e requisitos levantados.
@@ -353,17 +370,25 @@ de implementação das tecnologias e requisitos levantados.
 resultados do sistema através de testes feitos em diversos níveis.
 
 \item No capítulo \textbf{``Considerações Finais''}, relatamos a experiência de
-projeto de TCC e questões que ficaram para avaliação futura.
+projeto de TCC e questões adicionais que restaram para uma avaliação futura.
 
 \end{itemize}
 
+% TODO: Pensar em mais seções para adicionar ao capítulo
 \chapter{Aspectos Conceituais}
 
 Com o MVP definido no capítulo anterior, iremos nos aprofundar na base teórica
-das tecnologias para a seleção de ponto ótimo de instalação de antenas; mais
-especificamente, nos algoritmos de otimização que podem ser utilizados.
+das tecnologias para a seleção de ponto ótimo de instalação de antenas. Dentre
+estes aspectos, discorreremos neste capítulo sobre a representação e modelagem
+dos dados geográficos em SIG e os algoritmos de otimização que podem ser
+utilizados.
+
+\section{Representação Geográfica}
+
+% TODO: Como representaremos antenas no Django, quais os modelos complementares, diagrama de modelos
 
 \section{Algoritmos de Otimização}
+
 Em consulta à literatura pré-existente sobre o problema de otimização de
 instalação de ERBs, nos deparamos com várias abordagens distintas para o mesmo
 problema, em diferentes níveis de abstração. Há várias técnicas empregadas,
@@ -385,6 +410,7 @@ Por fim, WEGMANN et al. (2011)~\cite{taguchi} utilizam o método Taguchi,
 descrito em detalhes a seguir.
 
 \subsection{Método Taguchi}
+
 O Método Taguchi é um método estatístico que tem como objetivo diminuir o número
 de experimentos necessários para se ajustar um conjunto de parâmetros e assim
 se obter um aumento de performance no sistema. No trabalho em questão, os
@@ -393,10 +419,10 @@ ERB a ser instalada. Como tais parâmetros são contínuos, criamos níveis
 associados, que correspondem (em cada parâmetro) a valores distribuídos
 uniformemente dentro do intervalo avaliado.
 
-O primeiro passo do Método Taguchi é escolher um array ortogonal, que possua o
+O primeiro passo do Método Taguchi é escolher um \textit{array} ortogonal que possua o
 número de colunas iguais ao número de parâmetros analisados, e possua a
-quantidade de níveis adequada. Array orthogonal é uma tabela, na qual existe um
-número $t$ (chamado de força do array orthogonal) para o qual, qualquer seleção de
+quantidade de níveis adequada. Um \textit{array} orthogonal é uma tabela, na qual existe um
+número $t$ (chamado de força do \textit{array} orthogonal), o qual para qualquer seleção de
 $t$ colunas na tabela, todas as tuplas aparecem o mesmo número de vezes.
 
 Em seguida, mapeamos cada nível a um valor do parâmetro. Sejam $min_t$ e $max_t$
@@ -421,7 +447,7 @@ Na $m-$ésima iteração, a função de mapeamento é a seguinte:
 Onde $s$ é a quantidade de níveis escolhida e $l$ é o número do nível.
 
 Depois disso, mapeamos cada valor da imagem da função objetivo para a razão
-sinal ruído. A fórmula é:
+sinal-ruído. A fórmula é:
 \begin{equation*}
     SN_i = 10.log_{10}(y_i^2) [dB]
 \end{equation*}
@@ -439,42 +465,48 @@ próxima iteração. Além disso, o valor de $\beta_t$ é reduzido de um fator $
 \chapter{Tecnologias Utilizadas}
 
 Anteriormente, abordamos os dois componentes principais para compor nosso
-sistema: uma interface Web e um back-end SIG. Além disso, utilizaremos também
-dados específicos para o SIG na implmentação de um dos algoritmos apresentados
-em \textbf{``Aspectos Conceituais''}. Neste capítulo, discutimos as decisões
-tomadas pelo grupo acerca de \emph{frameworks} e bases de dados utilizadas no
-trabalho. Elas serão utilizadas no trabalho descrito pelo próximo capítulo.
+sistema: uma interface Web e um \textit{back-end} SIG. Além dessas ferramentas, utilizaremos
+também dados específicos para o SIG na implementação de um dos algoritmos
+apresentados em \textbf{``Aspectos Conceituais''}. Neste capítulo, discutimos as
+decisões tomadas pelo grupo acerca de \emph{frameworks} e bases de dados
+utilizadas no trabalho. Elas serão utilizadas no trabalho descrito pelo próximo
+capítulo.
 
-\section{Sistema Web e Backend}
-No projeto, utilizaremos o framework Django, escrito em Python. A principal
-razão para isso é que os integrantes já possuem familiaridade com ambos Python
-e Django, portanto facilitando o desenvolvimento pela transferência de
-conhecimentos préviso. A integração de front-end com o back-end deverá ser
-feita com o módulo de API REST do Django.
+\section{Sistema Web}
+
+No projeto, utilizaremos o \textit{framework} Django, escrito em Python. A
+principal razão para isso é que os integrantes já possuem familiaridade com
+ambos Python e Django, portanto facilitando o desenvolvimento pela transferência
+de conhecimentos prévios. Além disso, o \textit{framework} possui prototipagem
+relativamente simples para orientação a objetos, autenticação por padrão e fácil
+integração com banco de dados. A integração de \textit{front-end} com o
+\textit{back-end} deverá ser feita com o módulo de API REST do Django.
 
 O Django possui funcionalidades de SIG pelo módulo GeoDjango, que utiliza como
-banco de dados o PostGIS (baseado em Postgres). Serão armazenados
+banco de dados o PostGIS (baseado em PostgreSQL). Serão armazenados
 dados públicos de localização de ERBs, relevo e densidade populacional. Ele
 será também responsável pelos cálculos realizados para a localização de novas
-antenas.
+antenas no mapa.
 
 Para interação com o usuário por um mapa interativo, utilizaremos a biblioteca
 Leaflet, escrita em JavaScript. Ela se comunicará aos dados pela API REST a ser
 desenvolvida, tanto para requisições quanto para exibições.
 
-Optamos também pelo framework JavaScript conhecido por Vue para realizar o
+% TODO: Revisar seção front-end abaixo
+Optamos também pelo \textit{framework} JavaScript conhecido por Vue para realizar o
 controle \emph{single-page app} do nosso sistema, e a interface gráfica Vuetify
 para elaborar as telas do nosso sistema.
 
 \section{Bases de Dados}
-Todos os dados usados para o trabalho vieram de fontes abertas e não-pagas, e
-serão utilizados no SIG, para exibição em telas ou cálculos de otimização.
+
+Todos os dados usados para o trabalho vieram de fontes abertas, e
+serão utilizados no SIG para exibição em telas ou cálculos de otimização.
 
 Primeiramente, utilizamos o Mapa de ERBs Brasil presente no portal Telebrasil
 ~\cite{mapa-erb}. Essa base contém uma lista de ERBs do Brasil de novembro de
 2017, com informação de operadora, endereço, e posição geográfica de cada ERB.
 Essas informações são essenciais para o cálculo da posição ótima da ERB para
-maximizar a cobertura da célula.
+maximizar a cobertura da célula de determinada operadora.
 
 Também utilizamos a base do OpenCelliD, da empresa Unwired Labs
 ~\cite{opencellid}. Essa base contém uma lista de ERBs do mundo inteiro, com o
@@ -488,29 +520,30 @@ Outra base de dados em estudo foi o Google Earth Engine~\cite{earthengine}, uma
 API específica para dados geográficos públicos do Google, como relevo e
 densidade populacional. Devido à extensão destes dados, e à impraticidade de
 armazenamento em banco próprio, será realizada dependência desta base através
-de sua API, que possui implementação em Python.
+de sua API, que possui implementação em Python. Esta implementação será
+discutida adiante.
 
 \chapter{Metodologia do Trabalho}
 
-Neste capítulo, discorremos sobre como foi feito o desenvolvimento do MVP da
-introdução.
+Neste capítulo, discorremos sobre como foi feito o desenvolvimento do MVP
+apresentado na introdução.
 
 Em uma primeira etapa, definimos com o orientador a proposta e o escopo deste
 projeto, propondo a pesquisa a ser realizada tanto da perspectiva de
-implementações quanto de requisitos necessários. Levantados tais requisitos no
+implementações do algoritmo de otimização quanto de requisitos necessários. Levantados tais requisitos no
 capítulo \textbf{``Especificação de Requisitos do Sistema''}, a próxima etapa
 se baseou em projetar a realização de cada um destes requisitos de acordo com as
 prioridades definidas, isto é, iniciar um processo de decisões definitivas para
 o andamento do trabalho.
 
-Feitas estas decisões, finalmente, realizou-se a prototipagem das nossas
+Tomadas estas decisões, finalmente, realizou-se a prototipagem das nossas
 funcionalidades, dividida entre os dois integrantes do grupo de forma paralela
-para permitir o andamento de diferentes partes do sistema, com reuniões
+para permitir o andamento simultâneo de diferentes partes do sistema, com reuniões
 frequentes entre os integrantes e o orientador para avaliar o progresso. Após
-esta análise preliminar, iniciou-se o desenvolvimento definitivo do sistema na
+certa familiaridade com os desafios colocados, iniciou-se o desenvolvimento definitivo do sistema na
 especificação final, etapa que levou mais tempo neste projeto.
 
-Junto com o desenvolvimento, foi realizado o deployment do servidor de produção
+Junto com o desenvolvimento, foi realizado o \textit{deployment} do servidor de produção,
 onde os testes e as demonstrações podem ser feitos, de forma a verificar as
 condições reais de implementação do sistema. Ele foi atualizado a cada nova
 funcionalidade concluída.
@@ -518,7 +551,7 @@ funcionalidade concluída.
 Por fim, antes de realizar a apresentação do trabalho final, foi realizada uma
 bateria de testes para verificar o funcionamento correto do sistema após o
 desenvolvimento, sem a elaboração de novas funcionalidades, garantindo que
-estamos dentro das nossas previsões de projeto.
+continuamos dentro das nossas previsões de projeto.
 
 \begin{figure}[H]
     \centering
@@ -529,10 +562,10 @@ estamos dentro das nossas previsões de projeto.
 
 Desta forma, nos organizamos para realizar a implementação do sistema, separando
 as tarefas a serem realizadas nas categorias: pesquisa, projeto, e apresentação.
-Utilizamos o cronograma oficial de TCC para elaborar um diagrama de Gantt na
+Utilizamos o cronograma oficial da disciplina de TCC para elaborar um diagrama de Gantt na
 Figura~\ref{fig:gantt} com a sequência de tarefas a serem divididas pelo grupo
 ao longo do ano para cada semana. Indicamos também o período extra-escolar em
-colunas azuis, aonde haverá desenvolvimento do sistema de forma mais lenta e
+fundo azul, quando haverá desenvolvimento do sistema de forma mais lenta e
 sem cronograma específico.
 
 \chapter{Especificação de Requisitos do Sistema}
@@ -541,31 +574,32 @@ Tomando-se como base as tecnologias anteriormente citadas, definimos com mais
 detalhe as necessidades do sistema para priorizar o trabalho descrito no
 capítulo de \textbf{``Metodologia do Trabalho''}.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6in]{imagens/arvore_prerequisitos}
+    \caption{Árvore de pré-requisitos do sistema.}
+    \label{fig:arvore_prerequisitos}
+\end{figure}
+
 Para definir os requisitos do nosso sistema, foi elaborada uma árvore de
 pré-requisitos, listando a prioridade total dada a cada componente do sistema
 final na Figura~\ref{fig:arvore_prerequisitos}. A divisão do trabalho será
-feita nos componentes de front-end e back-end, como discorrido anteriormente.
+feita nos componentes de \textit{front-end} e \textit{back-end}, como discorrido
+anteriormente.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=6in]{imagens/arvore_prerequisitos}
-  \caption{Árvore de pré-requisitos do sistema.}
-  \label{fig:arvore_prerequisitos}
-\end{figure}
-
-Como evidenciado pela figura, a ênfase deste projeto será no back-end, em
-especial na parte de modelagem e programação relacionadas ao cálculo de
+Como evidenciado pela figura~\ref{fig:arvore_prerequisitos}, a ênfase deste projeto será no \textit{back-end};
+em especial, na parte de modelagem e programação relacionadas ao cálculo de
 otimização da posição de antenas. As outras duas partes relevantes do
-back-end tratam, respectivamente, do uso do banco de dados como SIG e da
-comunicação externa de dados via API.
+\textit{back-end} tratam, respectivamente, da instalação e uso do banco de dados do SIG, e
+da comunicação externa de dados via API.
 
-Embora tenha uma ênfase menor, o front-end da interface web também será
+Embora tenha uma ênfase menor, o \textit{front-end} da interface web também será
 um requisito fundamental de projeto, separado na experiência do usuário e na
 visualização do mapa.
 
-Definido o escopo, começamos a pensar, junto ao nosso orientador, sobre os
-requisitos do projeto. A estratégia utilizada foi o brainstorming, leitura de
-obras de referência, e pesquisa de softwares com escopo parecido.
+Definido o escopo, começamos a pensar, junto com nosso orientador, sobre os
+requisitos do projeto. A estratégia utilizada foi o \textit{brainstorming}, leitura de
+obras de referência na literatura de otimização de antenas, e pesquisa de softwares com escopo parecido.
 A ideia inicial era ter como ator principal do sistema o funcionário cadastrado
 de uma empresa de instalação de antenas, porém depois consideramos que seria
 complementar ao projeto considerar um usuário não-comercial, assim
@@ -575,11 +609,13 @@ nos levou à modelagem de diversos casos de uso de interesse do sistema. Alguns
 foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seção
 \textbf{``Perspectivas de Continuidade''} do último capítulo.
 
+% TODO: Rever casos de uso
 \section{Casos de Uso}
 \subsection{Atores}
 \begin{itemize}
 \item Administrador
 \item Funcionário cadastrado de Empresa de instalação de antenas
+% TODO: Mudar nome do usuário não-comercial
 \item Usuário não-comercial
 \end{itemize}
 
@@ -629,7 +665,7 @@ foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seçã
 \item Usuário ou senha estão incorretos: sistema exibe mensagem de erro (passo 2).
 \item Login por OAuth2: sistema recebe token de autenticação externa para o acesso (passo 1).
 \end{enumerate}
-\textbf{Inclusões:} - \\
+\textbf{Inclusões}: - \\
 
 \noindent \textbf{Caso de Uso 2}: Efetuar logout no sistema. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de logout no sistema. \\
@@ -732,6 +768,7 @@ instaladas e Parâmetros a serem considerados no cálculo.
 possível calcular a posição (passo 7) \\
 \textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (pré-condição). \\
 
+% ERIC: Continuar revisão daqui
 \chapter{Projeto e Implementação}
 
 Definidos os requisitos e as tecnologias a serem utilizadas, e os conceitos
@@ -739,13 +776,27 @@ abordados em cada algoritmo, iniciaram-se as implementações conforme o capítu
 \textbf{``Metodologia do Trabalho''}. As partes relevantes do sistema e as
 soluções encontradas estão mencionadas abaixo.
 
-\section{Backend}
+\section{\textit{Back-end}}
 
-A utilização do back-end no sistema foi, no geral, para a obtenção de dados
-existentes em banco e a computação de novas posições ótimas para as antenas.
+A utilização do \textit{back-end} no sistema foi, no geral, para a obtenção de
+dados existentes em banco e a computação de novas posições ótimas para as antenas.
 Apesar de não estar diretamente visível ao usuário, esta parte do sistema se
 mostrou também com dificuldades intrínsecas que nós precisamos enfrentar. Nas
 seções a seguir, detalharemos as medidas tomadas em cada etapa.
+
+\subsection{Modelo de ERB}
+
+Anteriormente, listamos dois modelos de ERBs, provenientes de duas bases de
+dados diferentes. Uma delas utiliza dados oficiais da Anatel para indicar as
+antenas oficialmente registradas, portanto que pertencem a uma única operadora.
+A outra apresenta antenas distinguíveis pelo identificador global CGI, portanto
+mostra várias vezes antenas compartilhadas por várias operadoras.
+
+Devido à proeminência do compartilhamento de antenas entre empresas de
+telecomunicação, optamos por utilizar a segunda base nas etapas subsequentes do
+projeto. Como não há correlação direta com cada operadora ao contrário da outra
+base, utilizou-se um campo específico do CGI, denominado MNC, para identificar a
+quem pertence cada antena nas etapas subsequentes do trabalho \cite{mcc-mnc}.
 
 \subsection{Clusterização}
 
@@ -774,11 +825,11 @@ Com o uso desse plugin, a exibição de até cerca de 500 antenas na tela tornou
 possível. Porém, mais antenas do que isso causavam vários problemas relacionados
 a uma grande quantidade de dados, como demora na transmissão de dados,
 requisições intensivas ao servidor, e problemas de memória no navegador do
-cliente. Algumas medidas foram tomadas tanto no back-end quanto no front-end
+cliente. Algumas medidas foram tomadas tanto no \textit{back-end} quanto no \textit{front-end}
 para tentar amenizar estes efeitos, mas sem gerar vantagens muito perceptíveis.
 
-Dessa forma, resolveu-se utilizar algoritmos de clusterização no back-end, e
-então realizar a integração com o front-end. A primeira tentativa envolveu a
+Dessa forma, resolveu-se utilizar algoritmos de clusterização no \textit{back-end}, e
+então realizar a integração com o \textit{front-end}. A primeira tentativa envolveu a
 utilização de uma biblioteca \textit{open-source} específica para o GeoDjango,
 chamada ``Anycluster''~\cite{anycluster}. Embora tenha sido feita para uma
 configuração de servidor similar à utilizada no projeto, a instalação e
@@ -811,7 +862,7 @@ dados, onde são indexados por zoom como nas tentativas anteriores. Para acelera
 o algoritmo de cálculo de clusters, utiliza-se os clusters de um zoom menor para
 gerar os de zooms maiores. Foram feitas algumas iterações com diferentes funções
 de clusterização do PostGIS para obter resultados melhores. A utilização de
-modelos ao invés de cache resultou em uma fácil integração com o front-end já
+modelos ao invés de cache resultou em uma fácil integração com o \textit{front-end} já
 existente, dado a facilidade do Django para lidar com modelos na API. Porém,
 os resultados obtidos foram inesperados, com clusters baseados na distância
 ponto-a-ponto ao invés de ao redor de um centro de massa. Dessa forma, lugares
@@ -826,13 +877,13 @@ número de caracteres do geohash) diferente para cada zoom, seguindo-se como
 referência a biblioteca  ``django-geohash-cluster''~\cite{geohashcluster}, sendo
 que a precisão máxima é de 7 caracteres, que tem precisão de aproximadamente 76
 metros no Equador, o que é o suficiente para determinados níveis de zoom.
-Além disso, o código do front-end foi modificado especificamente para fins de
+Além disso, o código do \textit{front-end} foi modificado especificamente para fins de
 performance, assim obtendo clusterizações com visualização mais natural.
 Graças ao suporte do GeoDjango para inserir o geohash em queries, foi possível
 realizar a implementação em um algoritmo simples, sem escrever as queries
 manualmente. A principal desvantagem deste algoritmo foi a extrema demora para
 realizar as clusterizações em comparação com os demais algoritmos; porém, o
-resultado final com a integração de clusterização front-end e back-end foi
+resultado final com a integração de clusterização \textit{front-end} e \textit{back-end} foi
 melhor. Outra desvantagem foi que, como não há correspondência direta entre
 níveis de zoom do mapa e precisões de geohash, determinados níveis de zoom
 demoram mais tempo para ler os dados. Além disso, há algumas pequenas falhas
@@ -878,7 +929,7 @@ uma vez que ela provê operações eficientes nessas estruturas de dados.
 
 \subsection{Interface de Programação de Aplicações}
 
-A integração do back-end com o front-end foi feita feita por uma API HTTP, que
+A integração do \textit{back-end} com o \textit{front-end} foi feita feita por uma API HTTP, que
 abstrai os dados e as funcionalidades necessários para a realização dos casos de
 uso. Resumidamente, ela deverá ser responsável por três tarefas específicas:
 
@@ -890,9 +941,9 @@ uso. Resumidamente, ela deverá ser responsável por três tarefas específicas:
 
 Desta forma, foram expostos endpoints para cada uma das tarefas. A utilização
 da biblioteca Django REST Framework facilitou o processo de integração da API
-ao back-end desenvolvido. O cliente de front-end poderá descobrir estes
+ao \textit{back-end} desenvolvido. O cliente de \textit{front-end} poderá descobrir estes
 endpoints a partir de um outro endpoint específico que expõe estas informações,
-de forma a tornar refatorações do back-end dinâmicas.
+de forma a tornar refatorações do \textit{back-end} dinâmicas.
 
 Algumas alterações tiveram que ser feitas tanto na configuração do Django quanto
 na criação de endpoints de API para a utilização da forma esperada. A primeira
@@ -924,14 +975,14 @@ científica e pesquisa. Dentro desta plataforma, dois datasets estudados são
 para densidade populacional.
 
 O Google Earth Engine possui uma API oficial em Python, que foi estudada e
-implementada no back-end. A implementação criada permite persistir dados no
+implementada no \textit{back-end}. A implementação criada permite persistir dados no
 cache do servidor, para evitar que valores frequentemente utilizados nos
 algoritmos de otimização (i.e. áreas analisadas repetidamente) sejam baixadas
 novamente a cada execução.
 
 \subsection{Instalação de Servidor}
 
-O back-end do sistema foi instalado em um servidor remoto para apresentações e
+O \textit{back-end} do sistema foi instalado em um servidor remoto para apresentações e
 testes. Utilizou-se o serviço DigitalOcean para a virtualização de servidor,
 onde subiu-se a instância por SSH em uma distribuição Linux. Nesta máquina,
 instalamos o repositório Python, o banco de dados PostgreSQL, e as aplicações
@@ -950,7 +1001,7 @@ repositório foram modificadas para aplicar novas alterações no código
 instantaneamente -- como migração de banco de dados, coleta de arquivos
 estáticos, novos endpoints, dentre outros.
 
-\section{Frontend}
+\section{\textit{Front-end}}
 
 % TODO: Introdução sobre o que será falado nas subseções
 
@@ -962,9 +1013,9 @@ estáticos, novos endpoints, dentre outros.
 
 % TODO: Vue
 
-\subsection{Integração com Backend}
+\subsection{Integração com \textit{Back-end}}
 
-% TODO: Uso da API, deployment do frontend
+% TODO: Uso da API, deployment do front-end
 
 \chapter{Testes e Avaliação}
 
@@ -1251,24 +1302,18 @@ usuários. \\
     Geolocation by Unwired Labs}.
     Disponível em: https://opencellid.org/.
     Acesso em: 01º de março de 2018.
-    
+
     \bibitem{earthengine}
     Google Earth.
     \textit{Google Earth Engine}.
     Disponível em: https://earthengine.google.com/.
     Acesso em: 16 de março de 2018.
 
-    \bibitem{gecon}
-    Yale University.
-    \textit{Geographically based Economic data -{}- Brazil}.
-    Disponível em: https://gecon.yale.edu/brazil.
-    Acesso em: 24 de março de 2018.
-
-    \bibitem{simet}
-    Núcleo de Informação e Coordenação do Ponto BR.
-    \textit{Sistema de Medição de Tráfego Internet}.
-    Disponível em: http://simet.nic.br/mapas-app.html.
-    Acesso em: 24 de março de 2018.
+    \bibitem{mcc-mnc}
+    Interactive Digital Media GmbH.
+    \textit{Mobile Country Codes (MCC) and Mobile Network Codes (MNC)}.
+    Disponível em: http://www.mcc-mnc.com.
+    Acesso em: 10 de outubro de 2018.
 
     \bibitem{anycluster}
     biodiv (GitHub).
@@ -1281,6 +1326,18 @@ usuários. \\
     \textit{django-geohash-cluster}.
     Disponível em: https://github.com/EvgeneOskin/django-geohash-cluster.
     Acesso em: 8 de setembro de 2018.
+
+    \bibitem{gecon}
+    Yale University.
+    \textit{Geographically based Economic data -{}- Brazil}.
+    Disponível em: https://gecon.yale.edu/brazil.
+    Acesso em: 24 de março de 2018.
+
+    \bibitem{simet}
+    Núcleo de Informação e Coordenação do Ponto BR.
+    \textit{Sistema de Medição de Tráfego Internet}.
+    Disponível em: http://simet.nic.br/mapas-app.html.
+    Acesso em: 24 de março de 2018.
 
 \end{thebibliography}
 % ========== Apêndices (opcional) ==========
