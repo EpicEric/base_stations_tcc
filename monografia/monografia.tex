@@ -1030,17 +1030,38 @@ novamente a cada execução.
 
 \subsection{Instalação de Servidor}
 
-O \textit{back-end} do sistema foi instalado em um servidor remoto para apresentações e
-testes. Utilizou-se o serviço DigitalOcean para a virtualização de servidor,
-onde subiu-se a instância por SSH em uma distribuição Ubuntu. Nesta máquina,
-instalamos o repositório em Python, o banco de dados PostgreSQL, e as aplicações adicionais
-necessárias para o GeoDjango/PostGIS.
+O \textit{back-end} do sistema foi instalado em um servidor remoto para
+apresentações e testes. Utilizou-se o serviço DigitalOcean para a virtualização
+de servidor, onde subiu-se a instância por SSH em uma distribuição Ubuntu. As
+chaves SSH foram distribuídas aos integrantes do grupo e ao orientador para
+permitir o acesso. Nesta máquina, instalamos o repositório em Python, o banco
+de dados PostgreSQL, e as aplicações adicionais necessárias para o
+GeoDjango/PostGIS. Os passos tomados na configuração a seguir foram, fora de
+ordem:
 
-Ainda neste servidor virtual, foram instalados o Nginx e o Gunicorn, para o \textit{proxy} e o
-acesso HTTP, respectivamente. Também foi utilizado um nome de domínio para o
-servidor, que foi configurado no Nginx. Além disso, por questão de segurança,
-também configurou-se o acesso HTTPS ao servidor, através do Let's Encrypt e sua
-configuração para \textit{proxy}.
+\begin{itemize}
+\item Criar e ativar um ambiente virtual do Python (\texttt{virtualenv}).
+\item Instalar dependências em Python do projeto.
+\item Obter a extensão do PostGIS, e as bibliotecas GEOS, PROJ.4, GDAL, GeoIP2.
+\item Criar um \textit{schema} no banco de dados para a aplicação.
+\item Carregar dados de antenas apropriadas e identificadas.
+\item Gerar diretório de arquivos estáticos do Django.
+\item Obter arquivos de localização via IP da biblioteca GeoIP2.
+\item Registrar-se no Google Earth Engine, gerar \textit{token} de autenticação,
+e salvar no ambiente de usuário.
+\item Criar usuários administradores para os membros do grupo e para
+demonstração.
+\item Habilitar cache em disco por banco de dados.
+\end{itemize}
+
+Estes passos foram reproduzidos em um \texttt{README} do repositório, para
+facilitar a criação de novos ambientes de desenvolvimento.
+
+Ainda neste servidor virtual, foram instalados o Nginx e o Gunicorn, para o
+\textit{proxy} e o acesso HTTP, respectivamente. Também foi utilizado um nome de
+domínio para o servidor, que foi configurado no Nginx. Além disso, por questão
+de segurança, também configurou-se o acesso HTTPS ao servidor, através do Let's
+Encrypt e sua configuração para \textit{proxy}.
 
 Por fim, para facilitar o deployment da aplicação para testes, configurou-se
 o repositório local do Git como um repositório remoto, permitindo que seja
@@ -1048,6 +1069,31 @@ atualizado por SSH com um único comando; e as regras de \textit{pull} do
 repositório foram modificadas para aplicar novas alterações no código
 instantaneamente -- como migração de banco de dados, coleta de arquivos
 estáticos, novos \textit{endpoints}, dentre outros.
+
+Uma medida tomada por segurança e por limitações técnicas na instalação do
+\textit{back-end} foi a utilização de ambientes de desenvolvimento -- isto é,
+a definição manual de variáveis do Django, sensíveis e/ou específicas por
+máquina. Para isto, foi criado um novo arquivo, \texttt{config\_settings.py},
+que é importado pelo arquivo de configurações padrão do Django
+(\texttt{settings.py}) e é ignorado pela ferramenta Git. Dentre as variáveis
+deste arquivo, estão:
+
+\begin{itemize}
+\item Uma \textit{flag} de debug, utilizada pelo Django para exibir informações
+sensíveis de erro quando habilitada.
+\item Uma chave secreta, utilizada para gerar \textit{hashes} de segurança.
+\item Lista de \textit{hostnames} aceitos para conexões de entrada, que foi
+definida para os IPs da máquina e o nome de domínio.
+\item A conexão ao banco de dados, com usuário, senha e \textit{schema}.
+\item Dados de acesso a autenticação social em serviços como GitHub e Facebook.
+\end{itemize}
+
+Alguns dados e parâmetros acima foram colocados como opcionais, para facilitar a
+instalação de ambientes de desenvolvimento. Por exemplo, a biblioteca GeoIP2,
+que tenta estimar a localização do usuário pelo IP, foi colocada no código como
+dependência opcional, devido ao tamanho dos arquivos consumidos e à falta de
+necessidade de testes para uso. Os dados de acesso para serviços sociais também
+foram tornados opcionais por razões semelhantes.
 
 \section{\textit{Front-end}}
 Para elaborar o \textit{front-end}, usamos o \textit{framework} Vue.js.
@@ -1187,6 +1233,16 @@ A seguir estão os testes do método SLSQP.
 
 
 % TODO
+
+\section{Resultados}
+
+% TODO
+
+As fontes do trabalho foram disponibilizadas como código aberto no GitHub, e
+foram separadas em dois repositórios: um para o \textit{back-end} Django, com
+instruções de instalação para desenvolvimento local~\cite{repo-django}; e um
+para o \textit{framework} de \textit{front-end} escrito em Vue~\cite{repo-vue}.
+Além disso, esta monografia em si também está disponível no GitHub~\cite{repo-tcc}.
 
 \chapter{Considerações Finais}
 
@@ -1503,6 +1559,24 @@ usuários. \\
     \textit{NumPy}.
     Disponível em: https://www.numpy.org/.
     Acesso em: 13 de março de 2018.
+
+    \bibitem{repo-django}
+    EpicEric (GitHub).
+    \textit{base\_stations\_django}.
+    Disponível em: https://github.com/EpicEric/base\_stations\_django.
+    Acesso em: 21 de fevereiro de 2018.
+
+    \bibitem{repo-vue}
+    EpicEric (GitHub).
+    \textit{base\_stations\_vue}.
+    Disponível em: https://github.com/EpicEric/base\_stations\_vue.
+    Acesso em: 22 de julho de 2018.
+
+    \bibitem{repo-tcc}
+    EpicEric (GitHub).
+    \textit{tcc}.
+    Disponível em: https://github.com/EpicEric/tcc.
+    Acesso em: 27 de janeiro de 2018.
 
     \bibitem{gecon}
     Yale University.
