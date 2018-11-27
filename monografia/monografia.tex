@@ -374,7 +374,7 @@ projeto de TCC e questões adicionais que restaram para uma avaliação futura.
 
 \end{itemize}
 
-% TODO: Pensar em mais seções para adicionar ao capítulo
+% TODO: Pensar em mais seções para adicionar a este capítulo
 \chapter{Aspectos Conceituais}
 
 Com o MVP definido no capítulo anterior, iremos nos aprofundar na base teórica
@@ -385,7 +385,7 @@ utilizados.
 
 \section{Representação Geográfica}
 
-% TODO: Como representaremos antenas no Django, quais os modelos complementares, diagrama de modelos
+% TODO Eric: Como representamos antenas no Django, quais os modelos complementares, diagrama de modelos
 
 \section{Algoritmos de Otimização}
 
@@ -492,7 +492,7 @@ Para interação com o usuário por um mapa interativo, utilizaremos a bibliotec
 Leaflet, escrita em JavaScript. Ela se comunicará aos dados pela API REST a ser
 desenvolvida, tanto para requisições quanto para exibições.
 
-% TODO: Revisar seção front-end abaixo
+% TODO Nakajo: Revisar parágrafo abaixo
 Optamos também pelo \textit{framework} JavaScript conhecido por Vue para realizar o
 controle \emph{single-page app} do nosso sistema, e a interface gráfica Vuetify
 para elaborar as telas do nosso sistema.
@@ -609,13 +609,12 @@ nos levou à modelagem de diversos casos de uso de interesse do sistema. Alguns
 foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seção
 \textbf{``Perspectivas de Continuidade''} do último capítulo.
 
-% TODO: Rever casos de uso
+% TODO Eric: Rever casos de uso
 \section{Casos de Uso}
 \subsection{Atores}
 \begin{itemize}
 \item Administrador
 \item Funcionário cadastrado de Empresa de instalação de antenas
-% TODO: Mudar nome do usuário não-comercial
 \item Usuário não-comercial
 \end{itemize}
 
@@ -768,7 +767,6 @@ instaladas e Parâmetros a serem considerados no cálculo.
 possível calcular a posição (passo 7) \\
 \textbf{Inclusões}: Caso de uso Exibir mapa com ERBs (pré-condição). \\
 
-% ERIC: Continuar revisão daqui
 \chapter{Projeto e Implementação}
 
 Definidos os requisitos e as tecnologias a serem utilizadas, e os conceitos
@@ -801,82 +799,83 @@ quem pertence cada antena nas etapas subsequentes do trabalho \cite{mcc-mnc}.
 \subsection{Clusterização}
 
 Um dos principais desafios na implementação foi realizar a exibição de múltiplas
-antenas como pontos em um mapa. Como muitas ERBs ficam muito próximas e,
+antenas como pontos em um mapa. Como muitas ERBs ficam próximas das outras e,
 portanto, difíceis de serem visualizadas separadamente, utilizou-se um
 \textit{plugin} próprio da biblioteca de mapa para a clusterização de pontos,
 facilitando a identificação da quantidade de antenas em uma região, com exibição
 variável com o zoom.
 
-  \begin{figure}[H]
+\begin{figure}[H]
     \centering
     \includegraphics[width=6in]{imagens/mapa_sem_clusters}
     \caption{Mapa de ERBs sem clusterização.}
     \label{fig:mapa_sem_clusters}
-  \end{figure}
+\end{figure}
 
-  \begin{figure}[H]
+\begin{figure}[H]
     \centering
     \includegraphics[width=6in]{imagens/mapa_com_clusters}
     \caption{Mapa de ERBs com clusterização.}
     \label{fig:mapa_com_clusters}
-  \end{figure}
+\end{figure}
 
 Com o uso desse plugin, a exibição de até cerca de 500 antenas na tela tornou-se
 possível. Porém, mais antenas do que isso causavam vários problemas relacionados
-a uma grande quantidade de dados, como demora na transmissão de dados,
+a uma grande quantidade de dados, como demora na transmissão por HTTP,
 requisições intensivas ao servidor, e problemas de memória no navegador do
 cliente. Algumas medidas foram tomadas tanto no \textit{back-end} quanto no \textit{front-end}
-para tentar amenizar estes efeitos, mas sem gerar vantagens muito perceptíveis.
+para tentar amenizar estes efeitos, como otimizar scripts mas sem gerar vantagens muito perceptíveis.
 
 Dessa forma, resolveu-se utilizar algoritmos de clusterização no \textit{back-end}, e
 então realizar a integração com o \textit{front-end}. A primeira tentativa envolveu a
 utilização de uma biblioteca \textit{open-source} específica para o GeoDjango,
-chamada ``Anycluster''~\cite{anycluster}. Embora tenha sido feita para uma
+chamada ``\texttt{Anycluster}''~\cite{anycluster}. Embora tenha sido feita para uma
 configuração de servidor similar à utilizada no projeto, a instalação e
 documentação se mostraram confusas e incompletas. E mesmo com tentativas de
 ajuste manual no código, incluindo refatoração das partes não-essenciais da
-aplicação. Além disso, a análise do código indica que não há nenhuma forma de
+aplicação, não foi possível integrar este código à nossa base. Além disso,
+a análise do código indica que não há nenhuma forma de
 cache dos dados de clusterização, o que não resultaria em velocidades adequadas
 para uma aplicação de visualização em mapa.
 
 Procurou-se então uma segunda alternativa de clusterização, com implementação
-própria para este projeto. A solução envolve utilizar o tiling de grade que o
+própria para este projeto. A solução envolve utilizar o \textit{tiling} de grade que o
 OpenStreetMap utiliza para carregar as imagens. A clusterização foi feita com
 fórmulas do PostGIS específicas para clusterização de pontos. Para o cache dos
-clusters, utilizou o cache padrão do Django. Os resultados gerados pelo programa
+\textit{clusters}, utilizou o cache padrão do Django. Os resultados gerados pelo programa
 eram corretos, mas o uso alto de memória e o tempo para clusterizar antes de
 cache inviabilizam o uso no servidor. Foi realizado um aumento na capacidade
 da máquina do host, mas não houve ganhos consideráveis. Além disso, os dados
-de cluster ficam com aparência estranha, onde a separação em grids fica muito
-perceptível.
+de \textit{cluster} ficam com aparência estranha, onde a separação em grids fica muito
+perceptível por não ser natural.
 
 A terceira tentativa utilizou a mesma ideia anterior, porém para um dado nível
-de zoom, serão utilizados os clusters para um zoom mais próximo do mapa,
-portanto usando 4 vezes mais dados. Ainda houve alguns clusters estranhos na
-visualização em mapa, embora consideravelmente melhores no geral; e o uso de
-dados muito alto tanto em processamento quanto em rede torna uma utilização com
-muitos clientes inviável.
+de zoom, seriam utilizados os \textit{clusters} para um zoom mais próximo do mapa,
+portanto usando 4 vezes mais dados. Ainda houve alguns \textit{clusters} estranhos na
+visualização em mapa, embora consideravelmente melhores no geral; mas combinado com o uso de
+dados muito alto tanto em processamento quanto em rede, uma utilização com
+muitos clientes se tornaria inviável.
 
-Em seguida, na quarta tentativa, optamos por salvar os clusters em banco de
+Em seguida, na quarta tentativa, optamos por salvar os \textit{clusters} em banco de
 dados, onde são indexados por zoom como nas tentativas anteriores. Para acelerar
-o algoritmo de cálculo de clusters, utiliza-se os clusters de um zoom menor para
+o algoritmo de cálculo de \textit{clusters}, utiliza-se os \textit{clusters} de um zoom menor para
 gerar os de zooms maiores. Foram feitas algumas iterações com diferentes funções
 de clusterização do PostGIS para obter resultados melhores. A utilização de
 modelos ao invés de cache resultou em uma fácil integração com o \textit{front-end} já
-existente, dado a facilidade do Django para lidar com modelos na API. Porém,
+existente, dada a facilidade do Django para lidar com modelos na API. Porém,
 os resultados obtidos foram inesperados, com clusters baseados na distância
 ponto-a-ponto ao invés de ao redor de um centro de massa. Dessa forma, lugares
 com muitas antenas lado-a-lado, em uma área com alta densidade de pontos como a
-cidade de São Paulo, aparecem como um único cluster, independente do zoom,
-deixando muits áreas vazias.
+cidade de São Paulo, aparecem como um único \textit{cluster}, independentemente do zoom,
+e às vezes muito longe do centro, deixando muits áreas vazias.
 
-A quinta tentativa se baseou nas demais, e também no conceito de geohash
+A quinta tentativa se baseou nas demais, e também no conceito de \textit{Geohash}
 (anotação de cada região em um mapa com caracteres alfanuméricos, dividindo cada
-região sucessiva do globo em 16 partes). Foi selecionado uma precisão (i.e. um
-número de caracteres do geohash) diferente para cada zoom, seguindo-se como
-referência a biblioteca  ``django-geohash-cluster''~\cite{geohashcluster}, sendo
-que a precisão máxima é de 7 caracteres, que tem precisão de aproximadamente 76
-metros no Equador, o que é o suficiente para determinados níveis de zoom.
+região sucessiva do globo em 16 partes). Foi selecionada uma precisão (i.e. um
+número de caracteres do \textit{geohash}) diferente para cada zoom, seguindo-se como
+referência a biblioteca  ``\texttt{django-geohash-cluster}''~\cite{geohashcluster}, sendo
+que a precisão máxima é de 7 caracteres, equivalente a uma precisão de aproximadamente 76
+metros no Equador, o que é o suficiente para níveis de zoom.
 Além disso, o código do \textit{front-end} foi modificado especificamente para fins de
 performance, assim obtendo clusterizações com visualização mais natural.
 Graças ao suporte do GeoDjango para inserir o geohash em queries, foi possível
@@ -884,14 +883,14 @@ realizar a implementação em um algoritmo simples, sem escrever as queries
 manualmente. A principal desvantagem deste algoritmo foi a extrema demora para
 realizar as clusterizações em comparação com os demais algoritmos; porém, o
 resultado final com a integração de clusterização \textit{front-end} e \textit{back-end} foi
-melhor. Outra desvantagem foi que, como não há correspondência direta entre
-níveis de zoom do mapa e precisões de geohash, determinados níveis de zoom
+melhor em desempenho. Outra desvantagem foi que, como não há correspondência direta entre
+níveis de zoom do mapa e precisões de \textit{geohash}, determinados níveis de zoom
 demoram mais tempo para ler os dados. Além disso, há algumas pequenas falhas
-visuais perto das bordas, que deverão ser corrigidas futuramente. Por fim,
-foram realizadas alterações na API para tornar a transição entre clusters e
-ERBs opaca para o usuário final -- ou seja, o script de exibição do mapa do
-navegador enxerga um único endpoint e não diferencia quando o servidor opta por
-antenas ao invés de clusters para zooms menores.
+visuais perto das bordas, que foram corrigidas posteriormente. Por fim,
+foram realizadas alterações na API para tornar a transição entre \textit{clusters} e
+ERBs na exibição do mapa opaca para o usuário final -- ou seja, o \textit{script} de exibição do mapa do
+navegador enxerga um único \textit{endpoint} e não diferencia quando o servidor opta por
+enviar dados de antenas ao invés de \textit{clusters} para zooms menores.
 
 Este algoritmo foi expandido para também permitir a filtragem por operadora de
 celular. Esta filtragem se baseia no campo MNC do identificador de cada estação
@@ -899,33 +898,33 @@ radiobase, que distingue a empresa responsável. Para filtros mais precisos, com
 tipo de tecnologia celular, não será utilizada clusterização, com carregamento e
 exibição diretamente no mapa -- já que inclui um número menor de antenas a serem
 exibidas, e varia com o caso de uso de cada usuário, portanto sendo um processo
-menos repetitivo para o servidor que não exige pré-computação.
+menos repetitivo para o servidor que não se beneficia de mecanismo de cache.
 
-Vale notar que, para a implementação de filtragem por operadora, os clusters
+Vale notar que, para a implementação de filtragem por operadora, os \textit{clusters}
 de todas as antenas utilizam um campo nulo para representar a operadora. Isso é
-importante porque, ao exibir os clusters sem filtro específico de operadora, na
+importante porque, ao exibir os \textit{clusters} sem filtro específico de operadora, na
 realidade, deverá ser feito filtro por operadora igual ao valor nulo. Esta
 distinção terá maior importância quando o cliente requisitar dados de clusters
 pela API, como descrito mais adiante.
 
-\section{Métodos Numéricos}
+\subsection{Métodos Numéricos}
 
 Em um primeiro momento, utilizamos três métodos para comparação entre
 algoritmos: Taguchi, Basinhopping e SQSQP. A função de otimização foi
 desacoplada da implementação do método numérico. Desse modo, podemos combinar
 quaisquer métodos numéricos implementados com quaisquer funções de otimização.
 
-Para os métodos Basinhopping e SQSQP, usamos a implementação pré-existente da
-biblioteca \textit{scipy}.
+Para os métodos Basinhopping e SQSQP, usamos a implementação disponível na
+biblioteca ``\texttt{scipy}''~\cite{scipy}.
 
 Já o método Taguchi foi implementado de acordo com a especificação especificada
 no capítulo \textbf{``Aspectos Conceituais''}. Os arrays ortogonais usados pelo
 método foram implementados como uma tabela, uma vez que seu cálculo é uma
 operação complexa, e os casos de uso preveem o uso de poucos parâmetros no
-método Taguchi. Usamos a biblioteca \textit{numpy} para as operações com array,
-uma vez que ela provê operações eficientes nessas estruturas de dados.
+método Taguchi. Usamos a biblioteca ``\texttt{numpy}''~\cite{numpy} para as operações com
+\textit{array}, uma vez que ela provê operações eficientes nessas estruturas de dados.
 
-% TODO: Por fim, acabamos escolhendo o Método Taguchi, pois...
+% TODO Nakajo: Por fim, acabamos escolhendo o Método Taguchi, pois...
 
 \subsection{Interface de Programação de Aplicações}
 
@@ -934,84 +933,84 @@ abstrai os dados e as funcionalidades necessários para a realização dos casos
 uso. Resumidamente, ela deverá ser responsável por três tarefas específicas:
 
 \begin{itemize}
-\item Realizar login de usuários no sistema.
+\item Realizar \textit{login} de usuários no sistema.
 \item Exibir dados de mapas na tela.
 \item Gerar otimização de posição de antena.
 \end{itemize}
 
-Desta forma, foram expostos endpoints para cada uma das tarefas. A utilização
+Desta forma, foram expostos \textit{endpoints} para cada uma das tarefas. A utilização
 da biblioteca Django REST Framework facilitou o processo de integração da API
-ao \textit{back-end} desenvolvido. O cliente de \textit{front-end} poderá descobrir estes
-endpoints a partir de um outro endpoint específico que expõe estas informações,
+ao \textit{back-end} desenvolvido. O cliente de \textit{front-end} -- no caso, o Vue -- poderá descobrir
+estes \textit{endpoints} a partir de um outro \textit{endpoint} específico que expõe estas informações,
 de forma a tornar refatorações do \textit{back-end} dinâmicas.
 
 Algumas alterações tiveram que ser feitas tanto na configuração do Django quanto
-na criação de endpoints de API para a utilização da forma esperada. A primeira
-se refere ao login de usuários, pois necessitou de reconfiguração da
+na criação de \textit{endpoints} de API para a realização esperada dos casos de uso. A primeira
+se refere ao \textit{login} de usuários, pois necessitou de reconfiguração da
 autenticação do Django. Esta autenticação foi modificada para permitir que, por
-um endpoint específico de login, um usuário realize uma requisição POST com seu
-usuário e senha e receba um token, que pode ser utilizada nas requisições
+um \textit{endpoint} específico de \textit{login}, um usuário realize uma requisição POST com seu
+nome de usuário e senha e receba um \textit{token}, que pode ser utilizado nas requisições
 autenticadas subsequentes. Como a autenticação padrão do Django não utiliza
-tokens, mas sim parâmetros de sessão específicos, alteramos esta configuração.
+\textit{tokens}, mas sim parâmetros de sessão específicos, alteramos esta configuração.
 
 Outra modificação se refere à exibição de dados no mapa. Devido ao esquema de
-clusterização por geohash descrito anteriormente, optou-se por uma abordagem
+clusterização por \textit{geohash} descrito anteriormente, optou-se por uma abordagem
 opaca na API, aonde o usuário deverá indicar apenas as coordenadas da tela, o
 tamanho de zoom atual, e o filtro de operadora. Dessa forma, foi descrita
-lógica adicional neste endpoint para converter o tamanho de zoom à precisão de
+lógica adicional neste \textit{endpoint} para converter o tamanho de zoom à precisão de
 geohash correspondente. Além disso, o filtro de operadora foi complementado com
-o caso geral de não filtrar por operadora, pois a modelagem dos clusters no
-banco de dados requer um filtro específico para clusters sem filtro de
+o caso geral de não filtrar por operadora, pois a modelagem dos \textit{clusters} no
+banco de dados requer um filtro específico para \textit{clusters} sem filtro de
 operadora.
 
 \subsection{Bancos de Dados Externos}
 
 Alguns dados adicionais mencionados anteriormente, que não serão persistidos no
 banco de dados, são referentes a população e relevo. Ao longo de nossa pesquisa,
-nos deparamos com o Google Earth Engine\cite{earthengine}, que é uma plataforma
+nos foi indicado o uso da Google Earth Engine\cite{earthengine}, que é uma plataforma
 de dados geoespaciais disponível publicamente para ferramentas de análise
-científica e pesquisa. Dentro desta plataforma, dois datasets estudados são
-\textit{``USGS/SRTMGL1\_003''} para topografia, e \textit{``WorldPop/POP''}
+científica e pesquisa. Dentro desta plataforma, dois \textit{datasets} estudados para uso no sistema
+são ``\texttt{USGS/SRTMGL1\_003}'' para topografia, e ``\texttt{WorldPop/POP}''
 para densidade populacional.
 
 O Google Earth Engine possui uma API oficial em Python, que foi estudada e
 implementada no \textit{back-end}. A implementação criada permite persistir dados no
 cache do servidor, para evitar que valores frequentemente utilizados nos
-algoritmos de otimização (i.e. áreas analisadas repetidamente) sejam baixadas
+algoritmos de otimização (i.e. uma única área analisada repetidamente) sejam baixadas
 novamente a cada execução.
 
 \subsection{Instalação de Servidor}
 
 O \textit{back-end} do sistema foi instalado em um servidor remoto para apresentações e
 testes. Utilizou-se o serviço DigitalOcean para a virtualização de servidor,
-onde subiu-se a instância por SSH em uma distribuição Linux. Nesta máquina,
-instalamos o repositório Python, o banco de dados PostgreSQL, e as aplicações
+onde subiu-se a instância por SSH em uma distribuição Ubuntu. Nesta máquina,
+instalamos o repositório em Python, o banco de dados PostgreSQL, e as aplicações adicionais
 necessárias para o GeoDjango/PostGIS.
 
-Neste servidor virtual, foram instalados o Nginx e o Gunicorn, para o proxy e o
+Ainda neste servidor virtual, foram instalados o Nginx e o Gunicorn, para o \textit{proxy} e o
 acesso HTTP, respectivamente. Também foi utilizado um nome de domínio para o
 servidor, que foi configurado no Nginx. Além disso, por questão de segurança,
 também configurou-se o acesso HTTPS ao servidor, através do Let's Encrypt e sua
-configuração para o proxy.
+configuração para \textit{proxy}.
 
 Por fim, para facilitar o deployment da aplicação para testes, configurou-se
 o repositório local do Git como um repositório remoto, permitindo que seja
-atualizado por SSH com um único comando; e as regras de \texttt{pull} do
+atualizado por SSH com um único comando; e as regras de \textit{pull} do
 repositório foram modificadas para aplicar novas alterações no código
 instantaneamente -- como migração de banco de dados, coleta de arquivos
-estáticos, novos endpoints, dentre outros.
+estáticos, novos \textit{endpoints}, dentre outros.
 
 \section{\textit{Front-end}}
 
-% TODO: Introdução sobre o que será falado nas subseções
+% TODO Nakajo: Introdução sobre o que será falado nas subseções
 
 \subsection{Projeto de Telas}
 
-% TODO: Lógica de telas
+% TODO Nakajo: Lógica de telas
 
 \subsection{Implementação com Vuetify}
 
-% TODO: Vue
+% TODO Nakajo: Vue
 
 \subsection{Integração com \textit{Back-end}}
 
@@ -1039,7 +1038,7 @@ estáticos, novos endpoints, dentre outros.
 Ao longo da especificação de requisitos e da implementação, alguns aspectos
 foram deixados de lado por fugirem do escopo do MVP. Porém, eles serão
 interessantes em um produto final, agregando funcionalidades desejáveis aos
-stakeholders. Além disso, também será interessante detalhar o processo de
+\textit{stakeholders}. Além disso, também será interessante detalhar o processo de
 criação de empresa para a distribuição do produto.
 
 \subsection{Plano de Negócio}
@@ -1055,9 +1054,9 @@ poder de comparar geograficamente; e o SIMET-NIC~\cite{simet}, com o acesso e
 qualidade da Internet no Brasil. Estas duas bases de dados, em conjunto com os
 anteriores, podem permitir uma análise aprofundada de parâmetros ótimos para a
 instalação de novas antenas e avaliação da estrutura pré-existente; porém,
-a relação destes dados não cabe ao caso de uso principal. Eles serão mais
+a relação destes dados não cabe ao nosso caso de uso principal. Elas serão mais
 interessantes em uma análise futura, ao trabalhar em conjunto com os
-stakeholders para análises de instalação com mais fatores.
+\textit{stakeholders} para análises de instalação com mais fatores.
 
 \subsection{Descrição dos Casos de Uso Adicionais}
 
@@ -1065,6 +1064,7 @@ Os casos de uso a seguir foram elaborados na etapa de ``Especificação de
 Requisitos do Sistema'', porém foram deixados para uma implementação futura, já
 que não afetam a demonstração do MVP.
 
+% TODO Eric: Revisar casos de uso
 \noindent \textbf{Caso de Uso 6}: Cadastrar usuário no sistema.  \\
 \textbf{Descrição}: Este caso de uso descreve o cadastro de usuários no sistema \\
 \textbf{Evento iniciador}: Usuário clica no botão cadastrar usuário. \\
@@ -1326,6 +1326,16 @@ usuários. \\
     \textit{django-geohash-cluster}.
     Disponível em: https://github.com/EvgeneOskin/django-geohash-cluster.
     Acesso em: 8 de setembro de 2018.
+
+    \bibitem{scipy}
+    \textit{SciPy.org}.
+    Disponível em: https://www.scipy.org/.
+    Acesso em: 13 de março de 2018.
+
+    \bibitem{numpy}
+    \textit{NumPy}.
+    Disponível em: https://www.numpy.org/.
+    Acesso em: 13 de março de 2018.
 
     \bibitem{gecon}
     Yale University.
