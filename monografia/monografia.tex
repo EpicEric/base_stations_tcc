@@ -624,6 +624,10 @@ foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seçã
 \textbf{``Perspectivas de Continuidade''} do último capítulo.
 
 \section{Casos de Uso}
+
+\newcounter{usecasecounter}
+\newcommand{\usecase}[1]{\refstepcounter{usecasecounter}\label{usecase:#1}\arabic{usecasecounter}}
+
 \subsection{Atores}
 \begin{itemize}
 \item Administrador
@@ -660,26 +664,26 @@ foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seçã
 
 \subsection{Descrição dos casos de uso}
 
-\noindent \textbf{Caso de Uso 1}: Efetuar \textit{login} no sistema. \\
+\noindent \textbf{Caso de Uso \usecase{login}}: Efetuar \textit{login} no sistema. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de autenticação no sistema. \\
 \textbf{Evento iniciador:} Usuário informa seu nome de usuário e senha. \\
 \textbf{Atores:} Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições:} Usuário na página de login. \\
 \textbf{Sequência de Eventos:}
 \begin{enumerate}
-\item Usuário informa seu nome de usuário e sua senha.
-\item Sistema autentica o usuário e senha.
+\item\label{step:login:enter-login} Usuário informa seu nome de usuário e sua senha.
+\item\label{step:login:authenticate} Sistema autentica o usuário e senha.
 \item Sistema exibe página inicial com opções correspondentes ao nível de privilégio do usuário.
 \end{enumerate}
 \textbf{Pós-condições:} Usuário logado no sistema. \\
 \textbf{Extensões:}
 \begin{enumerate}
-\item Usuário ou senha estão incorretos: Sistema exibe mensagem de erro (passo 2).
-\item Login por OAuth2: Sistema recebe token de autenticação externa para o acesso (passo 1).
+\item Usuário ou senha estão incorretos: Sistema exibe mensagem de erro (passo \ref{step:login:authenticate}).
+\item Login por OAuth2: Sistema recebe token de autenticação externa para o acesso (passo \ref{step:login:enter-login}).
 \end{enumerate}
 \textbf{Inclusões}: -{}- \\
 
-\noindent \textbf{Caso de Uso 2}: Efetuar \textit{logout} no sistema. \\
+\noindent \textbf{Caso de Uso \usecase{logout}}: Efetuar \textit{logout} no sistema. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de \textit{logout} no sistema. \\
 \textbf{Evento iniciador}: Usuário clica no botão de \textit{logout}. \\
 \textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
@@ -693,7 +697,7 @@ foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seçã
 \textbf{Extensões}: -{}- \\
 \textbf{Inclusões}: -{}- \\
 
-\noindent \textbf{Caso de Uso 3}: Exibir mapa \\
+\noindent \textbf{Caso de Uso \usecase{show-map}}: Exibir mapa \\
 \textbf{Descrição}: Este caso de uso descreve o processo de exibição de um mapa centrado na localização do usuário. \\
 \textbf{Evento iniciador}: Usuário requisita exibição de mapa. \\
 \textbf{Pré-condições}: Usuário logado no sistema. \\
@@ -702,13 +706,13 @@ foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seçã
 \item Usuário requisita exibição de mapa.
 \item Sistema pede que o usuário permita acessar sua geolocalização.
 \item Usuário permite que sistema acesse sua geolocalização.
-\item Sistema mostra um mapa centrado no usuário.
+\item\label{step:show-map:user-centered-map} Sistema mostra um mapa centrado no usuário.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs apresentado. \\
-\textbf{Extensões}: Usuário não permite: Sistema mostra mapa centrado numa localização padrão. (passo 4) \\
-\textbf{Inclusões}: Busca de mapa no OpenStreetMap (passo 4) \\
+\textbf{Extensões}: Usuário não permite: Sistema mostra mapa centrado numa localização padrão. (passo \ref{step:show-map:user-centered-map}) \\
+\textbf{Inclusões}: Busca de mapa no OpenStreetMap (passo \ref{step:show-map:user-centered-map}) \\
 
-\noindent \textbf{Caso de Uso 4}: Exibir mapa com ERBs. \\
+\noindent \textbf{Caso de Uso \usecase{show-map-bs}}: Exibir mapa com ERBs. \\
 \textbf{Descrição}: Este caso de uso descreve a exibição das ERBs em um mapa. \\
 \textbf{Evento iniciador}: Usuário clica na opção ``Mapa de ERBs''. \\
 \textbf{Atores}: Administrador, Funcionário. \\
@@ -716,14 +720,13 @@ foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seçã
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Usuário clica na opção ``Mapa de ERBs''.
-\item Sistema busca ERBs na região do mapa.
-\item Sistema exibe mapa com ERBs.
+\item\label{step:show-map-bs:show-map} Sistema exibe mapa com ERBs da região.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs apresentado. \\
 \textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso ``Exibir mapa'' (passo 3) \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map} ``Exibir mapa'' (passo \ref{step:show-map-bs:show-map}) \\
 
-\noindent \textbf{Caso de Uso 4.1}: Exibir mapa centrado em localização dada \\
+\noindent \textbf{Caso de Uso \usecase{show-map-location}}: Exibir mapa centrado em localização dada \\
 \textbf{Descrição}: Este caso de uso descreve a exibição do mapa com ERBs
 centrado em uma localização dada pelo usuário.  \\
 \textbf{Evento iniciador}: Usuário insere a latitude e longitude e clica em ``Buscar''. \\
@@ -732,17 +735,17 @@ centrado em uma localização dada pelo usuário.  \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Usuário insere a latitude e longitude e clica em ``Buscar''.
-\item Sistema mostra o mapa de ERBs centrado na localização dada.
+\item\label{step:show-map-location:show-map} Sistema mostra o mapa de ERBs centrado na localização dada.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs centrado na localização dada apresentado. \\
-\textbf{Extensões}: Latitude ou longitude inválida: Sistema mostra uma mensagem de erro (passo 2) \\
+\textbf{Extensões}: Latitude ou longitude inválida: Sistema mostra uma mensagem de erro (passo \ref{step:show-map-location:show-map}) \\
 \textbf{Inclusões}:
 \begin{enumerate}
-\item Busca de mapa no OpenStreetMap (passo 2)
-\item Caso de uso ``Exibir mapa com ERBs'' (pré-condição)
+\item Busca de mapa no OpenStreetMap (passo \ref{step:show-map-location:show-map})
+\item Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição)
 \end{enumerate}
 
-\noindent \textbf{Caso de Uso 4.2}: Exibir ERBs no mapa por operadora. \\
+\noindent \textbf{Caso de Uso \usecase{show-map-erb-operator}}: Exibir ERBs no mapa por operadora. \\
 \textbf{Descrição}: Este caso de uso descreve a exibição do mapa com ERBs para
 uma operadora definida pelo usuário. \\
 \textbf{Evento iniciador}: Usuário seleciona uma operadora. \\
@@ -755,9 +758,9 @@ uma operadora definida pelo usuário. \\
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs da operadora escolhida. \\
 \textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso ``Exibir mapa com ERBs'' (pré-condição) \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição) \\
 
-\noindent \textbf{Caso de Uso 5}: Encontrar local de instalação de ERBs.
+\noindent \textbf{Caso de Uso \usecase{find-optimal-location}}: Encontrar local de instalação de ERBs.
 \textbf{Descrição}: Este caso de uso descreve a exibição de posições otimizadas \\
 para instalação de ERBs.
 \textbf{Evento iniciador}: Usuário clica na opção ``Calcular posição para instalação''. \\
@@ -772,13 +775,13 @@ instaladas'' e ``Parâmetros a serem considerados no cálculo''.
 \item Sistema solicita para o usuário selecionar a região de interesse.
 \item Usuário seleciona a região de interesse.
 \item Sistema informa que operação pode demorar alguns momentos.
-\item Sistema indica os locais calculados no mapa.
+\item\label{step:find-optimal-location:show-positions} Sistema indica os locais calculados no mapa.
 \item Sistema mostra número de usuários atendidos por cada nova antena.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com posições otimizadas apresentadas. \\
 \textbf{Extensões}: Operação demora muito tempo: Sistema informa que não foi
-possível calcular a posição (passo 7) \\
-\textbf{Inclusões}: Caso de uso ``Exibir mapa com ERBs'' (pré-condição). \\
+possível calcular a posição (passo \ref{step:find-optimal-location:show-positions}) \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição). \\
 
 \chapter{Projeto e Implementação}
 
@@ -1288,7 +1291,7 @@ Os casos de uso a seguir foram elaborados na etapa de ``Especificação de
 Requisitos do Sistema'', porém foram deixados para uma implementação futura, já
 que não afetam a demonstração do MVP.
 
-\noindent \textbf{Caso de Uso 6}: Cadastrar usuário no sistema.  \\
+\noindent \textbf{Caso de Uso \usecase{sign-up}}: Cadastrar usuário no sistema.  \\
 \textbf{Descrição}: Este caso de uso descreve o cadastro de usuários no sistema \\
 \textbf{Evento iniciador}: Usuário clica no botão ``Cadastrar usuário''. \\
 \textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
@@ -1298,17 +1301,17 @@ que não afetam a demonstração do MVP.
 \item Usuário clica no botão ``Cadastrar usuário''.
 \item Sistema exibe página de cadastro.
 \item Usuário digita nome, e-mail, senha e confirmação de senha.
-\item Sistema valida dados e envia e-mail de confirmação para usuário.
+\item\label{step:sign-up:send-email} Sistema valida dados e envia e-mail de confirmação para usuário.
 \end{enumerate}
 \textbf{Pós-condições}: Usuário cadastrado no sistema com confirmação de e-mail pendente. \\
 \textbf{Extensões}:
 \begin{enumerate}
-\item Usuário já cadastrado: Sistema exibe mensagem de erro (passo 4)
-\item Senha não é igual a confirmação de senha: Sistema exibe mensagem de erro (passo 4)
+\item Usuário já cadastrado: Sistema exibe mensagem de erro (passo \ref{step:sign-up:send-email})
+\item Senha não é igual a confirmação de senha: Sistema exibe mensagem de erro (passo \ref{step:sign-up:send-email})
 \end{enumerate}
-\textbf{Inclusões}: Buscar usuário (passo 4) \\
+\textbf{Inclusões}: Buscar usuário (passo \ref{step:sign-up:send-email}) \\
 
-\noindent \textbf{Caso de Uso 6.1}: Confirmação de e-mail. \\
+\noindent \textbf{Caso de Uso \usecase{confirm-email}}: Confirmação de e-mail. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de confirmação de um e-mail. \\
 \textbf{Evento iniciador}: Usuário acessa a URL correspondente à confirmação de seu e-mail. \\
 \textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
@@ -1316,14 +1319,14 @@ que não afetam a demonstração do MVP.
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Usuário acessa a URL correspondente à confirmação de seu e-mail.
-\item Sistema confirma a validade do e-mail do usuário.
+\item\label{step:confirm-email:validate-email} Sistema confirma a validade do e-mail do usuário.
 \item Sistema redireciona o usuário para página inicial.
 \end{enumerate}
 \textbf{Extensões}: URL de confirmação inválida: Sistema mostra uma mensagem de
-erro e redireciona o usuário para a página de \textit{login} (passo 2). \\
+erro e redireciona o usuário para a página de \textit{login} (passo \ref{step:confirm-email:validate-email}). \\
 \textbf{Inclusões}: -{}- \\
 
-\noindent \textbf{Caso de Uso 7}: Adicionar nova ERB \\
+\noindent \textbf{Caso de Uso \usecase{add-bs}}: Adicionar nova ERB \\
 \textbf{Descrição}: Este caso de uso descreve o processo de adição de novas
 ERBs na base de dados. \\
 \textbf{Evento iniciador}: Usuário clica na opção ``Adicionar ERB''. \\
@@ -1334,16 +1337,16 @@ ERBs na base de dados. \\
 \item Usuário clica na opção ``Adicionar ERB'' e clica em um ponto no mapa.
 \item Sistema exibe formulário com dados a serem cadastrados sobre a nova ERB.
 \item Usuário preenche formulário e clica em ``Salvar''.
-\item Sistema salva nova ERB.
-\item Sistema exibe mapa com ERBs.
+\item\label{step:add-bs:save-bs} Sistema salva nova ERB.
+\item\label{step:add-bs:show-map} Sistema exibe mapa com ERBs.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs apresentado e nova ERB salva na base de
 dados. \\
 \textbf{Extensões}: Dados inválidos: Sistema exibe mensagem de erro e exibe
-formulário novamente (passo 4). \\
-\textbf{Inclusões}: Caso de uso ``Exibir mapa com ERBs'' (pré-condição e passo 5).\\
+formulário novamente (passo \ref{step:add-bs:save-bs}). \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição e passo \ref{step:add-bs:show-map}).\\
 
-\noindent \textbf{Caso de Uso 8}: Remover ERB \\
+\noindent \textbf{Caso de Uso \usecase{remove-bs}}: Remover ERB \\
 \textbf{Descrição}: Este caso de uso descreve o processo de remoção de uma ERB da
 base de dados. \\
 \textbf{Evento iniciador}: Usuário clica na opção ``Remover ERB''. \\
@@ -1355,14 +1358,14 @@ base de dados. \\
 \item Sistema pergunta se usuário realmente deseja remover ERB.
 \item Usuário responde ``Sim''.
 \item Sistema remove ERB.
-\item Sistema exibe mapa com ERBs.
+\item\label{step:remove-bs:show-map} Sistema exibe mapa com ERBs.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs apresentado e ERB escolhida pelo usuário
 removida da base de dados. \\
 \textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso ``Exibir mapa com ERBs'' (pré-condição e passo 5). \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição e passo \ref{step:remove-bs:show-map}). \\
 
-\noindent \textbf{Caso de Uso 9}: Exibir ERBs às quais o celular do usuário está
+\noindent \textbf{Caso de Uso \usecase{show-connected-bs}}: Exibir ERBs às quais o celular do usuário está
 conectado \\
 \textbf{Descrição}: Este caso de uso descreve o processo de exibição de ERBs às
 quais o usuário está conectado \\
@@ -1373,14 +1376,14 @@ sistema. \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Usuário clica na opção ``Antenas conectadas''.
-\item Sistema exibe um mapa com as ERBs conectadas em destaque.
+\item\label{step:show-connected-bs:show-map} Sistema exibe um mapa com as ERBs conectadas em destaque.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs conectadas apresentado. \\
 \textbf{Extensões}: Celular não está conectado a ERB nenhuma: Sistema exibe
-mensagem de erro (passo 2). \\
-\textbf{Inclusões}: Caso de uso ``Exibir mapa com ERBs'' (passo 2). \\
+mensagem de erro (passo \ref{step:show-connected-bs:show-map}). \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (passo \ref{step:show-connected-bs:show-map}). \\
 
-\noindent \textbf{Caso de Uso 10}: Exibir mapa com qualidade do sinal por
+\noindent \textbf{Caso de Uso \usecase{map-quality}}: Exibir mapa com qualidade do sinal por
 operadora. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de exibição de
 qualidade de sinal por operadora. \\
@@ -1390,15 +1393,15 @@ qualidade de sinal por operadora. \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Usuário clica na opção ``Qualidade de sinal''.
-\item Sistema exibe um mapa centrado na localização atual do usuário.
+\item\label{step:map-quality:show-map} Sistema exibe um mapa centrado na localização atual do usuário.
 \item Usuário clica em um ponto do mapa.
 \item Sistema exibe informações de qualidade de sinal por operadora.
 \end{enumerate}
 \textbf{Pós-condições}: Informações de qualidade de sinal apresentadas. \\
 \textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso ``Exibir mapa'' (passo 2) \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map} ``Exibir mapa'' (passo \ref{step:map-quality:show-map}) \\
 
-\noindent \textbf{Caso de Uso 11}: Estimar geolocalização do usuário. \\
+\noindent \textbf{Caso de Uso \usecase{estimate-geolocation}}: Estimar geolocalização do usuário. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de estimar a
 geolocalização do usuário a partir das antenas às quais ele está conectado. \\
 \textbf{Evento iniciador}: Usuário clica na opção ``Estimar geolocalização''. \\
@@ -1408,7 +1411,7 @@ sistema. \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Usuário clica na opção ``Estimar geolocalização''.
-\item Sistema exibe um mapa centrado na localização estimada do usuário.
+\item\label{step:estimate-geolocation:show-map} Sistema exibe um mapa centrado na localização estimada do usuário.
 \item Sistema mostra as antenas aos quais o usuário está conectado em destaque.
 \end{enumerate}
 \textbf{Pós-condições}: Localização estimada do usuário e antenas conectadas são
@@ -1417,13 +1420,13 @@ mostradas na tela. \\
 \begin{enumerate}
 \item Número de ERBs conectadas são insuficientes para estimar posição exata:
 Sistema exibe um mapa com a localização estimada do usuário representada por um
-círculo. (passo 2)
+círculo. (passo \ref{step:estimate-geolocation:show-map})
 \item Usuário não está conectado a nenhuma ERB: Sistema exibe mensagem de erro.
-(passo 2)
+(passo \ref{step:estimate-geolocation:show-map})
 \end{enumerate}
-\textbf{Inclusões}: Caso de uso ``Exibir mapa com ERBs'' (passo 2). \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (passo \ref{step:estimate-geolocation:show-map}). \\
 
-\noindent \textbf{Caso de Uso 12}: Listar usuários do sistema \\
+\noindent \textbf{Caso de Uso \usecase{list-users}}: Listar usuários do sistema \\
 \textbf{Descrição}: Este caso de uso descreve o processo de listar usuários do
 sistema. \\
 \textbf{Evento iniciador}: Administrador clica na opção ``Listar usuários''. \\
@@ -1432,13 +1435,13 @@ sistema. \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Administrador clica na opção ``Listar usuários''.
-\item Sistema busca usuários e os exibe em uma lista.
+\item\label{step:list-users:search} Sistema busca usuários e os exibe em uma lista.
 \end{enumerate}
 \textbf{Pós-condições}: Lista de usuários apresentada. \\
 \textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Buscar usuários no sistema (passo 2) \\
+\textbf{Inclusões}: Buscar usuários no sistema (passo \ref{step:list-users:search}) \\
 
-\noindent \textbf{Caso de Uso 13}: Modificar papel de usuário. \\
+\noindent \textbf{Caso de Uso \usecase{change-role}}: Modificar papel de usuário. \\
 \textbf{Descrição}: Este caso de uso descreve o processo de modificar papel de
 usuário. \\
 \textbf{Evento iniciador}: Administrador seleciona a opção ``Funcionário'' no campo
@@ -1455,7 +1458,7 @@ usuários. \\
 \end{enumerate}
 \textbf{Pós-condições}: Usuário escolhido tem papel de Funcionário. \\
 \textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso ``Listar usuário do sistema'' (pré-condição) \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:list-users} ``Listar usuários do sistema'' (pré-condição) \\
 
 
 % ========== Referências ==========
