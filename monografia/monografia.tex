@@ -492,7 +492,6 @@ Para interação com o usuário por um mapa interativo, utilizaremos a bibliotec
 Leaflet, escrita em JavaScript. Ela se comunicará aos dados pela API REST a ser
 desenvolvida, tanto para requisições quanto para exibições.
 
-% TODO Nakajo: Revisar parágrafo abaixo
 Optamos também pelo \textit{framework} JavaScript conhecido por Vue para realizar o
 controle \emph{single-page app} do nosso sistema, e a interface gráfica Vuetify
 para elaborar as telas do nosso sistema.
@@ -1000,70 +999,79 @@ instantaneamente -- como migração de banco de dados, coleta de arquivos
 estáticos, novos \textit{endpoints}, dentre outros.
 
 \section{\textit{Front-end}}
-Usamos a biblioteca Vue.js
+Para elaborar o \textit{front-end}, usamos a biblioteca Vue.js.
 O front-end da nossa aplicação foi responsável pela parte visual, pela 
 comunicação do cliente com a API em Django, pela exibição dos dados no mapa,
 e pelo recebimento das entradas do usuário.
 % TODO Nakajo: Introdução sobre o que será falado nas subseções
 
 \subsection{Projeto de Telas}
-A planejamento do front-end começou com o desenho das telas. Pensamos em telas
-que implementassem os casos de uso, além de serem fáceis de usar tanto em desktop
-como em smartphones.
+O planejamento do \textit{front-end} começou com o desenho das telas. Pensamos em telas
+que implementassem os casos de uso, além de serem fáceis de usar tanto em \textit{desktop}
+como em \textit{smartphones}.
 
-A tela primeira tela projetada foi a tela de Mapas. Inicialmente,
+% TODO Nakajo: Diagrama de telas
+
+A primeira tela projetada foi a tela de mapas. Inicialmente,
 ela teria o mapa com os clusters, e um menu lateral com opções de filtro por 
 operadora e tecnologia, opções de remoção, adição e exportação de ERBs e um 
 botão para executar o algoritmo de posição ideal a partir de parâmetros entrados
 pelo usuário.
 
-% IMAGEM %
+% TODO Nakajo: IMAGEM
 
 Depois de algumas iterações, removemos algumas funcionalidades e adicionamos 
 outros filtros. Outra tela projetada foi a tela inicial, com imagens do sistema
 funcionando e textos explicativos e um formulário de contato.
 
-% IMAGEM %
+% TODO Nakajo: IMAGEM
 
-Pensamos também na tela de login, na qual o usuário entra com seu usuário e 
+Pensamos também na tela de \textit{login}, na qual o usuário entra com seu nome de usuário e 
 senha. Essa seria a tela à qual ele seria redirecionado caso não estivesse logado.
 
-% IMAGEM %
+% TODO Nakajo: IMAGEM
 
 % TODO Nakajo: Lógica de telas
 
 \subsection{Implementação com Vuetify}
+
 Usamos a biblioteca Vuetify para implementar as telas. Ela provê componentes 
 com visual característico do Material Design para o Vue.js. O Material Design é
 uma linguagem visual criada pela Google que oferece um visual intuitivo que
 se aproxima do design do mundo real com tinta e papel, trabalhando com camadas
 e sombras que dão uma sensação tátil para o usuário.
-Com relação às telas criadas, a tela de Mapas usa um menu lateral, com opções de
+
+Com relação às telas criadas, a tela de mapas usa um menu lateral, com opções de
 filtro, um botão para executar o algoritmo de otimização, e um botão para exibir mapa de
 calor. As opções de menu são seleções retangulares, por círculo, tecnologia e
 cidades. Os filtros não implementados foram desabilitados.
 Com isso, a tela final ficou pouco diferente da planejada na etapa de projeto de 
 telas. 
 
-% IMAGEM %
-A tela de Login foi um formulário simples com um campo de login e senha.
-% IMAGEM %
+% TODO Nakajo: IMAGEM
+
+A tela de \textit{login} foi um formulário simples com um campo de usuário e senha.
+
+% TODO Nakajo: IMAGEM
 
 \subsection{Integração com \textit{Back-end}}
-O Front-end foi responsável por fazer as chamadas de API. Usamos o axios.js 
-dentro do Vue.js. Os retornos da API são convertidos automaticamente em JSON, 
-formato adequado para manipulação dentro do javascript. 
 
-Para a autenticação, na página de login, enviamos o usuário e a senha digitados 
-pelo usuário para o endpoint de login. Caso válidos, o backend retorna um token
-necessário para realizar outras consultas. Usamos o gerenciador de estado Vuex
+O \textit{front-end} foi responsável por fazer as chamadas de API.
+Usamos o axios.js % TODO Nakajo: Explicar o que é
+dentro do Vue.js. Os retornos da API são convertidos automaticamente em JSON, 
+formato adequado para manipulação dentro do JavaScript. 
+
+Para a autenticação, na página de \textit{login}, enviamos o usuário e a senha digitados 
+pelo usuário para o \textit{endpoint} de \textit{login}. Caso válidos, o \textit{back-end} retorna um
+\textit{token} necessário para realizar outras consultas. Usamos o gerenciador de estado Vuex
 para armazenar esse token no escopo global. O Vuex permite que todos os 
 componentes da aplicação compartilhem o mesmo estado e que a mudança de estado
 seja previsível e reflita para todos os componentes.
 
-Possuindo esse token, podemos fazer as chamadas de API restritas aos usuários 
-autenticados, e assim implementar nossos casos de uso. Isso foi feito adicionando-o ao cabeçário Authorization do
-HTTP. Caso o usuário tentasse acessar a página de mapas e o token não
+Possuindo esse \textit{token}, podemos fazer as chamadas de API restritas aos usuários 
+autenticados, e assim implementar nossos casos de uso. Isso foi feito adicionando-o
+ao cabeçalho \texttt{Authorization} do
+HTTP. Caso o usuário tentasse acessar a página de mapas e o \textit{token} não
 estivesse salvo no Vuex, o usuário seria redirecionado à página de login.
 
 % TODO: Uso da API, deployment do front-end
