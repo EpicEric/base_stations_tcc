@@ -129,7 +129,8 @@ realização do curso de bacharelado em Engenharia de Computação.
 
 Ao Dr. Wilian França Costa, pela indicação de dados utilizados no projeto.
 
-Ao SIMET do NIC.br, pelo interesse e auxílio no desenvolvimento.
+Ao Milton Kaoru Kashiwakura e o SIMET do NIC.br, pelo interesse e auxílio no
+desenvolvimento.
 
 \end{agradecimentos}
 
@@ -194,6 +195,16 @@ System, Web Application.
 \textbf{TI:} Tecnologia da Informação
 
 \textbf{TCC:} Trabalho de Conclusão de Curso
+
+\textbf{CSV:} Valores Separados por Vírgula (do inglês \textit{Comma-Separated Values})
+
+\textbf{UF:} Unidade Federativa
+
+\textbf{CGI:} Identificador Global de Célula (do inglês \textit{Cell Global Identifier})
+
+\textbf{MCC:} Código de País Móvel (do inglês \textit{Mobile Country Code})
+
+\textbf{MNC:} Código de Rede Móvel (do inglês \textit{Mobile Network Code})
 
 \end{pretextualsection}
 
@@ -346,7 +357,8 @@ antenas.
 
 \section{Organização do Trabalho}
 
-Para o projeto de formatura, organizaremos este TCC em oito capítulos:
+Para o projeto de formatura, organizaremos este Trabalho de Conclusão de Curso
+(TCC) em oito capítulos:
 
 \begin{itemize}
 \item No capítulo \textbf{``Introdução''} deste trabalho, definimos o problema, a motivação
@@ -504,14 +516,14 @@ para elaborar as telas do nosso sistema.
 Todos os dados usados para o trabalho vieram de fontes abertas, e
 serão utilizados no SIG para exibição em telas ou cálculos de otimização.
 
-Primeiramente, utilizamos o Mapa de ERBs Brasil presente no portal Telebrasil
-~\cite{mapa-erb}. Essa base contém uma lista de ERBs do Brasil de novembro de
+Primeiramente, utilizamos o Mapa de ERBs Brasil presente no portal Telebrasil~\cite{mapa-erb}.
+Essa base contém uma lista de ERBs do Brasil de novembro de
 2017, com informação de operadora, endereço, e posição geográfica de cada ERB.
 Essas informações são essenciais para o cálculo da posição ótima da ERB para
 maximizar a cobertura da célula de determinada operadora.
 
-Também utilizamos a base do OpenCelliD, da empresa Unwired Labs
-~\cite{opencellid}. Essa base contém uma lista de ERBs do mundo inteiro, com o
+Também utilizamos a base do OpenCelliD, da empresa Unwired Labs~\cite{opencellid}.
+Essa base contém uma lista de ERBs do mundo inteiro, com o
 CGI de cada ERB. Os dados foram obtidos através da colaboração de usuários do
 aplicativo LocationAPI da Unwired Labs. O LocationAPI trata-se de um serviço de
 geolocalização que não depende de GPS. Dessa forma, com a base da OpenCelliD,
@@ -783,19 +795,55 @@ Apesar de não estar diretamente visível ao usuário, esta parte do sistema se
 mostrou também com dificuldades intrínsecas que nós precisamos enfrentar. Nas
 seções a seguir, detalharemos as medidas tomadas em cada etapa.
 
-\subsection{Modelo de ERB}
+\subsection{Modelos de ERBs}
 
-Anteriormente, listamos dois modelos de ERBs, provenientes de duas bases de
-dados diferentes. Uma delas utiliza dados oficiais da Anatel para indicar as
-antenas oficialmente registradas, portanto que pertencem a uma única operadora.
-A outra apresenta antenas distinguíveis pelo identificador global CGI, portanto
-mostra várias vezes antenas compartilhadas por várias operadoras.
+Anteriormente, comentamos sobre a criação de dois modelos de ERBs, cada um
+proveniente de uma dentre duas bases de dados. Uma base delas utiliza
+dados oficiais da Anatel para indicar as antenas oficialmente registradas,
+portanto que pertencem a uma única operadora legalmente~\cite{mapa-erb}.
+Estas antenas foram denominadas ``Antenas Apropriadas'' (``\textit{Owned Base
+Stations}''), pois indicam as operadoras às quais pertencem.
+
+A outra base apresenta antenas distinguíveis por um identificador global,
+portanto acaba exibindo uma única antena compartilhada como várias entradas do
+banco de dados para cada respectiva operadora~\cite{opencellid}. Como possuem um
+identificador de padrão global, estes dados foram chamados de ``Antenas
+Identificadas'' (``\textit{Identified Base Stations}'') no código. Tanto os
+dados dessa base quanto da anterior são representados como arquivos
+\textit{Comma-Separated Values} (CSV) em suas origens.
+
+Para cada modelo, criamos um \textit{script} que parseia os dados de entrada e
+popula as entradas no banco de dados. Estes \textit{scripts} utilizaram o
+suporte nativo do Django a utilitários da linha de comando para facilitar o
+uso.
+
+Os dados da Anatel foram extraídos e desestruturados em latitude e longitude,
+operadora, Unidade Federativa (UF), município e endereço. Também foram criados
+modelos adicionais para agregar antenas por operadora e por UF.
+
+Para a base de dados aberta, foram utilizados como parâmetros a latitude e a
+longitude, os campos do \textit{Cell Global Identity} (CGI), que identifica cada
+antena, o tipo de rádio, e o sinal médio detectado. Como esta base possui dados
+globais de antenas, filtramos apenas para os do Brasil; para isso, utilizamos
+um dos campos do CGI, o \textit{Mobile Country Code} (MCC) -- que é único por
+país --, como filtro das linhas do arquivo CSV. O MCC do Brasil é 724~\cite{mcc-mnc}.
+
+Com estes dois scripts, conseguimos importar todos os dados relevantes destes
+arquivos para o PostGIS. Porém, em etapas posteriores do projeto, foi necessário
+escolher entre um modelo principal para implementar a solução. Para chegar a um
+consenso, conversamos dentro do grupo, com o orientador e com Milton Kaoru
+Kashiwakura, Diretor de Projetos Especiais e Desenvolvimento do NIC.br.
 
 Devido à proeminência do compartilhamento de antenas entre empresas de
 telecomunicação, optamos por utilizar a segunda base nas etapas subsequentes do
-projeto. Como não há correlação direta com cada operadora ao contrário da outra
-base, utilizou-se um campo específico do CGI, denominado MNC, para identificar a
-quem pertence cada antena nas etapas subsequentes do trabalho \cite{mcc-mnc}.
+projeto como análise mais realista da cobertura celular no Brasil. Como não há
+uma correlação direta das antenas com cada operadora ao contrário da outra
+base, utilizou-se um campo específico do CGI, denominado \textit{Mobile Network
+Code} (MNC) -- que especifica uma única operadora dentro de um país~\cite{mcc-mnc}
+--, para verificar a qual empresa pertence cada antena nas etapas subsequentes
+do trabalho. Assim, foi criado um modelo no banco de dados específico para
+guardar os valores de MNC e respectivas operadoras, pois será útil para filtrar
+estes dados.
 
 \subsection{Clusterização}
 
@@ -1096,6 +1144,8 @@ redirecionado à página de login.
 
 \chapter{Testes e Avaliação}
 
+% TODO: Introdução do capítulo
+
 \section{Testes de Métodos Numéricos}
 Realizamos testes para verificar a corretude dos métodos numéricos que usamos, 
 o SLSQP, o Basinhopping e o Taguchi. Usamos funções de teste para otimização
@@ -1166,8 +1216,8 @@ criação de empresa para a distribuição do produto.
 
 \subsection{Dados}
 
-Mais duas bases de dados que foram estudadas para uso no projeto são: a G-Econ
-~\cite{gecon}, da Universidade de Yale, que apresenta os dados de paridade de
+Mais duas bases de dados que foram estudadas para uso no projeto são: a G-Econ~\cite{gecon},
+da Universidade de Yale, que apresenta os dados de paridade de
 poder de comparar geograficamente; e o SIMET-NIC~\cite{simet}, com o acesso e
 qualidade da Internet no Brasil. Estas duas bases de dados, em conjunto com os
 anteriores, podem permitir uma análise aprofundada de parâmetros ótimos para a
