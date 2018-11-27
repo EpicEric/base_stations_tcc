@@ -21,6 +21,9 @@
 \usepackage{graphicx,cite,enumerate}
 \usepackage{float}
 
+\usepackage{color, colortbl}
+\definecolor{Gray}{gray}{0.9}
+
 
 % ========== Language options ==========
 \usepackage[brazil]{babel}
@@ -999,47 +1002,59 @@ instantaneamente -- como migração de banco de dados, coleta de arquivos
 estáticos, novos \textit{endpoints}, dentre outros.
 
 \section{\textit{Front-end}}
-Para elaborar o \textit{front-end}, usamos a biblioteca Vue.js.
+Para elaborar o \textit{front-end}, usamos o \textit{framework} Vue.js.
 O front-end da nossa aplicação foi responsável pela parte visual, pela 
 comunicação do cliente com a API em Django, pela exibição dos dados no mapa,
-e pelo recebimento das entradas do usuário.
-% TODO Nakajo: Introdução sobre o que será falado nas subseções
+e pelo recebimento das entradas do usuário. Nas seções a seguir, detalharemos 
+como planejamos e implementamos o cada uma dessas partes.
 
 \subsection{Projeto de Telas}
 O planejamento do \textit{front-end} começou com o desenho das telas. Pensamos em telas
 que implementassem os casos de uso, além de serem fáceis de usar tanto em \textit{desktop}
-como em \textit{smartphones}.
+como em \textit{smartphones}. Criamos um diagrama de telas para representar
+a sequência em que o usuário acessará as telas.
 
-% TODO Nakajo: Diagrama de telas
+% TODO Nakajo: IMAGEM diagrama de telas
 
 A primeira tela projetada foi a tela de mapas. Inicialmente,
 ela teria o mapa com os clusters, e um menu lateral com opções de filtro por 
 operadora e tecnologia, opções de remoção, adição e exportação de ERBs e um 
 botão para executar o algoritmo de posição ideal a partir de parâmetros entrados
-pelo usuário.
+pelo usuário. Criamos os desenhos com papel e lápis, visto que tratam-se de um
+projeto de baixa fidelidade.
 
-% TODO Nakajo: IMAGEM
+% TODO Nakajo: IMAGEM rascunho da tela de mapas
 
 Depois de algumas iterações, removemos algumas funcionalidades e adicionamos 
-outros filtros. Outra tela projetada foi a tela inicial, com imagens do sistema
-funcionando e textos explicativos e um formulário de contato.
+outros filtros. 
 
-% TODO Nakajo: IMAGEM
+Outra tela projetada foi a tela inicial, com imagens do sistema
+funcionando, textos explicativos e um formulário de contato. A ideia dessa tela
+é fornecer uma ideia inicial das \textit{features} do nosso projeto.
+
+% TODO Nakajo: IMAGEM rascunho da tela de contato
 
 Pensamos também na tela de \textit{login}, na qual o usuário entra com seu nome de usuário e 
 senha. Essa seria a tela à qual ele seria redirecionado caso não estivesse logado.
 
-% TODO Nakajo: IMAGEM
+% TODO Nakajo: IMAGEM rascunho da tela de login
 
-% TODO Nakajo: Lógica de telas
+\subsection{Implementação com Vue.js e Vuetify}
+Usamos o \textit{framework} Vue.js no front-end do nosso projeto. Ele é um dos
+\textit{frameworks} JavaScript mais populares da atualidade. Seu uso aumenta
+muito a produtividade e organização do código, porque ele divide o sistema em
+componentes pequenos e reusáveis. Outro benefício é o \textit{single page application} que o Vue.js viabiliza.
+Com o \textit{single page application}, quando o usuário muda de tela, a página não é recarregada, apenas os
+componentes diferentes que são trocados. Dessa forma, os componentes comuns a várias telas (como \textit{header} e \textit{footer})
+nunca são recarregados. Isso propicia uma experiência mais fluida para o usuário.
 
-\subsection{Implementação com Vuetify}
-
-Usamos a biblioteca Vuetify para implementar as telas. Ela provê componentes 
+Para tratar do visual do sistema, usamos a biblioteca Vuetify. Ela provê componentes 
 com visual característico do Material Design para o Vue.js. O Material Design é
 uma linguagem visual criada pela Google que oferece um visual intuitivo que
 se aproxima do design do mundo real com tinta e papel, trabalhando com camadas
-e sombras que dão uma sensação tátil para o usuário.
+e sombras que dão uma sensação tátil para o usuário. O uso do Vuetify facilitou
+muito o desenvolvimento, pois não precisamos nos preocupar muito com o estilo de
+cada elemento HTML.
 
 Com relação às telas criadas, a tela de mapas usa um menu lateral, com opções de
 filtro, um botão para executar o algoritmo de otimização, e um botão para exibir mapa de
@@ -1050,6 +1065,9 @@ telas.
 
 % TODO Nakajo: IMAGEM
 
+Ao escolher a opção de menu de seleção, podemos selecionar um retângulo ou
+circunferência no mapa.
+
 A tela de \textit{login} foi um formulário simples com um campo de usuário e senha.
 
 % TODO Nakajo: IMAGEM
@@ -1057,26 +1075,66 @@ A tela de \textit{login} foi um formulário simples com um campo de usuário e s
 \subsection{Integração com \textit{Back-end}}
 
 O \textit{front-end} foi responsável por fazer as chamadas de API.
-Usamos o axios.js % TODO Nakajo: Explicar o que é
-dentro do Vue.js. Os retornos da API são convertidos automaticamente em JSON, 
-formato adequado para manipulação dentro do JavaScript. 
+Usamos o axios.js, uma biblioteca JavaScript bastante popular usada para fazer
+requisições HTTP. Com o axios, os retornos da API são convertidos
+automaticamente em JSON, formato adequado para manipulação dentro do JavaScript.
 
-Para a autenticação, na página de \textit{login}, enviamos o usuário e a senha digitados 
+Para a autenticação, na página de \textit{login}, enviamos o usuário e a senha digitados
 pelo usuário para o \textit{endpoint} de \textit{login}. Caso válidos, o \textit{back-end} retorna um
 \textit{token} necessário para realizar outras consultas. Usamos o gerenciador de estado Vuex
-para armazenar esse token no escopo global. O Vuex permite que todos os 
+para armazenar esse token no escopo global. O Vuex permite que todos os
 componentes da aplicação compartilhem o mesmo estado e que a mudança de estado
 seja previsível e reflita para todos os componentes.
 
-Possuindo esse \textit{token}, podemos fazer as chamadas de API restritas aos usuários 
+Possuindo esse \textit{token}, podemos fazer as chamadas de API restritas aos usuários
 autenticados, e assim implementar nossos casos de uso. Isso foi feito adicionando-o
-ao cabeçalho \texttt{Authorization} do
-HTTP. Caso o usuário tentasse acessar a página de mapas e o \textit{token} não
-estivesse salvo no Vuex, o usuário seria redirecionado à página de login.
+ao cabeçalho \texttt{Authorization} do HTTP. Caso o usuário tentasse acessar a 
+página de mapas e o \textit{token} não estivesse salvo no Vuex, o usuário seria
+redirecionado à página de login.
 
 % TODO: Uso da API, deployment do front-end
 
 \chapter{Testes e Avaliação}
+
+\section{Testes de Métodos Numéricos}
+Realizamos testes para verificar a corretude dos métodos numéricos que usamos, 
+o SLSQP, o Basinhopping e o Taguchi. Usamos funções de teste para otimização
+com mínimo global conhecido, e verificamos se era
+igual à saída do método numérico. A seguir estão os testes do método Basinhopping.
+
+\begin{table}[H]
+\begin{tabular}{l|l|l}
+ Nome da função & (x, y) do mínimo & (x, y) dos mínimos conhecidos \\ \hline
+ \rowcolor{Gray}
+ Easom & [100.0, 100.0] & [[3.14, 3.14]] \\
+ Himmelblau's & [-3.78, -3.28] & [[3, 2], [-2.81, 3.13], [-3.78, -3.28]] \\
+ Matyas & [-0.0, -0.0] & [[0, 0]] \\
+ \rowcolor{Gray}
+ Mccormick & [2.59, 1.59] & [[-0.55, -1.55]] \\
+ \rowcolor{Gray}
+ Schaffer n.4 & [98.96, 98.02] & [[0, 1.25]] \\
+ Three-hump camel & [0.0, -0.0] & [[0, 0]]
+\end{tabular}
+\end{table}
+
+A seguir estão os testes do método SLSQP.
+\begin{table}[H]
+\begin{tabular}{l|l|l}
+ Nome da função & (x, y) do mínimo & (x, y) dos mínimos conhecidos \\ \hline
+ \rowcolor{Gray}
+ Easom & [100.0, 100.0] & [[3.14, 3.14]] \\
+ \rowcolor{Gray}
+ Himmelblau's & [-2.85, 3.08] & [[3, 2], [-2.81, 3.13], [-3.78, -3.28]] \\
+ \rowcolor{Gray}
+ Matyas & [-0.65, -0.65] & [[0, 0]] \\
+ \rowcolor{Gray}
+ Mccormick & [2.51, 1.51] & [[-0.55, -1.55]] \\
+ \rowcolor{Gray}
+ Schaffer n.4 & [100.0, 100.0] & [[0, 1.25]] \\
+ Three-hump camel & [0.0, -0.0] & [[0, 0]]
+\end{tabular}
+\end{table}
+
 
 % TODO
 
