@@ -546,7 +546,6 @@ Em cada iteração do método numérico, calculamos apenas a área adicionada po
 novas ERBs e somamos com a variável acumuladora. A área total será, portanto, o
 valor a ser maximizado pelos métodos numéricos.
 
-
 \chapter{Tecnologias Utilizadas}
 
 Anteriormente, abordamos os dois componentes principais para compor nosso
@@ -868,7 +867,7 @@ Apesar de não estar diretamente visível ao usuário, esta parte do sistema se
 mostrou também com dificuldades intrínsecas que nós precisamos enfrentar. Nas
 seções a seguir, detalharemos as medidas tomadas em cada etapa.
 
-\subsection{Modelos de ERBs}
+\subsection{Modelagem de ERBs}
 
 Anteriormente, comentamos sobre a criação de dois modelos de ERBs, cada um
 proveniente de uma dentre duas bases de dados. Uma base delas utiliza
@@ -912,22 +911,46 @@ telecomunicação, optamos por utilizar a segunda base nas etapas subsequentes d
 projeto como análise mais realista da cobertura celular no Brasil. Como não há
 uma correlação direta das antenas com cada operadora ao contrário da outra
 base, utilizou-se um campo específico do CGI, denominado \textit{Mobile Network
-Code} (MNC) -- que especifica uma única operadora dentro de um país~\cite{mcc-mnc}
---, para verificar a qual empresa pertence cada antena nas etapas subsequentes
+Code} (MNC) -- que especifica uma única operadora dentro de um país --,
+para verificar a qual empresa pertence cada antena nas etapas subsequentes
 do trabalho. Assim, foi criado um modelo no banco de dados específico para
 guardar os valores de MNC e respectivas operadoras, pois será útil para filtrar
-estes dados.
+estes dados. As instâncias desse modelo foram populadas a partir da base de
+dados de referência~\cite{mcc-mnc}.
 
-\subsection{Modelagem}
+Podemos representar estes modelos (antenas, UFs, operadoras e MNC) por um
+diagrama de classes, apresentado na figura \ref{fig:diagrama_classes_antenas}.
+Alguns detalhes importantes:
 
-% TODO Eric: Diagrama de modelos
+\begin{itemize}
+\item Foi criada uma classe abstrata para representar as antenas, que possui
+apenas o campo de localização.
+\item Alguns campos, como número atribuído pela Anatel de operadoras ou país da
+UF, não serão utilizados, mas ainda foram preenchidos a partir das bases de
+origem, pois podem ser úteis num produto final.
+\item O campo MNC das ``Antenas Identificadas'' será redundante quanto à
+relação, já que os valores serão iguais. Isso permite que o CGI dessas antenas
+seja obtido apenas por seus campos, sem requisitar o MNC associado na
+\textit{query} ao banco.
+\item Um outro modelo, ``Cluster de Antena'', foi criado para otimizar as
+operações de mapa, como será descrito na próxima seção. As relações deste
+modelo com as antenas são feitas por métodos fora do banco de dados, de forma a
+evitar um consumo alto de dados de \textit{clusters} no disco do PostGIS.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6in]{imagens/diagrama_classes_antenas}
+    \caption{Diagrama de classes das antenas.}
+    \label{fig:diagrama_classes_antenas}
+\end{figure}
 
 \subsection{Clusterização}
 
 Um dos principais desafios na implementação foi realizar a exibição de múltiplas
-antenas como pontos em um mapa. Como muitas ERBs ficam próximas das outras e,
+antenas como pontos em um mapa (figura \ref{fig:mapa_sem_clusters}). Como muitas ERBs ficam próximas das outras e,
 portanto, difíceis de serem visualizadas separadamente, utilizou-se um
-\textit{plugin} próprio da biblioteca de mapa para a clusterização de pontos,
+\textit{plugin} próprio da biblioteca do Leaflet para a clusterização de pontos (figura \ref{fig:mapa_com_clusters}),
 facilitando a identificação da quantidade de antenas em uma região, com exibição
 variável com o zoom.
 
@@ -1032,6 +1055,9 @@ importante porque, ao exibir os \textit{clusters} sem filtro específico de oper
 realidade, deverá ser feito filtro por operadora igual ao valor nulo. Esta
 distinção terá maior importância quando o cliente requisitar dados de clusters
 pela API, como descrito mais adiante.
+
+Foi implementada a lógica adicional ao criar antenas no banco de dados, para
+atualizar automaticamente os respectivos clusters.
 
 \subsection{Métodos Numéricos}
 
@@ -1228,6 +1254,10 @@ ele seria redirecionado caso não estivesse logado.
     \caption{Projeto inicial da tela de login.}
     \label{fig:rascunho_login}
 \end{figure}
+
+\subsection{Leaflet}
+
+% TODO Eric
 
 \subsection{Implementação com Vue.js e Vuetify}
 
