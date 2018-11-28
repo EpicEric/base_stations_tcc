@@ -1257,7 +1257,27 @@ ele seria redirecionado caso não estivesse logado.
 
 \subsection{Leaflet}
 
-% TODO Eric
+O Leaflet é uma biblioteca de código aberto para a criação de mapas interativos
+em JavaScript, com suporte nativo a celulares, extensa API e suporte a várias
+funcionalidades, como exibição de pontos, linhas e polígonos, utilização de
+camadas, suporte a \textit{raster}, sobreposição de dados, suporte ao formato
+de entrada GeoJSON comumente utilizado em SIGs, dentre outras. Além disso, ela
+possui uma extensa galeria de \textit{plugins} de terceiros para extender a
+funcionalidade do mapa, como:
+
+\begin{itemize}
+\item \textbf{Leaflet.MarkerCluster}, que permite aglomerar pontos próximos com
+facilidade.
+\item \textbf{Leaflet.draw}, para desenhar e editar figuras no mapa, como
+retângulos e círculos.
+\end{itemize}
+
+Estes dois \textit{plugins} foram utilizados no \textit{front-end} em conjunto
+com o Leaflet para a exibição de antenas e para a seleção de área de otimização,
+respectivamente. No caso do Leaflet.MarkerCluster, especificamente, foram feitos
+ajustes no código para tratar a API, que expõe as informações de
+\textit{cluster} pré-renderizadas em um formato específico, como apresentado na
+seção desta monografia sobre clusterização do \textit{back-end}.
 
 \subsection{Implementação com Vue.js e Vuetify}
 
@@ -1467,14 +1487,9 @@ resultados nas figuras \ref{fig:basinhopping_exemplo} e
 
 % TODO
 
-\section{Desempenho}
+%\section{Desempenho}
 
-% TODO Nakajo: Medidas de desempenho
-
-\section{User Experience}
-
-% TODO Nakajo: Ver se um usuário leigo conseguiria usar o sistema, e documentar a
-% interação
+%\section{User Experience}
 
 \section{Código}
 
@@ -1605,8 +1620,8 @@ ao amadurecimento da empresa no ecossistema de empreendedorismo.
 
 Da parte técnica do projeto, mais duas bases de dados que foram estudadas para
 uso foram: a G-Econ~\cite{gecon}, da Universidade de Yale, que apresenta os dados de paridade de
-poder de compra geograficamente; e o SIMET-NIC~\cite{simet}, com o acesso e
-qualidade da Internet no Brasil. Estas duas bases de dados, em conjunto com as
+poder de compra geograficamente; e o SIMET-NIC~\cite{simet}, com a qualidade do
+acesso de Internet no Brasil. Estas duas bases de dados, em conjunto com as
 anteriores, podem permitir uma análise aprofundada de parâmetros ótimos para a
 instalação de novas antenas e avaliação da estrutura pré-existente; porém,
 a relação destes dados não cabe ao nosso caso de uso principal desta monografia. Elas podem
@@ -1615,6 +1630,12 @@ ser úteis em uma análise futura, ao trabalhar em conjunto com os
 que seriam mais interessantes a uma empresa de telecomunicação.
 
 \subsection{Descrição dos Casos de Uso Adicionais}
+
+% Aviso para Bruno Albertini
+% Nós não nos decidimos se é melhor tirar ou deixar esta subseção na monografia
+% pois já tínhamos bolado esses casos de uso bem atrás.
+% Outra possibilidade que pensamos foi simplificar esta parte e só falar por
+% cima sobre os casos de uso pensados.
 
 Os casos de uso a seguir foram elaborados na etapa de ``Especificação de
 Requisitos do Sistema'', porém foram deixados para uma implementação futura, já
