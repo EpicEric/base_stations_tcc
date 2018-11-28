@@ -196,6 +196,8 @@ System, Web Application.
 
 \textbf{TCC:} Trabalho de Conclusão de Curso
 
+\textbf(FSPL:) Perda de Propagação em Espaço Livre (do inglês \textit{Free-Space Path Loss})
+
 \textbf{CSV:} Valores Separados por Vírgula (do inglês \textit{Comma-Separated Values})
 
 \textbf{UF:} Unidade Federativa
@@ -455,8 +457,31 @@ mais rápidos.
 
 \section{Propagação em Espaço Livre}
 
-% TODO: Descrever do que se trata, apresentar fórmula sinal-ruído, e por que foi
-% utilizada para este projeto
+O modelo mais simples de transmissão de dados por antenas celulares é o modelo
+de propagação em espaço livre. O sinal emitido por uma fonte, como uma ERB, se
+propaga em uma esfera de área $A = 4\pi d^2$. Ou seja, com uma maior distância
+$d$ da antena, a intensidade do sinal caí pelo inverso do quadrado. Podemos
+calcular a perda de propagação em espaço livre (\textit{free space path loss},
+ou FSPL) em função da distância e da frequência $f$~\cite{rf-design}. Seja a
+densidade de potência $S$ e a potência total $P_{tx}$, então temos:
+\begin{equation*}
+    S = P_{tx} \frac{1}{4\pi d^2}
+\end{equation*}
+A atenuação de sinal $R$ entre uma antena transmissora e uma antena receptora pode
+ser escrita como:
+\begin{equation*}
+    R = 20\cdot log_{10} \left( \frac{4\pi d^2}{\lambda} \right)
+\end{equation*}
+Onde $\lambda = \frac{c}{f}$ é o comprimento de onda eletromagnética. Em
+decibéis, reescrevemos como:
+\begin{equation*}
+    R = 32.4 + 20\cdot log_{10}(d) + 20\cdot log_{10}(f)
+\end{equation*}
+Com frequência em MHz e distância em km.
+
+Esta fórmula é útil para descrever de forma simples a atenuação do sinal
+recebido nos dispositivos celulares e, portanto, será utilizada neste projeto
+para verificar o comportamento das antenas.
 
 \section{Algoritmos de Otimização}
 
@@ -506,7 +531,7 @@ Definimos:
 \begin{equation*}
     \beta_t^{(m)} = \frac{max_t-min_t}{s+1}
 \end{equation*}
-Na $m-$ésima iteração, a função de mapeamento é a seguinte:
+Na $m-$ésima iteração, a função de mapeamento é:
 \begin{equation*}
     f_t^m(l) =
     \begin{cases}
@@ -1485,7 +1510,8 @@ resultados nas figuras \ref{fig:basinhopping_exemplo} e
     \label{fig:slsqp_exemplo}
 \end{figure}
 
-% TODO
+Como visto anteriormente, optamos por seguir utilizando o método Taguchi, pois
+havia se saído melhor nos testes de funções a serem minimizadas.
 
 %\section{Desempenho}
 
@@ -1539,6 +1565,12 @@ eventualmente resolver ou contornar. Sentimos que o principal fator que
 atrapalhou no projeto foi a falta de tempo para conclusão das tarefas do
 cronograma, já que houve muitos trabalhos das demais disciplinas competindo
 pelo tempo dedicado aos estudos.
+
+Também sentimos falta de alguns testes, como desempenho dos algoritmos de
+otimização para uma análise mais detalhada, ou de UX para verificar a
+facilidade de uso da interface, mas não puderam ser efetuadas pela restrição
+de tempo. De qualquer forma, estes serão mais interessantes no futuro
+desenvolvimento do MVP.
 
 Como mencionamos no capítulo anterior, na seção sobre o código desenvolvido,
 uma das partes que fez falta ao fim deste projeto foi uma boa implementação de
