@@ -400,7 +400,20 @@ utilizados.
 
 \section{Representação Geográfica}
 
-% TODO Eric: Como representamos antenas no Django, quais os modelos complementares, diagrama de modelos
+Devido à complexidade imposta pelo problema de se utilizar valores geográficos,
+essa seção da monografia se dedicará a como o PostGIS permite a modelagem dos
+diversos componentes utilizados nos capítulos subsequentes.
+
+% TODO Eric:
+% Especificação OpenGIS e tipos básicos -- \cite{opengis}
+% - Antenas
+% - Relevo e população
+% - Municípios e cidades
+
+\section{Propagação em Espaço Livre}
+
+% TODO: Descrever do que se trata, apresentar fórmula sinal-ruído, e por que foi
+% utilizada para este projeto
 
 \section{Algoritmos de Otimização}
 
@@ -847,6 +860,10 @@ Code} (MNC) -- que especifica uma única operadora dentro de um país~\cite{mcc-
 do trabalho. Assim, foi criado um modelo no banco de dados específico para
 guardar os valores de MNC e respectivas operadoras, pois será útil para filtrar
 estes dados.
+
+\subsection{Modelagem}
+
+% TODO Eric: Diagrama de modelos
 
 \subsection{Clusterização}
 
@@ -1514,7 +1531,7 @@ usuários. \\
 
     \bibitem{atoll}
     Forsk.
-    \textit{Atoll LTE / LTE-A Planning Software | Forsk}
+    \textit{Atoll LTE / LTE-A Planning Software | Forsk}.
     Disponível em: http://www.forsk.com/ltelte-pro.
     Acesso em: 01º de março de 2018.
 
@@ -1528,15 +1545,21 @@ usuários. \\
     \bibitem{mytower}
     MyTower.
     \textit{MyTower - Aluguel e Venda de Terrenos e Topos para
-    Operadoras de Telecom}
+    Operadoras de Telecom}.
     Disponível em: http://www.mytower.com.br/.
     Acesso em: 01º de março de 2018.
 
     \bibitem{skysites}
     Skysites.
-    \textit{Skysites}
+    \textit{Skysites}.
     Disponível em: http://skysites.com/.
     Acesso em: 01º de março de 2018.
+
+    \bibitem{opengis}
+    OpenGIS Consortium, Inc.
+    \textit{Simple Feature Access - Part 2: SQL Option}.
+    Disponível em: https://www.opengeospatial.org/standards/sfs.
+    Acesso em: 24 de novembro de 2018.
 
     \bibitem{evolutivo}
     LEE, S.; LEE, S.; KIM, K.; KIM, YH.
@@ -1552,7 +1575,7 @@ usuários. \\
     \bibitem{taguchi}
     WEGMANN, A.; VIERING I.; KLEIN, A.
     \textit{A Joint Optimization of Antenna Parameters in a
-    Cellular Network Using Taguchi’s Method}
+    Cellular Network Using Taguchi’s Method}.
     IEEE 73rd Vehicular Technology Conference (VTC Spring), 2011.
 
     \bibitem{mapa-erb}
