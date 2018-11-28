@@ -1305,7 +1305,27 @@ específicos criados no \textit{back-end}.
 
 \subsection{Instalação de \textit{Front-end}}
 
-% TODO Eric: Deployment do front-end
+Graças à interface de linha de comando do Vue, é possível gerar arquivos
+prontos para produção com um simples comando de \texttt{build}. Estes arquivos
+incluem uma página HTML, um \textit{favicon} e os arquivos de JavaScript e CSS.
+Dessa forma, é possível servir a aplicação em um servidor estático, apenas
+direcionando aos arquivos na pasta \texttt{dist} gerada.
+
+Para realizar o \textit{deployment} do \textit{front-end}, optamos pelo serviço
+Netlify~\cite{netlify}, que é uma plataforma de integração contínua (do inglês,
+\textit{continuous integration}) para websites, com um \textit{pipeline} de
+entrega da última versão de um código fonte. Ela automaticamente gera o site
+para cada alteração do código e disponibiliza em uma URL própria. Como o código
+desenvolvido é todo aberto, podemos utilizar esta ferramenta gratuitamente pelos
+termos de uso do produto, disponibilizando o site em um domínio que pertence ao
+grupo sem necessitar da instalação de um novo servidor. Esta ferramenta também
+possui suporte a HTTPS por padrão, e permite configurar o DNS facilmente.
+
+Foram necessárias algumas modificações no código de geração de arquivos
+estáticos do Vue, relacionadas à pré-renderização dos componentes de
+desenvolvimento \textit{client-side} para uso como HTML no pós-processamento
+do Netlify. Feitas estas alterações, testamos novamente o serviço, que funcionou
+conforme o esperado.
 
 \chapter{Testes e Avaliação}
 
@@ -1317,8 +1337,8 @@ o SLSQP, o Basinhopping e o Taguchi. Usamos funções de teste para otimização
 com mínimo global conhecido, e verificamos se era igual à saída do método
 numérico. A tabela \ref{table:test-bh} possui os resultados dos testes do método
 Basinhopping; a tabela \ref{table:test-slsqp} possuir os de SLSQP; e a tabela
-\ref{table:test-taguchi}, do Método Taguchi. A definição de cada função e
-seu domínio de busca está disponível na referência~\cite{optimization-functions}.
+\ref{table:test-taguchi}, do Método Taguchi. A definição de cada função escolhida e
+seus domínios de busca foi obtida da literatura~\cite{optimization-functions}.
 As linhas marcadas em cinza mostram funções na qual o método numérico não achou
 o mínimo global.
 
@@ -1375,6 +1395,9 @@ Three hump camel  &  f(0.0,0.0)=0.0  &  f(0,0)=0.0 \\
 \caption{Testes de mínimo global para Método Taguchi.}
 \label{table:test-taguchi}
 \end{table}
+
+Dos três algoritmos, o Método Taguchi encontrou o resultado correto com maior
+frequência. Dessa forma, ele foi priorizado nas etapas posteriores de projeto.
 
 \section{Cálculo da Posição Ideal para Instalação}
 Criamos testes para verificar se a função de cálculo de área total funcionava
@@ -1699,7 +1722,7 @@ usuários. \\
     Forsk.
     \textit{Atoll LTE / LTE-A Planning Software | Forsk}.
     Disponível em: http://www.forsk.com/ltelte-pro.
-    Acesso em: 01º de março de 2018.
+    Acesso em: 1º de março de 2018.
 
     \bibitem{tude}
     TUDE, Eduardo.
@@ -1713,13 +1736,13 @@ usuários. \\
     \textit{MyTower - Aluguel e Venda de Terrenos e Topos para
     Operadoras de Telecom}.
     Disponível em: http://www.mytower.com.br/.
-    Acesso em: 01º de março de 2018.
+    Acesso em: 1º de março de 2018.
 
     \bibitem{skysites}
     Skysites.
     \textit{Skysites}.
     Disponível em: http://skysites.com/.
-    Acesso em: 01º de março de 2018.
+    Acesso em: 1º de março de 2018.
 
     \bibitem{opengis}
     OpenGIS Consortium, Inc.
@@ -1767,7 +1790,7 @@ usuários. \\
     \textit{OpenCelliD - Largest Open Database of Cell Towers \&
     Geolocation by Unwired Labs}.
     Disponível em: https://opencellid.org/.
-    Acesso em: 01º de março de 2018.
+    Acesso em: 1º de março de 2018.
 
     \bibitem{earthengine}
     Google Earth.
@@ -1802,6 +1825,17 @@ usuários. \\
     \textit{NumPy}.
     Disponível em: https://www.numpy.org/.
     Acesso em: 13 de março de 2018.
+
+    \bibitem{netlify}
+    \textit{Netlify}.
+    Disponível em: https://www.netlify.com.
+    Acesso em: 7 de setembro de 2018.
+
+    \bibitem{optimization-functions}
+    Wikipedia.
+    \textit{Test functions for optimization}.
+    Disponível em: https://en.wikipedia.org/wiki/Test\_functions\_for\_optimization.
+    Acesso em: 28 de novembro de 2018.
 
     \bibitem{repo-django}
     EpicEric (GitHub).
@@ -1838,12 +1872,6 @@ usuários. \\
     \textit{Sistema de Medição de Tráfego Internet}.
     Disponível em: http://simet.nic.br/mapas-app.html.
     Acesso em: 24 de março de 2018.
-
-    \bibitem{optimization-functions}
-    Wikipedia.
-    \textit{Test functions for optimization}.
-    Disponível em: https://en.wikipedia.org/wiki/Test\_functions\_for\_optimization.
-    Acesso em: 28 de novembro de 2018.
 
 \end{thebibliography}
 % ========== Apêndices (opcional) ==========
