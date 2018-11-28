@@ -389,7 +389,6 @@ projeto de TCC e questões adicionais que restaram para uma avaliação futura.
 
 \end{itemize}
 
-% TODO: Pensar em mais seções para adicionar a este capítulo
 \chapter{Aspectos Conceituais}
 
 Com o MVP definido no capítulo anterior, iremos nos aprofundar na base teórica
@@ -404,11 +403,55 @@ Devido à complexidade imposta pelo problema de se utilizar valores geográficos
 essa seção da monografia se dedicará a como o PostGIS permite a modelagem dos
 diversos componentes utilizados nos capítulos subsequentes.
 
-% TODO Eric:
-% Especificação OpenGIS e tipos básicos -- \cite{opengis}
-% - Antenas
-% - Relevo e população
-% - Municípios e cidades
+O Open Geospatial Consortium é uma organização sem fins lucrativos dedicada à
+padronização de sistemas de informações geográficas. Para a representação de
+dados geográficos, ela especifica tipos de representações de dados, como
+pontos, linhas, e polígonos~\cite{opengis}. Estes tipos, ou geometrias, são
+implementados nos principais SIGs, como por exemplo o ArcGIS e a extensão
+PostGIS do PostgreSQL; mais especificamente, ambos utilizam a biblioteca C++
+aberta ``GEOS''.
+
+A utilização de cada tipo depende do objeto a ser representado. No caso de
+representar ERBs, por exemplo, a única informação geográfica que precisa ser
+armazenada é a sua localização. Para isso, será usado o tipo \texttt{Point} --
+que é também o tipo mais simples da especificação, armazenando apenas as
+coordenadas horizontal e vertical.
+
+Para municípios e unidades federativas, por outro lado, deseja-se representar
+uma área com formato arbitrário. Poderíamos usar o tipo \texttt{Polygon} -- que
+representa um polígono por uma lista ordenada de pontos, onde o primeiro ponto
+deve ser idêntico ao último --, mas esta abordagem ignora dois casos: quando a
+área do município possui buracos (i.e. há um enclave de outro município), e
+quando a área do município é desconexa (por exemplo, quando é um arquipélago).
+Ambos os casos requerem a representação da área por mais de um polígono; para
+isso, a GEOS disponibiliza a coleção de geometrias \texttt{MultiPolygon}, que
+também é uma geometria em si.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6in]{imagens/dados-relevo-30m}
+    \caption{Dados de relevo do Butantã com resolução de 1 arco-segundo.}
+    \label{fig:map_altitude_polygons}
+\end{figure}
+
+Por fim, outras informações que podem ser obtidas em bancos de dados externos,
+como população e relevo, mostram os valores como regiões no mapa. A razão para
+isso é facilitar a transformação dos dados vetoriais (i.e. escalares) para
+\textit{raster} (i.e. imagens) na hora de exibir ao usuário. Assim, em algumas
+das bases descritas posteriormente nesta monografia, esses dados são
+disponibilizados como uma lista de tuplas de área (\texttt{Polygon}s) e valor
+(número de habitantes ou altitude em metros, respectivamente). Estes polígonos
+possuem tamanho igual à resolução da análise, que depende da metodologia usada
+para gerar os dados. Um exemplo de dado \textit{raster} com múltiplos polígonos
+está representado na figura \ref{fig:map_altitude_polygons}, que possui
+resolução de 1 arco-segundo, o que equivale a aproximadamente 30 metros.
+
+Para determinadas análises, como estimar a altitude em um ponto qualquer ou
+contar a população em uma área, pode ser mais interessante transformar esses
+dados em uma lista de tuplas de pontos (\texttt{Point}s) e valores, com pontos
+centrados nos polígonos. A razão para isso é que estes dados ocupam menos espaço
+em disco e os algoritmos de distância e pertencimento a uma área são em geral
+mais rápidos.
 
 \section{Propagação em Espaço Livre}
 
@@ -490,16 +533,18 @@ próxima iteração. Além disso, o valor de $\beta_t$ é reduzido de um fator $
     \beta_t^{(m+1)} = \epsilon\beta_t^{(m)}
 \end{equation*}
 
-\subsection{Função a ser otimizada}
-Usamos a área de cobertura como função a ser otimizada pelos algoritmos 
+\subsection{Função Escolhida}
+Usamos a área de cobertura como função a ser otimizada pelos algoritmos
 numéricos. Adotamos que cada ERB tem área de cobertura fixa.
-No algoritmo, definimos uma variável acumuladora que guarda a área de cobertura 
+No algoritmo, definimos uma variável acumuladora que guarda a área de cobertura
 total das ERBs instaladas. O GeoDjango oferece funções para cálculo da união
-de figuras geométricas, de modo que as áreas de intercecção não são somadas 
-múltiplas vezes. Esse cálculo é feito apenas uma vez no início do 
-algoritmo. Em cada iteração do método numérico, calculamos apenas a área
-das novas ERBs e somamos com a variável acumuladora. Esse é o valor a ser
-otimizado pelos métodos numéricos.
+de figuras geométricas pela biblioteca GEOS, de modo que as áreas de intersecção
+não são somadas múltiplas vezes. Esse cálculo é feito apenas uma vez no início
+do algoritmo.
+
+Em cada iteração do método numérico, calculamos apenas a área adicionada por
+novas ERBs e somamos com a variável acumuladora. A área total será, portanto, o
+valor a ser maximizado pelos métodos numéricos.
 
 
 \chapter{Tecnologias Utilizadas}
@@ -510,7 +555,7 @@ também dados específicos para o SIG na implementação de um dos algoritmos
 apresentados em \textbf{``Aspectos Conceituais''}. Neste capítulo, discutimos as
 decisões tomadas pelo grupo acerca de \emph{frameworks} e bases de dados
 utilizadas no trabalho. Elas serão utilizadas no trabalho descrito pelo próximo
-capítulo. 
+capítulo.
 
 \section{Sistema Web}
 
@@ -1006,11 +1051,11 @@ método Taguchi. Usamos a biblioteca ``\texttt{numpy}''~\cite{numpy} para as ope
 \textit{array}, uma vez que ela provê operações eficientes nessas estruturas de dados.
 
 Por fim, escolhemos o Método Taguchi, pois ele se comportou melhor que os demais
-nos testes, encontrando mais mínimos globais que o SQSQP e o Basinhopping.
+nos testes, encontrando mais mínimos globais que o SQSQP e o Basinhopping (mais
+detalhes no capítulo \textbf{``Testes e Avaliação''})
 Além disso, temos um entendimento melhor de seu funcionamento uma vez que nós
 que o implementamos. Os detalhes sobre os testes mencionados
 encontram-se no capítulo Testes e Avaliação.
-
 
 \subsection{Interface de Programação de Aplicações}
 
@@ -1137,7 +1182,7 @@ Para elaborar o \textit{front-end}, usamos o \textit{framework} Vue.js.
 O front-end da nossa aplicação foi responsável pela parte visual, pela
 comunicação do cliente com a API em Django, pela exibição dos dados no mapa,
 e pelo recebimento das entradas do usuário. Nas seções a seguir, detalharemos
-como planejamos e implementamos o cada uma dessas partes.
+como planejamos e implementamos cada uma dessas partes.
 
 \subsection{Projeto de Telas}
 O planejamento do \textit{front-end} começou com o desenho das telas. Pensamos em telas
@@ -1149,7 +1194,7 @@ ela teria o mapa com os clusters e um menu lateral com opções de filtro por
 operadora e tecnologia, opções de remoção, adição e exportação de ERBs e um
 botão para executar o algoritmo de posição ideal a partir de parâmetros fornecidos
 pelo usuário. Criamos os desenhos com papel e lápis, visto que tratam-se de uma
-representação de baixa fidelidade.
+representação de baixa fidelidade. Esta tela está na figura \ref{fig:rascunho_mapa}.
 
 \begin{figure}[H]
     \centering
@@ -1162,8 +1207,9 @@ Depois de algumas iterações, removemos algumas funcionalidades e adicionamos
 outros filtros.
 
 Outra tela projetada foi a tela inicial, com imagens do sistema
-funcionando, textos explicativos e um formulário de contato. O objetivo dessa tela
-é fornecer uma ideia inicial das \textit{features} do nosso projeto.
+funcionando, textos explicativos e um formulário de contato (figura \ref{fig:rascunho_landing}).
+O objetivo dessa tela é fornecer uma ideia inicial das \textit{features} do
+nosso projeto.
 
 \begin{figure}[H]
     \centering
@@ -1172,8 +1218,9 @@ funcionando, textos explicativos e um formulário de contato. O objetivo dessa t
     \label{fig:rascunho_landing}
 \end{figure}
 
-Pensamos também na tela de \textit{login}, na qual o usuário entra com seu nome de usuário e
-senha. Essa seria a tela à qual ele seria redirecionado caso não estivesse logado.
+Pensamos também na tela de \textit{login}, na qual o usuário entra com seu nome
+de usuário e senha (figura \ref{fig:rascunho_login}). Essa seria a tela à qual
+ele seria redirecionado caso não estivesse logado.
 
 \begin{figure}[H]
     \centering
@@ -1183,6 +1230,7 @@ senha. Essa seria a tela à qual ele seria redirecionado caso não estivesse log
 \end{figure}
 
 \subsection{Implementação com Vue.js e Vuetify}
+
 Usamos o \textit{framework} Vue.js no front-end do nosso projeto. Ele é um dos
 \textit{frameworks} JavaScript mais populares da atualidade. Seu uso aumenta
 muito a produtividade e organização do código, porque ele divide o sistema em
@@ -1203,7 +1251,7 @@ Com relação às telas criadas, a tela de mapas usa um menu lateral, com opçõ
 filtro, um botão para executar o algoritmo de otimização, e um botão para exibir mapa de
 calor. As opções de menu são seleções retangulares, por círculo, tecnologia e
 cidades. Os filtros não implementados foram desabilitados.
-Com isso, a tela final ficou pouco diferente da planejada na etapa de projeto de
+Com isso, a tela final (figura \ref{fig:tela_mapas}) ficou pouco diferente da planejada na etapa de projeto de
 telas.
 
 \begin{figure}[H]
@@ -1214,7 +1262,7 @@ telas.
 \end{figure}
 
 Ao escolher a opção de menu de seleção, podemos selecionar um retângulo ou
-circunferência no mapa.
+circunferência no mapa (figura \ref{fig:fig:tela_mapas_retangulo}).
 
 \begin{figure}[H]
     \centering
@@ -1223,7 +1271,7 @@ circunferência no mapa.
     \label{fig:tela_mapas_retangulo}
 \end{figure}
 
-A tela de \textit{login} foi um formulário simples com um campo de usuário e senha.
+A tela de \textit{login} (figura \ref{fig:tela_login}) foi um formulário simples com um campo de usuário e senha.
 
 \begin{figure}[H]
     \centering
@@ -1251,21 +1299,31 @@ ao cabeçalho \texttt{Authorization} do HTTP. Caso o usuário tentasse acessar a
 página de mapas e o \textit{token} não estivesse salvo no Vuex, o usuário seria
 redirecionado à página de login.
 
-% TODO: Uso da API, deployment do front-end
+Para obter dados de antenas para exibir no mapa, e realizar requisições de
+cálculo de instalação de novas antenas, foram usados os \textit{endpoints}
+específicos criados no \textit{back-end}.
+
+\subsection{Instalação de \textit{Front-end}}
+
+% TODO Eric: Deployment do front-end
 
 \chapter{Testes e Avaliação}
 
 % TODO: Introdução do capítulo
 
-\section{Testes de Métodos Numéricos}
-Realizamos testes para verificar a corretude dos métodos numéricos que usamos, 
+\section{Métodos Numéricos}
+Realizamos testes para verificar a corretude dos métodos numéricos que usamos,
 o SLSQP, o Basinhopping e o Taguchi. Usamos funções de teste para otimização
-com mínimo global conhecido, e verificamos se era
-igual à saída do método numérico. A seguir estão os testes do método Basinhopping.
-A definição das funções e o domínio de busca está disponível na referência~\cite{optimization-functions}.
-As linhas marcadas em cinza mostram funções na qual o método numérico não achou o mínimo global.
+com mínimo global conhecido, e verificamos se era igual à saída do método
+numérico. A tabela \ref{table:test-bh} possui os resultados dos testes do método
+Basinhopping; a tabela \ref{table:test-slsqp} possuir os de SLSQP; e a tabela
+\ref{table:test-taguchi}, do Método Taguchi. A definição de cada função e
+seu domínio de busca está disponível na referência~\cite{optimization-functions}.
+As linhas marcadas em cinza mostram funções na qual o método numérico não achou
+o mínimo global.
 
 \begin{table}[H]
+\centering
 \begin{tabular}{l|l|l}
  Nome da função & Mínimo calculado & Mínimo global \\ \hline
 \rowcolor{Gray}
@@ -1278,10 +1336,12 @@ Mccormick  &  f(2.59,1.59)=1.23  &  f(-0.55,-1.55)=-1.91 \\
 Schaffer4  &  f(98.73,98.64)=0.5  &  f(0,1.25)=0.29 \\
 Three hump camel  &  f(-0.0,-0.0)=0.0  &  f(0,0)=0.0 \\
 \end{tabular}
+\caption{Testes de mínimo global para Basinhopping.}
+\label{table:test-bh}
 \end{table}
 
-A seguir estão os testes do método SLSQP.
 \begin{table}[H]
+\centering
 \begin{tabular}{l|l|l}
  Nome da função & Mínimo calculado & Mínimo global \\ \hline
 \rowcolor{Gray}
@@ -1296,10 +1356,12 @@ Mccormick  &  f(2.51,1.51)=1.24  &  f(-0.55,-1.55)=-1.91 \\
 Schaffer4  &  f(100.0,100.0)=0.5  &  f(0,1.25)=0.29 \\
 Three hump camel  &  f(0.0,-0.0)=0.0  &  f(0,0)=0.0 \\
 \end{tabular}
+\caption{Testes de mínimo global para SLSQP.}
+\label{table:test-slsqp}
 \end{table}
 
-A seguir estão os testes do método Taguchi.
 \begin{table}[H]
+\centering
 \begin{tabular}{l|l|l}
 Nome da função & Mínimo calculado & Mínimo global \\ \hline
 Easom  &  f(3.14,3.14)=-1.0  &  f(3.14,3.14)=-1.0 \\
@@ -1310,14 +1372,16 @@ Mccormick  &  f(-0.55,-1.55)=-1.91  &  f(-0.55,-1.55)=-1.91 \\
 Schaffer4  &  f(-98.51,-98.51)=0.5  &  f(0,1.25)=0.29 \\
 Three hump camel  &  f(0.0,0.0)=0.0  &  f(0,0)=0.0 \\
 \end{tabular}
+\caption{Testes de mínimo global para Método Taguchi.}
+\label{table:test-taguchi}
 \end{table}
 
-\section{Testes do cálculo da posição ideal para instalação}
+\section{Cálculo da Posição Ideal para Instalação}
 Criamos testes para verificar se a função de cálculo de área total funcionava
 corretamente com os métodos numéricos.
 Selecionamos uma área retangular e o método Taguchi, e rodamos
 o algoritmo para cálculo das posições de duas novas antenas. O resultado está
-na figura abaixo.
+na figura \ref{fig:taguchi_exemplo}.
 
 \begin{figure}[H]
     \centering
@@ -1326,8 +1390,9 @@ na figura abaixo.
     \label{fig:taguchi_exemplo}
 \end{figure}
 
-Repetimos o processo para os métodos Basinhopping e SLSQP, e obtivemos os 
-seguintes resultados:
+Repetimos o processo para os métodos Basinhopping e SLSQP, e obtivemos os
+resultados nas figuras \ref{fig:basinhopping_exemplo} e
+\ref{fig:slsqp_exemplo}, respectivamente.
 
 \begin{figure}[H]
     \centering
@@ -1345,9 +1410,18 @@ seguintes resultados:
 
 % TODO
 
+\section{Desempenho}
+
+% TODO Nakajo: Medidas de desempenho
+
+\section{User Experience}
+
+% TODO Nakajo: Ver se um usuário leigo conseguiria usar o sistema, e documentar a
+% interação
+
 \section{Resultados}
 
-% TODO
+% TODO Eric: Comentários sobre código final
 
 As fontes do trabalho foram disponibilizadas como código aberto no GitHub, e
 foram separadas em dois repositórios: um para o \textit{back-end} Django, com
@@ -1357,11 +1431,11 @@ Além disso, esta monografia em si também está disponível no GitHub~\cite{rep
 
 \chapter{Considerações Finais}
 
-% TODO: Recapitulação e visão geral sobre o projeto
+% TODO Eric: Recapitulação e visão geral sobre o projeto, falar impressões
 
 \section{Conclusões do Projeto de Formatura}
 
-% TODO: Falar mais especificamente sobre o que deu certo e errado
+% TODO Eric: Falar mais especificamente sobre o que deu certo e errado
 
 \section{Contribuições}
 
@@ -1421,7 +1495,7 @@ Desta forma, podemos estabelecer a \textit{startup} de maneira adequada ao
 mercado e voltada a resultados positivos, tanto na valorização do produto quanto
 ao amadurecimento da empresa no ecossistema de empreendedorismo.
 
-\subsection{Dados}
+\subsection{Dados Adicionais}
 
 Da parte técnica do projeto, mais duas bases de dados que foram estudadas para
 uso foram: a G-Econ~\cite{gecon}, da Universidade de Yale, que apresenta os dados de paridade de
@@ -1669,6 +1743,17 @@ usuários. \\
     \textit{A Joint Optimization of Antenna Parameters in a
     Cellular Network Using Taguchi’s Method}.
     IEEE 73rd Vehicular Technology Conference (VTC Spring), 2011.
+
+    \bibitem{operacao-lte}
+    IZARIO, Bruno R. F.
+    \textit{Comparação do Sistema LTE Operando na Faixa de 2,5 GHz e 700 MHz}.
+    2015. Dissertação (Mestrado em Engenharia Elétrica) -- Escola de Engenharia,
+    Universidade Presbiteriana Mackenzie, São Paulo.
+
+    \bibitem{rf-design}
+    JARVIS, Neil.
+    \textit{Fundamentals of a RF Design}.
+    Rohde \& Schwarz, 2017.
 
     \bibitem{mapa-erb}
     Telebrasil.
