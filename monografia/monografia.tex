@@ -490,6 +490,18 @@ próxima iteração. Além disso, o valor de $\beta_t$ é reduzido de um fator $
     \beta_t^{(m+1)} = \epsilon\beta_t^{(m)}
 \end{equation*}
 
+\subsection{Função a ser otimizada}
+Usamos a área de cobertura como função a ser otimizada pelos algoritmos 
+numéricos. Adotamos que cada ERB tem área de cobertura fixa.
+No algoritmo, definimos uma variável acumuladora que guarda a área de cobertura 
+total das ERBs instaladas. O GeoDjango oferece funções para cálculo da união
+de figuras geométricas, de modo que as áreas de intercecção não são somadas 
+múltiplas vezes. Esse cálculo é feito apenas uma vez no início do 
+algoritmo. Em cada iteração do método numérico, calculamos apenas a área
+das novas ERBs e somamos com a variável acumuladora. Esse é o valor a ser
+otimizado pelos métodos numéricos.
+
+
 \chapter{Tecnologias Utilizadas}
 
 Anteriormente, abordamos os dois componentes principais para compor nosso
@@ -498,7 +510,7 @@ também dados específicos para o SIG na implementação de um dos algoritmos
 apresentados em \textbf{``Aspectos Conceituais''}. Neste capítulo, discutimos as
 decisões tomadas pelo grupo acerca de \emph{frameworks} e bases de dados
 utilizadas no trabalho. Elas serão utilizadas no trabalho descrito pelo próximo
-capítulo.
+capítulo. 
 
 \section{Sistema Web}
 
@@ -1299,6 +1311,37 @@ Schaffer4  &  f(-98.51,-98.51)=0.5  &  f(0,1.25)=0.29 \\
 Three hump camel  &  f(0.0,0.0)=0.0  &  f(0,0)=0.0 \\
 \end{tabular}
 \end{table}
+
+\section{Testes do cálculo da posição ideal para instalação}
+Criamos testes para verificar se a função de cálculo de área total funcionava
+corretamente com os métodos numéricos.
+Selecionamos uma área retangular e o método Taguchi, e rodamos
+o algoritmo para cálculo das posições de duas novas antenas. O resultado está
+na figura abaixo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{imagens/taguchi-exemplo}
+    \caption{Cálculo da nova posição de otimização pelo método Taguchi.}
+    \label{fig:taguchi_exemplo}
+\end{figure}
+
+Repetimos o processo para os métodos Basinhopping e SLSQP, e obtivemos os 
+seguintes resultados:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{imagens/basinhopping-exemplo}
+    \caption{Cálculo da nova posição de otimização pelo método Basinhopping.}
+    \label{fig:basinhopping_exemplo}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{imagens/slsqp-exemplo}
+    \caption{Cálculo da nova posição de otimização pelo método SLSQP.}
+    \label{fig:slsqp_exemplo}
+\end{figure}
 
 % TODO
 
