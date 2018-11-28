@@ -1220,34 +1220,48 @@ igual à saída do método numérico. A seguir estão os testes do método Basin
 
 \begin{table}[H]
 \begin{tabular}{l|l|l}
- Nome da função & (x, y) do mínimo & (x, y) dos mínimos conhecidos \\ \hline
- \rowcolor{Gray}
- Easom & [100.0, 100.0] & [[3.14, 3.14]] \\
- Himmelblau's & [-3.78, -3.28] & [[3, 2], [-2.81, 3.13], [-3.78, -3.28]] \\
- Matyas & [-0.0, -0.0] & [[0, 0]] \\
- \rowcolor{Gray}
- Mccormick & [2.59, 1.59] & [[-0.55, -1.55]] \\
- \rowcolor{Gray}
- Schaffer n.4 & [98.96, 98.02] & [[0, 1.25]] \\
- Three-hump camel & [0.0, -0.0] & [[0, 0]]
+ Nome da função & Mínimo calculado & Mínimo global \\ \hline
+\rowcolor{Gray}
+Easom  &  f(100.0,100.0)=-0.0  &  f(3.14,3.14)=-1.0 \\
+Himmelblaus  &  f(-3.78,-3.28)=0.0  &  f(3,2)=0 \\
+Matyas  &  f(-0.0,-0.0)=0.0  &  f(0,0)=0.0 \\
+\rowcolor{Gray}
+Mccormick  &  f(2.59,1.59)=1.23  &  f(-0.55,-1.55)=-1.91 \\
+\rowcolor{Gray}
+Schaffer4  &  f(98.73,98.64)=0.5  &  f(0,1.25)=0.29 \\
+Three hump camel  &  f(-0.0,-0.0)=0.0  &  f(0,0)=0.0 \\
 \end{tabular}
 \end{table}
 
 A seguir estão os testes do método SLSQP.
 \begin{table}[H]
 \begin{tabular}{l|l|l}
- Nome da função & (x, y) do mínimo & (x, y) dos mínimos conhecidos \\ \hline
- \rowcolor{Gray}
- Easom & [100.0, 100.0] & [[3.14, 3.14]] \\
- \rowcolor{Gray}
- Himmelblau's & [-2.85, 3.08] & [[3, 2], [-2.81, 3.13], [-3.78, -3.28]] \\
- \rowcolor{Gray}
- Matyas & [-0.65, -0.65] & [[0, 0]] \\
- \rowcolor{Gray}
- Mccormick & [2.51, 1.51] & [[-0.55, -1.55]] \\
- \rowcolor{Gray}
- Schaffer n.4 & [100.0, 100.0] & [[0, 1.25]] \\
- Three-hump camel & [0.0, -0.0] & [[0, 0]]
+ Nome da função & Mínimo calculado & Mínimo global \\ \hline
+\rowcolor{Gray}
+Easom  &  f(100.0,100.0)=-0.0  &  f(3.14,3.14)=-1.0 \\
+\rowcolor{Gray}
+Himmelblaus  &  f(-2.85,3.08)=0.17  &  f(3,2)=0 \\
+\rowcolor{Gray}
+Matyas  &  f(-0.65,-0.65)=0.02  &  f(0,0)=0.0 \\
+\rowcolor{Gray}
+Mccormick  &  f(2.51,1.51)=1.24  &  f(-0.55,-1.55)=-1.91 \\
+\rowcolor{Gray}
+Schaffer4  &  f(100.0,100.0)=0.5  &  f(0,1.25)=0.29 \\
+Three hump camel  &  f(0.0,-0.0)=0.0  &  f(0,0)=0.0 \\
+\end{tabular}
+\end{table}
+
+A seguir estão os testes do método Taguchi.
+\begin{table}[H]
+\begin{tabular}{l|l|l}
+Nome da função & Mínimo calculado & Mínimo global \\ \hline
+Easom  &  f(3.14,3.14)=-1.0  &  f(3.14,3.14)=-1.0 \\
+Himmelblaus  &  f(3.0,2.0)=0.0  &  f(3,2)=0 \\
+Matyas  &  f(0.0,0.0)=0.0  &  f(0,0)=0.0 \\
+Mccormick  &  f(-0.55,-1.55)=-1.91  &  f(-0.55,-1.55)=-1.91 \\
+\rowcolor{Gray}
+Schaffer4  &  f(-98.51,-98.51)=0.5  &  f(0,1.25)=0.29 \\
+Three hump camel  &  f(0.0,0.0)=0.0  &  f(0,0)=0.0 \\
 \end{tabular}
 \end{table}
 
