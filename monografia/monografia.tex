@@ -1130,33 +1130,45 @@ como planejamos e implementamos o cada uma dessas partes.
 \subsection{Projeto de Telas}
 O planejamento do \textit{front-end} começou com o desenho das telas. Pensamos em telas
 que implementassem os casos de uso, além de serem fáceis de usar tanto em \textit{desktop}
-como em \textit{smartphones}. Criamos um diagrama de telas para representar
-a sequência em que o usuário acessará as telas.
-
-% TODO Nakajo: IMAGEM diagrama de telas
+como em \textit{smartphones}.
 
 A primeira tela projetada foi a tela de mapas. Inicialmente,
-ela teria o mapa com os clusters, e um menu lateral com opções de filtro por
+ela teria o mapa com os clusters e um menu lateral com opções de filtro por
 operadora e tecnologia, opções de remoção, adição e exportação de ERBs e um
-botão para executar o algoritmo de posição ideal a partir de parâmetros entrados
-pelo usuário. Criamos os desenhos com papel e lápis, visto que tratam-se de um
-projeto de baixa fidelidade.
+botão para executar o algoritmo de posição ideal a partir de parâmetros fornecidos
+pelo usuário. Criamos os desenhos com papel e lápis, visto que tratam-se de uma
+representação de baixa fidelidade.
 
-% TODO Nakajo: IMAGEM rascunho da tela de mapas
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{imagens/rascunho-mapa}
+    \caption{Projeto inicial da tela de mapas.}
+    \label{fig:rascunho_mapa}
+\end{figure}
 
 Depois de algumas iterações, removemos algumas funcionalidades e adicionamos
 outros filtros.
 
 Outra tela projetada foi a tela inicial, com imagens do sistema
-funcionando, textos explicativos e um formulário de contato. A ideia dessa tela
+funcionando, textos explicativos e um formulário de contato. O objetivo dessa tela
 é fornecer uma ideia inicial das \textit{features} do nosso projeto.
 
-% TODO Nakajo: IMAGEM rascunho da tela de contato
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{imagens/rascunho-landing}
+    \caption{Projeto inicial da tela inicial.}
+    \label{fig:rascunho_landing}
+\end{figure}
 
 Pensamos também na tela de \textit{login}, na qual o usuário entra com seu nome de usuário e
 senha. Essa seria a tela à qual ele seria redirecionado caso não estivesse logado.
 
-% TODO Nakajo: IMAGEM rascunho da tela de login
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=2in]{imagens/rascunho-login}
+    \caption{Projeto inicial da tela de login.}
+    \label{fig:rascunho_login}
+\end{figure}
 
 \subsection{Implementação com Vue.js e Vuetify}
 Usamos o \textit{framework} Vue.js no front-end do nosso projeto. Ele é um dos
@@ -1182,15 +1194,31 @@ cidades. Os filtros não implementados foram desabilitados.
 Com isso, a tela final ficou pouco diferente da planejada na etapa de projeto de
 telas.
 
-% TODO Nakajo: IMAGEM
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6in]{imagens/tela-mapas}
+    \caption{Tela de mapas.}
+    \label{fig:tela_mapas}
+\end{figure}
 
 Ao escolher a opção de menu de seleção, podemos selecionar um retângulo ou
 circunferência no mapa.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6in]{imagens/tela-mapas-retangulo}
+    \caption{Tela de mapas de seleção de área retangular.}
+    \label{fig:tela_mapas_retangulo}
+\end{figure}
+
 A tela de \textit{login} foi um formulário simples com um campo de usuário e senha.
 
-% TODO Nakajo: IMAGEM
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{imagens/tela-login}
+    \caption{Tela de login.}
+    \label{fig:tela_login}
+\end{figure}
 \subsection{Integração com \textit{Back-end}}
 
 O \textit{front-end} foi responsável por fazer as chamadas de API.
@@ -1222,6 +1250,8 @@ Realizamos testes para verificar a corretude dos métodos numéricos que usamos,
 o SLSQP, o Basinhopping e o Taguchi. Usamos funções de teste para otimização
 com mínimo global conhecido, e verificamos se era
 igual à saída do método numérico. A seguir estão os testes do método Basinhopping.
+A definição das funções e o domínio de busca está disponível na referência~\cite{optimization-functions}.
+As linhas marcadas em cinza mostram funções na qual o método numérico não achou o mínimo global.
 
 \begin{table}[H]
 \begin{tabular}{l|l|l}
@@ -1680,6 +1710,12 @@ usuários. \\
     \textit{Sistema de Medição de Tráfego Internet}.
     Disponível em: http://simet.nic.br/mapas-app.html.
     Acesso em: 24 de março de 2018.
+
+    \bibitem{optimization-functions}
+    Wikipedia.
+    \textit{Test functions for optimization}.
+    Disponível em: https://en.wikipedia.org/wiki/Test\_functions\_for\_optimization.
+    Acesso em: 28 de novembro de 2018.
 
 \end{thebibliography}
 % ========== Apêndices (opcional) ==========
