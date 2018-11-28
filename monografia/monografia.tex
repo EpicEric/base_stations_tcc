@@ -1329,7 +1329,11 @@ conforme o esperado.
 
 \chapter{Testes e Avaliação}
 
-% TODO: Introdução do capítulo
+Após a implementação de funcionalidades-chave do projeto, como os algoritmos de
+otimização e o desenvolvimento do \textit{front-end}, seguiu-se uma fase de
+testes para avaliar a corretude, analisar métricas de qualidade ou comparar
+diferentes implementações, dependendo do caso. Os resultados obtidos foram
+descritos a seguir.
 
 \section{Métodos Numéricos}
 Realizamos testes para verificar a corretude dos métodos numéricos que usamos,
@@ -1471,12 +1475,47 @@ serem seguidos após o TCC.
 
 \section{Conclusões do Projeto de Formatura}
 
-% TODO Eric: Falar mais especificamente sobre o que deu certo e errado e justificar
+Em nossa visão, conseguimos seguir satisfatoriamente o cronograma estabelecido
+no capítulo de ``Metodologia do Trabalho'', implementando os requisitos
+definidos para o MVP. Mais importante, ficamos contentes com o resultado final
+obtido, e temos crença de que o produto atual ainda pode ser desenvolvido para
+atingir uma alta qualidade para o mercado de instalação de antenas celulares.
+Um novo objetivo do ponto de vista dos requisitos seria obter resultados mais
+rápidos e mais precisos, buscando-se uma alternativa à solução de otimização
+atual.
+
+Também conseguimos expandir nossos conhecimentos sobre aplicações web
+para design, desenvolvimento e \textit{deployment}. Ainda melhoramos nossa
+confiança nos conhecimentos prévios dos \textit{frameworks} Django e Vue, além
+das ferramentas para disponibilizar serviços na web e PostgreSQL.
+
+Houve dificuldades ao longo da implementação que o grupo conseguiu
+eventualmente resolver ou contornar. Sentimos que o principal fator que
+atrapalhou no projeto foi a falta de tempo para conclusão das tarefas do
+cronograma, já que houve muitos trabalhos das demais disciplinas competindo
+pelo tempo dedicado aos estudos.
+
+Como mencionamos no capítulo anterior, na seção sobre o código desenvolvido,
+uma das partes que fez falta ao fim deste projeto foi uma boa implementação de
+testes, que permitiria uma coleta de métricas para avaliar rigorosamente os
+objetivos e resultados do trabalho.
 
 \section{Contribuições}
 
-% TODO Eric: Expressar as contribuições do TCC para o meio acadêmico, para a
-% sociedade e para o grupo. Listar o que é de autoria do grupo
+Todo o código desenvolvido pelo grupo nos repositórios foi feito do zero. As
+contribuições externas vieram por meio de bibliotecas, dados e serviços livres:
+
+\begin{itemize}
+\item \textbf{Banco de dados e extensões}: PostgreSQL, PostGIS, GEOS, GDAL,
+PROJ.4, GeoIP2.
+\item \textbf{\textit{Back-end}}: Django, Django REST Framework, numpy, scipy,
+Google Earth Engine API.
+\item \textbf{Servidor}: Nginx, Gunicorn, Let's Encrypt.
+\item \textbf{Front-end}: Vue, Vuetify, axios, Leaflet, Leaflet.MarkerCluster,
+Leaflet.draw.
+\item \textbf{Ferramentas}: GitHub, Netlify, LaTeX.
+\item \textbf{Dados}: Telebrasil, OpenCelliD, Google Earth Engine.
+\end{itemize}
 
 \section{Perspectivas de Continuidade}
 
