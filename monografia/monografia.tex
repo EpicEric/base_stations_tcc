@@ -1100,9 +1100,9 @@ foram tornados opcionais por razões semelhantes.
 
 \section{\textit{Front-end}}
 Para elaborar o \textit{front-end}, usamos o \textit{framework} Vue.js.
-O front-end da nossa aplicação foi responsável pela parte visual, pela 
+O front-end da nossa aplicação foi responsável pela parte visual, pela
 comunicação do cliente com a API em Django, pela exibição dos dados no mapa,
-e pelo recebimento das entradas do usuário. Nas seções a seguir, detalharemos 
+e pelo recebimento das entradas do usuário. Nas seções a seguir, detalharemos
 como planejamos e implementamos o cada uma dessas partes.
 
 \subsection{Projeto de Telas}
@@ -1114,16 +1114,16 @@ a sequência em que o usuário acessará as telas.
 % TODO Nakajo: IMAGEM diagrama de telas
 
 A primeira tela projetada foi a tela de mapas. Inicialmente,
-ela teria o mapa com os clusters, e um menu lateral com opções de filtro por 
-operadora e tecnologia, opções de remoção, adição e exportação de ERBs e um 
+ela teria o mapa com os clusters, e um menu lateral com opções de filtro por
+operadora e tecnologia, opções de remoção, adição e exportação de ERBs e um
 botão para executar o algoritmo de posição ideal a partir de parâmetros entrados
 pelo usuário. Criamos os desenhos com papel e lápis, visto que tratam-se de um
 projeto de baixa fidelidade.
 
 % TODO Nakajo: IMAGEM rascunho da tela de mapas
 
-Depois de algumas iterações, removemos algumas funcionalidades e adicionamos 
-outros filtros. 
+Depois de algumas iterações, removemos algumas funcionalidades e adicionamos
+outros filtros.
 
 Outra tela projetada foi a tela inicial, com imagens do sistema
 funcionando, textos explicativos e um formulário de contato. A ideia dessa tela
@@ -1131,7 +1131,7 @@ funcionando, textos explicativos e um formulário de contato. A ideia dessa tela
 
 % TODO Nakajo: IMAGEM rascunho da tela de contato
 
-Pensamos também na tela de \textit{login}, na qual o usuário entra com seu nome de usuário e 
+Pensamos também na tela de \textit{login}, na qual o usuário entra com seu nome de usuário e
 senha. Essa seria a tela à qual ele seria redirecionado caso não estivesse logado.
 
 % TODO Nakajo: IMAGEM rascunho da tela de login
@@ -1145,7 +1145,7 @@ Com o \textit{single page application}, quando o usuário muda de tela, a págin
 componentes diferentes que são trocados. Dessa forma, os componentes comuns a várias telas (como \textit{header} e \textit{footer})
 nunca são recarregados. Isso propicia uma experiência mais fluida para o usuário.
 
-Para tratar do visual do sistema, usamos a biblioteca Vuetify. Ela provê componentes 
+Para tratar do visual do sistema, usamos a biblioteca Vuetify. Ela provê componentes
 com visual característico do Material Design para o Vue.js. O Material Design é
 uma linguagem visual criada pela Google que oferece um visual intuitivo que
 se aproxima do design do mundo real com tinta e papel, trabalhando com camadas
@@ -1157,8 +1157,8 @@ Com relação às telas criadas, a tela de mapas usa um menu lateral, com opçõ
 filtro, um botão para executar o algoritmo de otimização, e um botão para exibir mapa de
 calor. As opções de menu são seleções retangulares, por círculo, tecnologia e
 cidades. Os filtros não implementados foram desabilitados.
-Com isso, a tela final ficou pouco diferente da planejada na etapa de projeto de 
-telas. 
+Com isso, a tela final ficou pouco diferente da planejada na etapa de projeto de
+telas.
 
 % TODO Nakajo: IMAGEM
 
@@ -1173,7 +1173,7 @@ A tela de \textit{login} foi um formulário simples com um campo de usuário e s
 
 O \textit{front-end} foi responsável por fazer as chamadas de API.
 Usamos o axios.js, uma biblioteca JavaScript bastante popular usada para fazer
-requisições HTTP. Com o axios, os retornos da API são convertidos
+requisições HTTP. Com ele, os retornos da API são convertidos
 automaticamente em JSON, formato adequado para manipulação dentro do JavaScript.
 
 Para a autenticação, na página de \textit{login}, enviamos o usuário e a senha digitados
@@ -1185,7 +1185,7 @@ seja previsível e reflita para todos os componentes.
 
 Possuindo esse \textit{token}, podemos fazer as chamadas de API restritas aos usuários
 autenticados, e assim implementar nossos casos de uso. Isso foi feito adicionando-o
-ao cabeçalho \texttt{Authorization} do HTTP. Caso o usuário tentasse acessar a 
+ao cabeçalho \texttt{Authorization} do HTTP. Caso o usuário tentasse acessar a
 página de mapas e o \textit{token} não estivesse salvo no Vuex, o usuário seria
 redirecionado à página de login.
 
@@ -1234,7 +1234,6 @@ A seguir estão os testes do método SLSQP.
 \end{tabular}
 \end{table}
 
-
 % TODO
 
 \section{Resultados}
@@ -1270,20 +1269,61 @@ criação de empresa para a distribuição do produto.
 
 \subsection{Plano de Negócio}
 
-% TODO Eric: Descrever como seria realizada a criação de empresa e busca de fundos,
-% e o modelo de negócios adotado
+Também foi feito um estudo de implementação do projeto do MVP na concepção de
+um produto real; em outras palavras, as etapas para prosseguir com a criação
+de uma \textit{startup}. Em especial na própria Escola Politécnica, há uma
+organização específica para promoção dessa cultura, chamada Núcleo de
+Empreendedorismo da USP (NEU), que fomenta e dá suporte à criação de pequenas
+empresas de alunos~\cite{neu}.
+
+Em linhas gerais, estabelecemos um processo de implantação da empresa após a
+conclusão do TCC, seguindo-se as recomendações do próprio NEU:
+
+\begin{enumerate}
+\item Entrar em contato com o NEU e avaliar recursos disponíveis no seu
+programa de pré-aceleração, como contatos do mercado e mentoria de
+empreendedorismo.
+\item\label{business-landing-page} Completar a \textit{landing page} com os
+principais pontos fortes do produto, e divulgar para os \textit{stakeholders}.
+Assim, será possível obter \textit{feedback} sobre o interesse do mercado --
+pelo número de acessos à página e pelo preenchimento de formulários de
+notificações por e-mail --, além de estabelecer uma base de clientes realmente
+interessada no negócio.
+\item Utilizando-se como base o conceito de \textit{Business Model Canvas},
+elaborar um modelo de negócio, listando os objetivos e medidas a serem tomados.
+A princípio, seria dada ênfase na escolha de parceiros e clientes, com foco
+secundário nas atividades e recursos da empresa.
+\item Validar MVP com os primeiros usuários do sistema selecionados no passo
+\ref{business-landing-page}. Com isso, será possível obter \textit{feedback} e
+métricas de uso, estabelecidas de acordo com as seguintes hipóteses (baseadas
+nos nossos recursos não-funcionais):
+\begin{itemize}
+\item O produto é de fácil utilização.
+\item O sistema é útil para os instaladores de antenas.
+\item Os clientes possuem confiança na qualidade do produto.
+\end{itemize}
+\item Com os dados coletados acima, aperfeiçoar o produto incrementalmente, em
+preparação para reorganizar a estrutura da empresa. Isso permite aumentar o
+número de clientes e a própria empresa em contrapartida, seguindo-se a ajuda
+do NEU nesta etapa.
+\end{enumerate}
+
+Desta forma, podemos estabelecer a \textit{startup} de maneira adequada ao
+mercado e voltada a resultados positivos, tanto na valorização do produto quanto
+ao amadurecimento da empresa no ecossistema de empreendedorismo.
 
 \subsection{Dados}
 
-Mais duas bases de dados que foram estudadas para uso no projeto são: a G-Econ~\cite{gecon},
-da Universidade de Yale, que apresenta os dados de paridade de
-poder de comparar geograficamente; e o SIMET-NIC~\cite{simet}, com o acesso e
-qualidade da Internet no Brasil. Estas duas bases de dados, em conjunto com os
+Da parte técnica do projeto, mais duas bases de dados que foram estudadas para
+uso foram: a G-Econ~\cite{gecon}, da Universidade de Yale, que apresenta os dados de paridade de
+poder de compra geograficamente; e o SIMET-NIC~\cite{simet}, com o acesso e
+qualidade da Internet no Brasil. Estas duas bases de dados, em conjunto com as
 anteriores, podem permitir uma análise aprofundada de parâmetros ótimos para a
 instalação de novas antenas e avaliação da estrutura pré-existente; porém,
-a relação destes dados não cabe ao nosso caso de uso principal. Elas serão mais
-interessantes em uma análise futura, ao trabalhar em conjunto com os
-\textit{stakeholders} para análises de instalação com mais fatores.
+a relação destes dados não cabe ao nosso caso de uso principal desta monografia. Elas podem
+ser úteis em uma análise futura, ao trabalhar em conjunto com os
+\textit{stakeholders} para análises de instalação levando-se em conta parâmetros socioeconômicos,
+que seriam mais interessantes a uma empresa de telecomunicação.
 
 \subsection{Descrição dos Casos de Uso Adicionais}
 
@@ -1580,6 +1620,12 @@ usuários. \\
     \textit{tcc}.
     Disponível em: https://github.com/EpicEric/tcc.
     Acesso em: 27 de janeiro de 2018.
+
+    \bibitem{neu}
+    Núcleo de Empreendedorismo da USP.
+    \textit{Guia NEU de Suporte aos Alunos}.
+    Disponível em: http://www.uspempreende.org/ebook/.
+    Acesso em: 27 de novembro de 2018.
 
     \bibitem{gecon}
     Yale University.
