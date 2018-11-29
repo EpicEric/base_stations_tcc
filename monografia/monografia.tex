@@ -196,7 +196,7 @@ System, Web Application.
 
 \textbf{TCC:} Trabalho de Conclusão de Curso
 
-\textbf(FSPL:) Perda de Propagação em Espaço Livre (do inglês \textit{Free-Space Path Loss})
+\textbf{FSPL:} Perda de Propagação em Espaço Livre (do inglês \textit{Free-Space Path Loss})
 
 \textbf{CSV:} Valores Separados por Vírgula (do inglês \textit{Comma-Separated Values})
 
@@ -221,8 +221,8 @@ System, Web Application.
 
 Na revolução da informação em que vivemos hoje, onde cada vez mais pessoas
 estão conectadas à rede, o acesso à Internet tem se tornado cada vez mais
-essencial no dia-a-dia, até mesmo a populações fisicamente isoladas de regiões
-urbanas. Empresas bem conhecidas, como Vivo e Claro, vêm se empenhando para
+essencial no dia-a-dia, até mesmo a populações fisicamente isoladas de qualquer região
+urbana. Empresas bem conhecidas, como Vivo e Claro, vêm se empenhando para
 garantir melhor acesso a mais pessoas, mas se deparam com problemas de
 engenharia nesta tarefa.
 
@@ -264,7 +264,7 @@ obter, gravar, gerir, analisar e visualizar dados geográficos. Seu uso permite
 tomar decisões, analisar estatísticas e resolver problemas de otimização a
 partir de dados geográficos. O SIG é uma base que pode ser usada tanto no
 dia-a-dia para encontrar lojas próximas, quanto para profissionais rastrearem
-padrões de migração, monitorarem desmatamento ou planejamento urbano,
+padrões de migração de ave ou monitorarem desmatamento ou planejamento urbano,
 por exemplo.
 
 No nosso projeto, usaremos um framework de SIG para gravar e exibir a posição de
@@ -282,8 +282,8 @@ desenvolveremos um \textit{front-end} Web que permita selecionar a região na
 qual se pretende instalar alguma ERB. Esta interface se comunicará com o
 \textit{back-end} do SIG, para obter e calcular os dados desejados.
 
-O design deverá ser responsivo, podendo ser utilizado em plataformas mobile
-ou desktop, e simples, com controles com experiência de usuário (UX) intuitiva
+O design deverá ser responsivo, podendo ser utilizado em plataformas \textit{mobile}
+ou \textit{desktop}, e simples, com controles com experiência de usuário (UX) intuitiva
 para verificar a posição ótima de instalação de antenas em determinada área
 escolhida pelo usuário. Para isso, a interface deverá exibir um mapa com as
 informações do SIG, que permita ao usuário selecionar uma área desejada. Os
@@ -295,7 +295,7 @@ isso, o \textit{front-end} deverá obter dados e atualizar a tela dinamicamente.
 Com uma análise preliminar do setor, verificamos o mercado de instalação e
 aluguel de torres telefônicas no Brasil para comparar as tecnologias utilizadas
 em estudos de ERBs. Assim, pesquisamos serviços similares da concorrência. Um
-dos produtos encontrados, chamado Atoll, é um software de planejamento de
+dos produtos encontrados, chamado Atoll, é um \textit{software} de planejamento de
 células e posições de ERBs, similar ao que desejamos desenvolver, porém com
 funcionalidades estendidas como manutenção e melhoria de locais
 pré-estabelecidos, e parâmetros avançados de especificação das antenas, além de
@@ -303,7 +303,7 @@ módulos para outras tecnologias de telecomunicação como Wi-Fi~\cite{atoll}.
 
 Porém, a ferramenta parece muito voltada à instalação urbana e análise de
 infra-estrutura pré-existente, sem foco em uma eventual expansão. Por isso,
-vemos como que há necessidade do mercado por uma ferramenta voltada à ampliação
+vemos como há necessidade do mercado por uma ferramenta voltada à ampliação
 de uma rede de ERBs, e que seja de fácil uso pelos instaladores de antenas do
 setor comercial. A utilização de um \textit{front-end} web também contornará
 problemas relacionados à instalação de programas no computador, como
@@ -329,7 +329,7 @@ Como explica o presidente da consultoria Teleco, há problemas com as leis atuai
 para instalação de novas antenas e, portanto, a adoção de novas
 tecnologias~\cite{tude}. Com a chegada do 5G no Brasil, espera-se que haja maior
 disposição dos agentes de Estado por agilidade no processo de licitação de novas
-antenas, já que há necessidade dos usuários por um acesso à Internet melhor e
+antenas, já que há demanda dos usuários por um acesso à Internet melhor e
 mais veloz. Nesse sentido, a ferramenta pode acelerar a instalação de novas
 antenas.
 
@@ -402,7 +402,7 @@ utilizados.
 \section{Representação Geográfica}
 
 Devido à complexidade imposta pelo problema de se utilizar valores geográficos,
-essa seção da monografia se dedicará a como o PostGIS permite a modelagem dos
+essa seção da monografia se dedicará a como o SIG permite a modelagem dos
 diversos componentes utilizados nos capítulos subsequentes.
 
 O Open Geospatial Consortium é uma organização sem fins lucrativos dedicada à
@@ -441,7 +441,7 @@ como população e relevo, mostram os valores como regiões no mapa. A razão pa
 isso é facilitar a transformação dos dados vetoriais (i.e. escalares) para
 \textit{raster} (i.e. imagens) na hora de exibir ao usuário. Assim, em algumas
 das bases descritas posteriormente nesta monografia, esses dados são
-disponibilizados como uma lista de tuplas de área (\texttt{Polygon}s) e valor
+disponibilizados como uma lista de tuplas ``área (\texttt{Polygon}) e valor''
 (número de habitantes ou altitude em metros, respectivamente). Estes polígonos
 possuem tamanho igual à resolução da análise, que depende da metodologia usada
 para gerar os dados. Um exemplo de dado \textit{raster} com múltiplos polígonos
@@ -450,9 +450,9 @@ resolução de 1 arco-segundo, o que equivale a aproximadamente 30 metros.
 
 Para determinadas análises, como estimar a altitude em um ponto qualquer ou
 contar a população em uma área, pode ser mais interessante transformar esses
-dados em uma lista de tuplas de pontos (\texttt{Point}s) e valores, com pontos
+dados em uma lista de tuplas ``ponto (\texttt{Point}s) e valor'', com pontos
 centrados nos polígonos. A razão para isso é que estes dados ocupam menos espaço
-em disco e os algoritmos de distância e pertencimento a uma área são em geral
+em disco e os algoritmos de filtro de distância e pertencimento a uma área são em geral
 mais rápidos.
 
 \section{Propagação em Espaço Livre}
@@ -479,7 +479,7 @@ decibéis, reescrevemos como:
 \end{equation*}
 Com frequência em MHz e distância em km.
 
-Esta fórmula é útil para descrever de forma simples a atenuação do sinal
+A fórmula de FSPL é útil para descrever de forma simples a atenuação do sinal
 recebido nos dispositivos celulares e, portanto, será utilizada neste projeto
 para verificar o comportamento das antenas.
 
@@ -508,17 +508,17 @@ descrito em detalhes a seguir.
 \subsection{Método Taguchi}
 
 O Método Taguchi é um método estatístico que tem como objetivo diminuir o número
-de experimentos necessários para se ajustar um conjunto de parâmetros e assim
-se obter um aumento de performance no sistema. No trabalho em questão, os
+de experimentos necessários para se ajustar um conjunto de parâmetros e, assim,
+obter um ganho de desempenho no sistema. No trabalho em questão, os
 parâmetros a serem otimizados são as coordenadas (latitude e longitude) de cada
 ERB a ser instalada. Como tais parâmetros são contínuos, criamos níveis
-associados, que correspondem (em cada parâmetro) a valores distribuídos
-uniformemente dentro do intervalo avaliado.
+associados, que correspondem cada parâmetro a valores distribuídos uniformemente
+dentro do intervalo avaliado.
 
 O primeiro passo do Método Taguchi é escolher um \textit{array} ortogonal que possua o
 número de colunas iguais ao número de parâmetros analisados, e possua a
-quantidade de níveis adequada. Um \textit{array} orthogonal é uma tabela, na qual existe um
-número $t$ (chamado de força do \textit{array} orthogonal), o qual para qualquer seleção de
+quantidade de níveis adequada. Um \textit{array} ortogonal é uma tabela na qual há um
+número $t$ (chamado de força do \textit{array} ortogonal), sendo que, para qualquer seleção de
 $t$ colunas na tabela, todas as tuplas aparecem o mesmo número de vezes.
 
 Em seguida, mapeamos cada nível a um valor do parâmetro. Sejam $min_t$ e $max_t$
@@ -562,8 +562,8 @@ próxima iteração. Além disso, o valor de $\beta_t$ é reduzido de um fator $
 Usamos a área de cobertura como função a ser otimizada pelos algoritmos
 numéricos. Adotamos que cada ERB tem área de cobertura fixa.
 No algoritmo, definimos uma variável acumuladora que guarda a área de cobertura
-total das ERBs instaladas. O GeoDjango oferece funções para cálculo da união
-de figuras geométricas pela biblioteca GEOS, de modo que as áreas de intersecção
+total das ERBs instaladas. As bibliotecas geoespaciais, como a GEOS, oferecem funções
+para cálculo da união de figuras geométricas, de modo que as áreas de intersecção
 não são somadas múltiplas vezes. Esse cálculo é feito apenas uma vez no início
 do algoritmo.
 
@@ -610,22 +610,22 @@ para elaborar as telas do nosso sistema.
 Todos os dados usados para o trabalho vieram de fontes abertas, e
 serão utilizados no SIG para exibição em telas ou cálculos de otimização.
 
-Primeiramente, utilizamos o Mapa de ERBs Brasil presente no portal Telebrasil~\cite{mapa-erb}.
+Primeiramente, estudamos o ``Mapa de ERBs Brasil'', presente no portal Telebrasil~\cite{mapa-erb}.
 Essa base contém uma lista de ERBs do Brasil de novembro de
-2017, com informação de operadora, endereço, e posição geográfica de cada ERB.
-Essas informações são essenciais para o cálculo da posição ótima da ERB para
-maximizar a cobertura da célula de determinada operadora.
+2017 com informações de operadora, endereço, e posição geográfica de cada ERB.
+Essas informações são essenciais no cálculo da posição ótima da ERB para
+maximizar a cobertura da célula de cada operadora.
 
 Também utilizamos a base do OpenCelliD, da empresa Unwired Labs~\cite{opencellid}.
 Essa base contém uma lista de ERBs do mundo inteiro, com o
 CGI de cada ERB. Os dados foram obtidos através da colaboração de usuários do
-aplicativo LocationAPI da Unwired Labs. O LocationAPI trata-se de um serviço de
+aplicativo LocationAPI da Unwired Labs, que consiste de um serviço de
 geolocalização que não depende de GPS. Dessa forma, com a base da OpenCelliD,
 podemos estimar a posição de um celular a partir das ERBs às quais ele está
 conectado.
 
 Outra base de dados em estudo foi o Google Earth Engine~\cite{earthengine}, uma
-API específica para dados geográficos públicos do Google, como relevo e
+API específica para dados geográficos públicos da Google, como relevo e
 densidade populacional. Devido à extensão destes dados, e à impraticidade de
 armazenamento em banco próprio, será realizada dependência desta base através
 de sua API, que possui implementação em Python. Esta implementação será
@@ -669,10 +669,10 @@ continuamos dentro das nossas previsões de projeto.
 \end{figure}
 
 Desta forma, nos organizamos para realizar a implementação do sistema, separando
-as tarefas a serem realizadas nas categorias: pesquisa, projeto, e apresentação.
+as tarefas a serem realizadas nas categorias ``pesquisa'', ``projeto'', e ``apresentação''.
 Utilizamos o cronograma oficial da disciplina de TCC para elaborar um diagrama de Gantt na
 Figura~\ref{fig:gantt} com a sequência de tarefas a serem divididas pelo grupo
-ao longo do ano para cada semana. Indicamos também o período extra-escolar em
+ao longo do ano para cada semana. Indicamos também o período de módulo de estágio em
 fundo azul, quando haverá desenvolvimento do sistema de forma mais lenta e
 sem cronograma específico.
 
@@ -707,14 +707,14 @@ visualização do mapa.
 
 Definido o escopo, começamos a pensar, junto com nosso orientador, sobre os
 requisitos do projeto. A estratégia utilizada foi o \textit{brainstorming}, leitura de
-obras de referência na literatura de otimização de antenas, e pesquisa de softwares com escopo parecido.
-A ideia inicial era ter como ator principal do sistema o funcionário cadastrado
-de uma empresa de instalação de antenas, porém depois consideramos que seria
+obras de referência na literatura de otimização de antenas, e pesquisa de \textit{softwares}
+com escopo parecido. A ideia inicial era ter como ator principal do sistema o funcionário
+cadastrado de uma empresa de instalação de antenas, porém depois consideramos que seria
 complementar ao projeto considerar um usuário não-comercial, assim
 como um usuário administrador. Nessa fase, perguntamo-nos como o nosso projeto
-poderia ajudar esses atores, qual informação ele deveria produzir. Esse processo
+poderia ajudar esses atores, e quais informações ele poderia produzir. Esse processo
 nos levou à modelagem de diversos casos de uso de interesse do sistema. Alguns
-foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seção
+foram deixados de lado por fugirem do escopo do MVP, e estão listados na seção
 \textbf{``Perspectivas de Continuidade''} do último capítulo.
 
 \section{Casos de Uso}
@@ -799,7 +799,7 @@ foram deixados de lado por fugirem ao escopo do MVP, e estão listados na seçã
 \begin{enumerate}
 \item Usuário requisita exibição de mapa.
 \item Sistema pede que o usuário permita acessar sua geolocalização.
-\item Usuário permite que sistema acesse sua geolocalização.
+\item Usuário permite que o sistema acesse sua geolocalização.
 \item\label{step:show-map:user-centered-map} Sistema mostra um mapa centrado no usuário.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs apresentado. \\
@@ -854,9 +854,9 @@ uma operadora definida pelo usuário. \\
 \textbf{Extensões}: -{}- \\
 \textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição) \\
 
-\noindent \textbf{Caso de Uso \usecase{find-optimal-location}}: Encontrar local de instalação de ERBs.
-\textbf{Descrição}: Este caso de uso descreve a exibição de posições otimizadas \\
-para instalação de ERBs.
+\noindent \textbf{Caso de Uso \usecase{find-optimal-location}}: Encontrar local de instalação de ERBs. \\
+\textbf{Descrição}: Este caso de uso descreve a exibição de posições otimizadas
+para instalação de ERBs. \\
 \textbf{Evento iniciador}: Usuário clica na opção ``Calcular posição para instalação''. \\
 \textbf{Atores}: Administrador, Funcionário. \\
 \textbf{Pré-condições}: Usuário logado no sistema e na página ``Mapa de ERBs''. \\
@@ -868,9 +868,8 @@ instaladas'' e ``Parâmetros a serem considerados no cálculo''.
 \item Usuário preenche o formulário e clica em avançar.
 \item Sistema solicita para o usuário selecionar a região de interesse.
 \item Usuário seleciona a região de interesse.
-\item Sistema informa que operação pode demorar alguns momentos.
-\item\label{step:find-optimal-location:show-positions} Sistema indica os locais calculados no mapa.
-\item Sistema mostra número de usuários atendidos por cada nova antena.
+\item Sistema informa que operação pode demorar.
+\item\label{step:find-optimal-location:show-positions} Sistema indica os locais calculados no mapa e mostra número de usuários atendidos por cada nova antena.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com posições otimizadas apresentadas. \\
 \textbf{Extensões}: Operação demora muito tempo: Sistema informa que não foi
@@ -882,7 +881,7 @@ possível calcular a posição (passo \ref{step:find-optimal-location:show-posit
 Definidos os requisitos e as tecnologias a serem utilizadas, e os conceitos
 abordados em cada algoritmo, iniciaram-se as implementações conforme o capítulo
 \textbf{``Metodologia do Trabalho''}. As partes relevantes do sistema e as
-soluções encontradas estão mencionadas abaixo.
+soluções encontradas foram mencionadas abaixo.
 
 \section{\textit{Back-end}}
 
@@ -895,23 +894,23 @@ seções a seguir, detalharemos as medidas tomadas em cada etapa.
 \subsection{Modelagem de ERBs}
 
 Anteriormente, comentamos sobre a criação de dois modelos de ERBs, cada um
-proveniente de uma dentre duas bases de dados. Uma base delas utiliza
-dados oficiais da Anatel para indicar as antenas oficialmente registradas,
-portanto que pertencem a uma única operadora legalmente~\cite{mapa-erb}.
+referente a uma de duas bases de dados. Uma das base utiliza
+dados oficiais da Anatel para indicar as antenas oficialmente registradas que,
+portanto, pertencem a uma única operadora oficialmente~\cite{mapa-erb}.
 Estas antenas foram denominadas ``Antenas Apropriadas'' (``\textit{Owned Base
 Stations}''), pois indicam as operadoras às quais pertencem.
 
 A outra base apresenta antenas distinguíveis por um identificador global,
 portanto acaba exibindo uma única antena compartilhada como várias entradas do
-banco de dados para cada respectiva operadora~\cite{opencellid}. Como possuem um
-identificador de padrão global, estes dados foram chamados de ``Antenas
+banco de dados, equivalente ao número de operadoras do compartilhamento~\cite{opencellid}.
+Como possuem um identificador de padrão global, estes dados foram chamados de ``Antenas
 Identificadas'' (``\textit{Identified Base Stations}'') no código. Tanto os
 dados dessa base quanto da anterior são representados como arquivos
 \textit{Comma-Separated Values} (CSV) em suas origens.
 
 Para cada modelo, criamos um \textit{script} que parseia os dados de entrada e
 popula as entradas no banco de dados. Estes \textit{scripts} utilizaram o
-suporte nativo do Django a utilitários da linha de comando para facilitar o
+suporte nativo do Django ao desenvolvimento para linha de comando, para facilitar o
 uso.
 
 Os dados da Anatel foram extraídos e desestruturados em latitude e longitude,
@@ -950,12 +949,13 @@ Alguns detalhes importantes:
 \begin{itemize}
 \item Foi criada uma classe abstrata para representar as antenas, que possui
 apenas o campo de localização.
-\item Alguns campos, como número atribuído pela Anatel de operadoras ou país da
+\item Alguns campos, como número atribuído às operadoras pela Anatel, ou país da
 UF, não serão utilizados, mas ainda foram preenchidos a partir das bases de
-origem, pois podem ser úteis num produto final.
+origem, pois podem ser úteis num produto futuro.
 \item O campo MNC das ``Antenas Identificadas'' será redundante quanto à
-relação, já que os valores serão iguais. Isso permite que o CGI dessas antenas
-seja obtido apenas por seus campos, sem requisitar o MNC associado na
+relação, já que o seu \texttt{mnc} e o \texttt{valor} do outro modelo serão iguais.
+Isso permite que o CGI dessas antenas
+seja obtido apenas por seus campos, sem requisitar o respectivo MNC na
 \textit{query} ao banco.
 \item Um outro modelo, ``Cluster de Antena'', foi criado para otimizar as
 operações de mapa, como será descrito na próxima seção. As relações deste
@@ -998,35 +998,35 @@ possível. Porém, mais antenas do que isso causava vários problemas relacionad
 a uma grande quantidade de dados, como demora na transmissão por HTTP,
 requisições intensivas ao servidor, e problemas de memória no navegador do
 cliente. Algumas medidas foram tomadas tanto no \textit{back-end} quanto no \textit{front-end}
-para tentar amenizar estes efeitos, como otimizar scripts mas sem gerar vantagens muito perceptíveis.
+para tentar amenizar estes efeitos, como otimizar scripts; mas não houve vantagens perceptíveis.
 
 Dessa forma, resolveu-se utilizar algoritmos de clusterização no \textit{back-end}, e
 então realizar a integração com o \textit{front-end}. A primeira tentativa envolveu a
 utilização de uma biblioteca \textit{open-source} específica para o GeoDjango,
 chamada ``\texttt{Anycluster}''~\cite{anycluster}. Embora tenha sido feita para uma
 configuração de servidor similar à utilizada no projeto, a instalação e
-documentação se mostraram confusas e incompletas. E mesmo com tentativas de
+documentação se mostraram confusas e incompletas. E, mesmo com tentativas de
 ajuste manual no código, incluindo refatoração das partes não-essenciais da
 aplicação, não foi possível integrar este código à nossa base. Além disso,
 a análise do código indica que não há nenhuma forma de
 cache dos dados de clusterização, o que não resultaria em velocidades adequadas
-para uma aplicação de visualização em mapa.
+para uma aplicação de visualização em mapa com vários clientes.
 
 Procurou-se então uma segunda alternativa de clusterização, com implementação
 própria para este projeto. A solução envolve utilizar o \textit{tiling} de grade que o
 OpenStreetMap utiliza para carregar as imagens. A clusterização foi feita com
-fórmulas do PostGIS específicas para clusterização de pontos. Para o cache dos
-\textit{clusters}, utilizou o cache padrão do Django. Os resultados gerados pelo programa
+fórmulas do PostGIS específicas para clusterização de pontos. Para o armazenamento temporário dos
+\textit{clusters}, utilizou-se o cache padrão do Django. Os resultados gerados pelo programa
 eram corretos, mas o uso alto de memória e o tempo para clusterizar antes de
 cache inviabilizam o uso no servidor. Foi realizado um aumento na capacidade
-da máquina do host, mas não houve ganhos consideráveis. Além disso, os dados
-de \textit{cluster} ficam com aparência estranha, onde a separação em grids fica muito
+da máquina do servidor, mas não houve ganhos consideráveis. Além disso, os dados
+de \textit{cluster} ficam com aparência estranha, onde a separação em grade fica muito
 perceptível por não ser natural.
 
-A terceira tentativa utilizou a mesma ideia anterior, porém para um dado nível
+A terceira tentativa utilizou a mesma ideia anterior; porém, para um dado nível
 de zoom, seriam utilizados os \textit{clusters} para um zoom mais próximo do mapa,
-portanto usando 4 vezes mais dados. Ainda houve alguns \textit{clusters} estranhos na
-visualização em mapa, embora consideravelmente melhores no geral; mas combinado com o uso de
+portanto, usando 4 vezes mais dados. Ainda houve alguns \textit{clusters} estranhos na
+visualização do mapa, embora consideravelmente melhores no geral; mas combinado com o uso de
 dados muito alto tanto em processamento quanto em rede, uma utilização com
 muitos clientes se tornaria inviável.
 
@@ -1049,11 +1049,11 @@ região sucessiva do globo em 16 partes). Foi selecionada uma precisão (i.e. um
 número de caracteres do \textit{geohash}) diferente para cada zoom, seguindo-se como
 referência a biblioteca  ``\texttt{django-geohash-cluster}''~\cite{geohashcluster}, sendo
 que a precisão máxima é de 7 caracteres, equivalente a uma precisão de aproximadamente 76
-metros no Equador, o que é o suficiente para níveis de zoom.
+metros no Equador, o que é o suficiente para os níveis de zoom utilizados.
 Além disso, o código do \textit{front-end} foi modificado especificamente para fins de
-performance, assim obtendo clusterizações com visualização mais natural.
-Graças ao suporte do GeoDjango para inserir o geohash em queries, foi possível
-realizar a implementação em um algoritmo simples, sem escrever as queries
+desempenho, assim obtendo clusterizações com visualização mais natural.
+Graças ao suporte do GeoDjango para inserir o \textit{geohash} em \textit{queries}, foi possível
+realizar a implementação em um algoritmo simples, sem escrever as \textit{queries}
 manualmente. A principal desvantagem deste algoritmo foi a extrema demora para
 realizar as clusterizações em comparação com os demais algoritmos; porém, o
 resultado final com a integração de clusterização \textit{front-end} e \textit{back-end} foi
@@ -1081,8 +1081,8 @@ realidade, deverá ser feito filtro por operadora igual ao valor nulo. Esta
 distinção terá maior importância quando o cliente requisitar dados de clusters
 pela API, como descrito mais adiante.
 
-Foi implementada a lógica adicional ao criar antenas no banco de dados, para
-atualizar automaticamente os respectivos clusters.
+Por fim, foi implementada a lógica adicional ao adicionar novas antenas no banco de dados, para
+atualizar automaticamente os respectivos \textit{clusters}.
 
 \subsection{Métodos Numéricos}
 
@@ -1095,24 +1095,23 @@ Para os métodos Basinhopping e SQSQP, usamos a implementação disponível na
 biblioteca ``\texttt{scipy}''~\cite{scipy}.
 
 Já o método Taguchi foi implementado de acordo com a especificação especificada
-no capítulo \textbf{``Aspectos Conceituais''}. Os arrays ortogonais usados pelo
+no capítulo \textbf{``Aspectos Conceituais''}. Os \textit{arrays} ortogonais usados pelo
 método foram implementados como uma tabela, uma vez que seu cálculo é uma
 operação complexa, e os casos de uso preveem o uso de poucos parâmetros no
 método Taguchi. Usamos a biblioteca ``\texttt{numpy}''~\cite{numpy} para as operações com
 \textit{array}, uma vez que ela provê operações eficientes nessas estruturas de dados.
 
 Por fim, escolhemos o Método Taguchi, pois ele se comportou melhor que os demais
-nos testes, encontrando mais mínimos globais que o SQSQP e o Basinhopping (mais
-detalhes no capítulo \textbf{``Testes e Avaliação''})
-Além disso, temos um entendimento melhor de seu funcionamento uma vez que nós
-que o implementamos. Os detalhes sobre os testes mencionados
-encontram-se no capítulo Testes e Avaliação.
+nos testes, encontrando mais mínimos globais que o SQSQP e o Basinhopping.
+Além disso, tivemos um entendimento melhor de seu funcionamento uma vez que nós
+o implementamos. Os detalhes sobre os testes mencionados
+encontram-se no capítulo ``Testes e Avaliação''.
 
 \subsection{Interface de Programação de Aplicações}
 
-A integração do \textit{back-end} com o \textit{front-end} foi feita feita por uma API HTTP, que
-abstrai os dados e as funcionalidades necessários para a realização dos casos de
-uso. Resumidamente, ela deverá ser responsável por três tarefas específicas:
+A integração do \textit{back-end} com o \textit{front-end} foi feita por uma API HTTP, que
+abstrai as funcionalidades e os dados necessários para a realização dos casos de
+uso. Resumidamente, essa API deverá ser responsável por três tarefas específicas:
 
 \begin{itemize}
 \item Realizar \textit{login} de usuários no sistema.
@@ -1149,7 +1148,7 @@ operadora.
 
 Alguns dados adicionais mencionados anteriormente, que não serão persistidos no
 banco de dados, são referentes a população e relevo. Ao longo de nossa pesquisa,
-nos foi indicado o uso da Google Earth Engine\cite{earthengine}, que é uma plataforma
+nos foi indicado o uso do Google Earth Engine\cite{earthengine}, que é um motor
 de dados geoespaciais disponível publicamente para ferramentas de análise
 científica e pesquisa. Dentro desta plataforma, dois \textit{datasets} estudados para uso no sistema
 são ``\texttt{USGS/SRTMGL1\_003}'' para topografia, e ``\texttt{WorldPop/POP}''
@@ -1159,7 +1158,8 @@ O Google Earth Engine possui uma API oficial em Python, que foi estudada e
 implementada no \textit{back-end}. A implementação criada permite persistir dados no
 cache do servidor, para evitar que valores frequentemente utilizados nos
 algoritmos de otimização (i.e. uma única área analisada repetidamente) sejam baixadas
-novamente a cada execução.
+novamente a cada execução. O uso desses dados segue os passos descritos para
+dados \textit{raster} do capítulo ``Aspectos Conceituais''.
 
 \subsection{Instalação de Servidor}
 
@@ -1167,21 +1167,22 @@ O \textit{back-end} do sistema foi instalado em um servidor remoto para
 apresentações e testes. Utilizou-se o serviço DigitalOcean para a virtualização
 de servidor, onde subiu-se a instância por SSH em uma distribuição Ubuntu. As
 chaves SSH foram distribuídas aos integrantes do grupo e ao orientador para
-permitir o acesso. Nesta máquina, instalamos o repositório em Python, o banco
+permitir o acesso a todos. Nesta máquina, instalamos o repositório em Python, o banco
 de dados PostgreSQL, e as aplicações adicionais necessárias para o
-GeoDjango/PostGIS. Os passos tomados na configuração a seguir foram, fora de
-ordem:
+GeoDjango/PostGIS. Os passos tomados na configuração foram:
 
 \begin{itemize}
 \item Criar e ativar um ambiente virtual do Python (\texttt{virtualenv}).
 \item Instalar dependências em Python do projeto.
-\item Obter a extensão do PostGIS, e as bibliotecas GEOS, PROJ.4, GDAL, GeoIP2.
-\item Criar um \textit{schema} no banco de dados para a aplicação.
+\item Obter a extensão do PostGIS para o PostgreSQL, e as bibliotecas GEOS,
+PROJ.4, GDAL, GeoIP2.
+\item Criar um \textit{schema} no banco de dados para a aplicação e aplicar migrações
+de modelos.
 \item Carregar dados de antenas apropriadas e identificadas.
 \item Gerar diretório de arquivos estáticos do Django.
-\item Obter arquivos de localização via IP da biblioteca GeoIP2.
+\item Obter arquivos de localização por IP para a biblioteca GeoIP2.
 \item Registrar-se no Google Earth Engine, gerar \textit{token} de autenticação,
-e salvar no ambiente de usuário.
+e salvar no ambiente de usuário da máquina.
 \item Criar usuários administradores para os membros do grupo e para
 demonstração.
 \item Habilitar cache em disco por banco de dados.
@@ -1196,7 +1197,7 @@ domínio para o servidor, que foi configurado no Nginx. Além disso, por questã
 de segurança, também configurou-se o acesso HTTPS ao servidor, através do Let's
 Encrypt e sua configuração para \textit{proxy}.
 
-Por fim, para facilitar o deployment da aplicação para testes, configurou-se
+Por fim, para facilitar o \textit{deployment} da aplicação para testes, configurou-se
 o repositório local do Git como um repositório remoto, permitindo que seja
 atualizado por SSH com um único comando; e as regras de \textit{pull} do
 repositório foram modificadas para aplicar novas alterações no código
@@ -1225,13 +1226,13 @@ Alguns dados e parâmetros acima foram colocados como opcionais, para facilitar 
 instalação de ambientes de desenvolvimento. Por exemplo, a biblioteca GeoIP2,
 que tenta estimar a localização do usuário pelo IP, foi colocada no código como
 dependência opcional, devido ao tamanho dos arquivos consumidos e à falta de
-necessidade de testes para uso. Os dados de acesso para serviços sociais também
-foram tornados opcionais por razões semelhantes.
+necessidade de seu uso para testes. Os dados de acesso para serviços sociais também
+foram tornados opcionais pela mesma razão.
 
 \section{\textit{Front-end}}
 Para elaborar o \textit{front-end}, usamos o \textit{framework} Vue.js.
 O front-end da nossa aplicação foi responsável pela parte visual, pela
-comunicação do cliente com a API em Django, pela exibição dos dados no mapa,
+comunicação do cliente com a API do Django, pela exibição dos dados no mapa,
 e pelo recebimento das entradas do usuário. Nas seções a seguir, detalharemos
 como planejamos e implementamos cada uma dessas partes.
 
@@ -1243,9 +1244,11 @@ como em \textit{smartphones}.
 A primeira tela projetada foi a tela de mapas. Inicialmente,
 ela teria o mapa com os clusters e um menu lateral com opções de filtro por
 operadora e tecnologia, opções de remoção, adição e exportação de ERBs e um
-botão para executar o algoritmo de posição ideal a partir de parâmetros fornecidos
-pelo usuário. Criamos os desenhos com papel e lápis, visto que tratam-se de uma
-representação de baixa fidelidade. Esta tela está na figura \ref{fig:rascunho_mapa}.
+botão para executar o algoritmo de cálculo da posição ideal a partir de parâmetros fornecidos
+pelo usuário (figura \ref{fig:rascunho_mapa}). Criamos os desenhos com papel e lápis,
+visto que tratam-se de uma representação de baixa fidelidade.
+Depois de algumas iterações, removemos algumas funcionalidades e adicionamos
+outros filtros.
 
 \begin{figure}[H]
     \centering
@@ -1254,12 +1257,9 @@ representação de baixa fidelidade. Esta tela está na figura \ref{fig:rascunho
     \label{fig:rascunho_mapa}
 \end{figure}
 
-Depois de algumas iterações, removemos algumas funcionalidades e adicionamos
-outros filtros.
-
 Outra tela projetada foi a tela inicial, com imagens do sistema
 funcionando, textos explicativos e um formulário de contato (figura \ref{fig:rascunho_landing}).
-O objetivo dessa tela é fornecer uma ideia inicial das \textit{features} do
+O objetivo dessa tela é fornecer uma ideia inicial das funcionalidades do
 nosso projeto.
 
 \begin{figure}[H]
@@ -1309,9 +1309,10 @@ seção desta monografia sobre clusterização do \textit{back-end}.
 Usamos o \textit{framework} Vue.js no front-end do nosso projeto. Ele é um dos
 \textit{frameworks} JavaScript mais populares da atualidade. Seu uso aumenta
 muito a produtividade e organização do código, porque ele divide o sistema em
-componentes pequenos e reusáveis. Outro benefício é o \textit{single page application} que o Vue.js viabiliza.
-Com o \textit{single page application}, quando o usuário muda de tela, a página não é recarregada, apenas os
-componentes diferentes que são trocados. Dessa forma, os componentes comuns a várias telas (como \textit{header} e \textit{footer})
+componentes pequenos e reusáveis. Outro benefício é o \textit{single-page application} que
+o Vue.js disponibiliza. Com ele, a página não é recarregada quando o usuário muda de tela,
+mas apenas os componentes diferentes entre telas que são trocados. Dessa forma, os
+componentes comuns a várias telas (como \textit{header} e \textit{footer})
 nunca são recarregados. Isso propicia uma experiência mais fluida para o usuário.
 
 Para tratar do visual do sistema, usamos a biblioteca Vuetify. Ela provê componentes
@@ -1326,8 +1327,8 @@ Com relação às telas criadas, a tela de mapas usa um menu lateral, com opçõ
 filtro, um botão para executar o algoritmo de otimização, e um botão para exibir mapa de
 calor. As opções de menu são seleções retangulares, por círculo, tecnologia e
 cidades. Os filtros não implementados foram desabilitados.
-Com isso, a tela final (figura \ref{fig:tela_mapas}) ficou pouco diferente da planejada na etapa de projeto de
-telas.
+Com isso, a tela final (figura \ref{fig:tela_mapas}) ficou um pouco diferente da
+planejada na etapa de projeto de telas.
 
 \begin{figure}[H]
     \centering
@@ -1346,7 +1347,7 @@ circunferência no mapa (figura \ref{fig:tela_mapas_retangulo}).
     \label{fig:tela_mapas_retangulo}
 \end{figure}
 
-A tela de \textit{login} (figura \ref{fig:tela_login}) foi um formulário simples com um campo de usuário e senha.
+A tela de \textit{login} (figura \ref{fig:tela_login}) é um formulário simples com um campo de usuário e senha.
 
 \begin{figure}[H]
     \centering
@@ -1356,19 +1357,19 @@ A tela de \textit{login} (figura \ref{fig:tela_login}) foi um formulário simple
 \end{figure}
 \subsection{Integração com \textit{Back-end}}
 
-O \textit{front-end} foi responsável por fazer as chamadas de API.
-Usamos o axios.js, uma biblioteca JavaScript bastante popular usada para fazer
+O \textit{front-end} foi responsável por fazer as chamadas da API.
+Usamos o \texttt{axios.js}, uma biblioteca JavaScript bastante popular, usada para fazer
 requisições HTTP. Com ele, os retornos da API são convertidos
 automaticamente em JSON, formato adequado para manipulação dentro do JavaScript.
 
 Para a autenticação, na página de \textit{login}, enviamos o usuário e a senha digitados
 pelo usuário para o \textit{endpoint} de \textit{login}. Caso válidos, o \textit{back-end} retorna um
 \textit{token} necessário para realizar outras consultas. Usamos o gerenciador de estado Vuex
-para armazenar esse token no escopo global. O Vuex permite que todos os
+para armazenar esse \textit{token} no escopo global. O Vuex permite que todos os
 componentes da aplicação compartilhem o mesmo estado e que a mudança de estado
-seja previsível e reflita para todos os componentes.
+seja previsível e refletida para todos os componentes.
 
-Possuindo esse \textit{token}, podemos fazer as chamadas de API restritas aos usuários
+Com esse \textit{token} em mãos, podemos fazer as chamadas de API restritas aos usuários
 autenticados, e assim implementar nossos casos de uso. Isso foi feito adicionando-o
 ao cabeçalho \texttt{Authorization} do HTTP. Caso o usuário tentasse acessar a
 página de mapas e o \textit{token} não estivesse salvo no Vuex, o usuário seria
@@ -1394,7 +1395,7 @@ para cada alteração do código e disponibiliza em uma URL própria. Como o có
 desenvolvido é todo aberto, podemos utilizar esta ferramenta gratuitamente pelos
 termos de uso do produto, disponibilizando o site em um domínio que pertence ao
 grupo sem necessitar da instalação de um novo servidor. Esta ferramenta também
-possui suporte a HTTPS por padrão, e permite configurar o DNS facilmente.
+possui suporte a HTTPS por padrão, e permite configurar as entradas do DNS facilmente.
 
 Foram necessárias algumas modificações no código de geração de arquivos
 estáticos do Vue, relacionadas à pré-renderização dos componentes de
@@ -1407,7 +1408,7 @@ conforme o esperado.
 Após a implementação de funcionalidades-chave do projeto, como os algoritmos de
 otimização e o desenvolvimento do \textit{front-end}, seguiu-se uma fase de
 testes para avaliar a corretude, analisar métricas de qualidade ou comparar
-diferentes implementações, dependendo do caso. Os resultados obtidos foram
+diferentes implementações, dependendo do caso de teste. Os resultados obtidos foram
 descritos a seguir.
 
 \section{Métodos Numéricos}
@@ -1415,7 +1416,7 @@ Realizamos testes para verificar a corretude dos métodos numéricos que usamos,
 o SLSQP, o Basinhopping e o Taguchi. Usamos funções de teste para otimização
 com mínimo global conhecido, e verificamos se era igual à saída do método
 numérico. A tabela \ref{table:test-bh} possui os resultados dos testes do método
-Basinhopping; a tabela \ref{table:test-slsqp} possuir os de SLSQP; e a tabela
+Basinhopping; a tabela \ref{table:test-slsqp} possui os de SLSQP; e a tabela
 \ref{table:test-taguchi}, do Método Taguchi. A definição de cada função escolhida e
 seus domínios de busca foi obtida da literatura~\cite{optimization-functions}.
 As linhas marcadas em cinza mostram funções na qual o método numérico não achou
@@ -1476,12 +1477,12 @@ Three hump camel  &  f(0.0,0.0)=0.0  &  f(0,0)=0.0 \\
 \end{table}
 
 Dos três algoritmos, o Método Taguchi encontrou o resultado correto com maior
-frequência. Dessa forma, ele foi priorizado nas etapas posteriores de projeto.
+frequência. Dessa forma, ele foi utilizado nas etapas posteriores de projeto.
 
 \section{Cálculo da Posição Ideal para Instalação}
 Criamos testes para verificar se a função de cálculo de área total funcionava
 corretamente com os métodos numéricos.
-Selecionamos uma área retangular e o método Taguchi, e rodamos
+Selecionamos uma área retangular e a implementação com Método Taguchi, e rodamos
 o algoritmo para cálculo das posições de duas novas antenas. O resultado está
 na figura \ref{fig:taguchi_exemplo}.
 
@@ -1493,7 +1494,7 @@ na figura \ref{fig:taguchi_exemplo}.
 \end{figure}
 
 Repetimos o processo para os métodos Basinhopping e SLSQP, e obtivemos os
-resultados nas figuras \ref{fig:basinhopping_exemplo} e
+resultados das figuras \ref{fig:basinhopping_exemplo} e
 \ref{fig:slsqp_exemplo}, respectivamente.
 
 \begin{figure}[H]
@@ -1510,7 +1511,7 @@ resultados nas figuras \ref{fig:basinhopping_exemplo} e
     \label{fig:slsqp_exemplo}
 \end{figure}
 
-Como visto anteriormente, optamos por seguir utilizando o método Taguchi, pois
+Como visto anteriormente, optamos por seguir utilizando o Método Taguchi, pois
 havia se saído melhor nos testes de funções a serem minimizadas.
 
 %\section{Desempenho}
@@ -1521,10 +1522,10 @@ havia se saído melhor nos testes de funções a serem minimizadas.
 
 Cada integrante avaliou o código do outro em termos de organização, eficiência,
 legibilidade e coesão, para garantir programas de ótima qualidade. Dessa forma,
-conseguimos obter resultados muito satisfatórios em termos de qualidade de
-código, que atendesse às expectativas do grupo.
+conseguimos obter resultados muito satisfatórios neste quesito, que atendesse às
+expectativas de qualidade do grupo.
 
-Consideramos que o ponto mais fraco da implementação foram os testes, com falta
+Consideramos que o ponto mais fraco da implementação foram os testes, pela falta
 de testes unitários ou de integração automatizados. A isto atribuímos vários
 fatores, dentre eles a falta de tempo para desenvolvimento e a inexperiência
 com \textit{frameworks} de teste para Django e Vue. Isto seria a prioridade
@@ -1548,15 +1549,15 @@ serem seguidos após o TCC.
 
 Em nossa visão, conseguimos seguir satisfatoriamente o cronograma estabelecido
 no capítulo de ``Metodologia do Trabalho'', implementando os requisitos
-definidos para o MVP. Mais importante, ficamos contentes com o resultado final
+definidos para o MVP. Acima de tudo, ficamos contentes com o resultado final
 obtido, e temos crença de que o produto atual ainda pode ser desenvolvido para
 atingir uma alta qualidade para o mercado de instalação de antenas celulares.
-Um novo objetivo do ponto de vista dos requisitos seria obter resultados mais
-rápidos e mais precisos, buscando-se uma alternativa à solução de otimização
+Um novo objetivo, do ponto de vista dos requisitos, seria obter resultados mais
+rápidos e mais precisos, buscando-se alternativas à solução de otimização
 atual.
 
 Também conseguimos expandir nossos conhecimentos sobre aplicações web
-para design, desenvolvimento e \textit{deployment}. Ainda melhoramos nossa
+acerca do design, desenvolvimento e \textit{deployment}. Ainda melhoramos nossa
 confiança nos conhecimentos prévios dos \textit{frameworks} Django e Vue, além
 das ferramentas para disponibilizar serviços na web e PostgreSQL.
 
@@ -1568,14 +1569,10 @@ pelo tempo dedicado aos estudos.
 
 Também sentimos falta de alguns testes, como desempenho dos algoritmos de
 otimização para uma análise mais detalhada, ou de UX para verificar a
-facilidade de uso da interface, mas não puderam ser efetuadas pela restrição
+facilidade de uso da interface, mas não puderam ser efetuadas pela mesma restrição
 de tempo. De qualquer forma, estes serão mais interessantes no futuro
-desenvolvimento do MVP.
-
-Como mencionamos no capítulo anterior, na seção sobre o código desenvolvido,
-uma das partes que fez falta ao fim deste projeto foi uma boa implementação de
-testes, que permitiria uma coleta de métricas para avaliar rigorosamente os
-objetivos e resultados do trabalho.
+desenvolvimento do MVP, onde espera-se uma boa coleta de métricas para avaliar
+rigorosamente os objetivos e resultados do trabalho.
 
 \section{Contribuições}
 
@@ -1601,7 +1598,7 @@ foram deixados de lado por fugirem do escopo do MVP. Porém, eles serão
 interessantes em um produto final, agregando funcionalidades desejáveis aos
 \textit{stakeholders}. Além disso, também será interessante detalhar o processo
 de criação de empresa para a distribuição do produto, uma vez que o principal
-objetivo deste TCC foi gerar um produto viável.
+objetivo deste TCC foi gerar um produto mais atraente.
 
 \subsection{Plano de Negócio}
 
@@ -1610,7 +1607,7 @@ um produto real; em outras palavras, as etapas para prosseguir com a criação
 de uma \textit{startup}. Em especial na própria Escola Politécnica, há uma
 organização específica para promoção dessa cultura, chamada Núcleo de
 Empreendedorismo da USP (NEU), que fomenta e dá suporte à criação de pequenas
-empresas de alunos~\cite{neu}.
+empresas fundadas por alunos~\cite{neu}.
 
 Em linhas gerais, estabelecemos um processo de implantação da empresa após a
 conclusão do TCC, seguindo-se as recomendações do próprio NEU:
@@ -1636,7 +1633,7 @@ nos nossos recursos não-funcionais):
 \begin{itemize}
 \item O produto é de fácil utilização.
 \item O sistema é útil para os instaladores de antenas.
-\item Os clientes possuem confiança na qualidade do produto.
+\item Os clientes possuem confiança do produto.
 \end{itemize}
 \item Com os dados coletados acima, aperfeiçoar o produto incrementalmente, em
 preparação para reorganizar a estrutura da empresa. Isso permite aumentar o
@@ -1659,7 +1656,8 @@ instalação de novas antenas e avaliação da estrutura pré-existente; porém,
 a relação destes dados não cabe ao nosso caso de uso principal desta monografia. Elas podem
 ser úteis em uma análise futura, ao trabalhar em conjunto com os
 \textit{stakeholders} para análises de instalação levando-se em conta parâmetros socioeconômicos,
-que seriam mais interessantes a uma empresa de telecomunicação.
+que seriam mais interessantes a uma empresa de telecomunicação em termos de
+análise de risco.
 
 \subsection{Descrição dos Casos de Uso Adicionais}
 
@@ -1689,7 +1687,7 @@ que não afetam a demonstração do MVP.
 \textbf{Extensões}:
 \begin{enumerate}
 \item Usuário já cadastrado: Sistema exibe mensagem de erro (passo \ref{step:sign-up:send-email})
-\item Senha não é igual a confirmação de senha: Sistema exibe mensagem de erro (passo \ref{step:sign-up:send-email})
+\item Senha não é igual à confirmação de senha: Sistema exibe mensagem de erro (passo \ref{step:sign-up:send-email})
 \end{enumerate}
 \textbf{Inclusões}: Buscar usuário (passo \ref{step:sign-up:send-email}) \\
 
