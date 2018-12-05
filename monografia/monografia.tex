@@ -1,7 +1,9 @@
 \documentclass[]{politex}
 % ========== Opções ==========
-% pnumromarab - Numeração de páginas usando algarismos romanos na parte pré-textual e arábicos na parte textual
-% abnttoc - Forçar paginação no sumário conforme ABNT (inclui "p." na frente das páginas)
+% pnumromarab - Numeração de páginas usando algarismos romanos na parte 
+%               pré-textual e arábicos na parte textual
+% abnttoc - Forçar paginação no sumário conforme ABNT (inclui "p." na frente
+%           das páginas)
 % normalnum - Numeração contínua de figuras e tabelas
 %	(caso contrário, a numeração é reiniciada a cada capítulo)
 % draftprint - Ajusta as margens para impressão de rascunhos
@@ -24,6 +26,9 @@
 \usepackage{color, colortbl}
 \definecolor{Gray}{gray}{0.9}
 
+% Criar página vazia
+\newcommand*\NewPage{\newpage\null\thispagestyle{empty}\newpage}
+
 
 % ========== Language options ==========
 \usepackage[brazil]{babel}
@@ -42,13 +47,16 @@
 \usepackage{blindtext}
 
 
+% ========== Ficha catalográfica ==========
+\usepackage[final]{pdfpages}
+
 
 % ========== Opções do documento ==========
 % Título
-\titulo{Sistema de apoio a instalação de ERBs}
+\titulo{Sistema Web para Instalação de ERBs}
 
 % Autor
-\autor{Mateus Nakajo de Mendonça \\%
+\autor{Mateus Nakajo de Mendonça\\%
        Eric Rodrigues Pires}
 
 % Para múltiplos autores (TCC)
@@ -82,7 +90,9 @@
 \begin{document}
 % ========== Capa e folhas de rosto ==========
 \capa
+\NewPage
 \falsafolhaderosto
+\NewPage
 \folhaderosto
 
 
@@ -96,13 +106,14 @@
 
 % ========== Ficha catalográfica ==========
 % Fazer solicitação no site:
-%	http://www.poli.usp.br/en/bibliotecas/servicos/catalogacao-na-publicacao.html
+%  http://www.poli.usp.br/en/bibliotecas/servicos/catalogacao-na-publicacao.html
 
+\includepdf[pages=-, offset=0 -50]{imagens/catalogacao.pdf}
 
 % ========== Dedicatória (opcional) ==========
 \dedicatoria{
-Dedico à minha família e meus amigos, que me ajudaram e incentivaram durante a
-minha graduação.
+Dedico à minha família e aos meus amigos, que me ajudaram e incentivaram durante
+a minha graduação.
 
 -{}- Mateus
 
@@ -118,11 +129,11 @@ que sempre me apoiaram nos estudos e trabalhos.
 % ========== Agradecimentos ==========
 \begin{agradecimentos}
 
-Ao Prof. Dr. Bruno de Carvalho Albertini, pela orientação constante na realização
-deste trabalho e sincero desprendimento.
+Ao Prof. Dr. Bruno de Carvalho Albertini, pela orientação constante na
+realização deste trabalho e sincero desprendimento.
 
-Ao Prof. Dr. Antonio Fischer de Toledo, pelos textos trazidos e pela disposição a
-nos ajudar.
+Ao Prof. Dr. Antonio Fischer de Toledo, pelos textos trazidos e pela disposição
+a nos ajudar.
 
 À Escola Politécnica da Universidade de São Paulo, pela oportunidade de
 realização do curso de bacharelado em Engenharia de Computação.
@@ -137,7 +148,7 @@ desenvolvimento.
 
 % ========== Epígrafe (opcional) ==========
 \epigrafe{%
-    \emph{``O maior bem do Homem é uma mente inquieta.''}
+    \textit{``O maior bem do Homem é uma mente inquieta.''}
     \begin{flushright}
         -{}- Isaac Asimov
     \end{flushright}
@@ -196,13 +207,16 @@ System, Web Application.
 
 \textbf{TCC:} Trabalho de Conclusão de Curso
 
-\textbf{FSPL:} Perda de Propagação em Espaço Livre (do inglês \textit{Free-Space Path Loss})
+\textbf{FSPL:} Perda de Propagação em Espaço Livre (do inglês \textit{Free-Space
+Path Loss})
 
-\textbf{CSV:} Valores Separados por Vírgula (do inglês \textit{Comma-Separated Values})
+\textbf{CSV:} Valores Separados por Vírgula (do inglês \textit{Comma-Separated
+Values})
 
 \textbf{UF:} Unidade Federativa
 
-\textbf{CGI:} Identificador Global de Célula (do inglês \textit{Cell Global Identifier})
+\textbf{CGI:} Identificador Global de Célula (do inglês \textit{Cell Global
+Identifier})
 
 \textbf{MCC:} Código de País Móvel (do inglês \textit{Mobile Country Code})
 
@@ -212,7 +226,7 @@ System, Web Application.
 
 % ========== Sumário ==========
 \sumario
-
+\NewPage
 
 
 % ========== Elementos textuais ==========
@@ -244,8 +258,8 @@ O objetivo deste projeto de formatura é criar um produto mínimo viável (MVP) 
 um sistema que permita calcular posições para a instalação de antenas de
 telefonia de forma a maximizar o seu alcance.
 
-Há dois requisitos principais para a realização deste sistema. A primeira envolve
-coletar, apresentar e utilizar dados geográficos utilizados nos cálculos
+Há dois requisitos principais para a realização deste sistema. A primeira
+envolve coletar, apresentar e utilizar dados geográficos utilizados nos cálculos
 de instalação de novas antenas. Isso pode ser realizado por um sistema de
 informações geográficas.
 
@@ -267,10 +281,10 @@ dia-a-dia para encontrar lojas próximas, quanto para profissionais rastrearem
 padrões de migração de ave ou monitorarem desmatamento ou planejamento urbano,
 por exemplo.
 
-Em nosso projeto, usamos um framework de SIG para gravar e exibir a posição de
-ERBs (Estações Radiobase) atuais, o relevo topográfico e a quantidade de
-consumidores atendidos na área da rede atual, segregados pela tecnologia em uso.
-Com essas informações, determinamos as posições ótimas de ERBs de modo a
+Em nosso projeto, usamos um \textit{framework} de SIG para gravar e exibir a
+posição de ERBs (Estações Radiobase) atuais, o relevo topográfico e a quantidade
+de consumidores atendidos na área da rede atual, segregados pela tecnologia em
+uso. Com essas informações, determinamos as posições ótimas de ERBs de modo a
 maximizar a área de cobertura do sistema de telefonia. Para tanto, aplicaremos
 técnicas de programação linear, uma vez que estamos diante de um problema de
 otimização cuja função a ser otimizada é linear em relação às variáveis de
@@ -399,6 +413,7 @@ projeto de TCC e questões adicionais que restaram para uma avaliação futura.
 
 \end{itemize}
 
+\NewPage
 \chapter{Aspectos Conceituais}
 
 Com o MVP definido no capítulo anterior, iremos nos aprofundar na base teórica
@@ -473,23 +488,23 @@ calcular a perda de propagação em espaço livre (\textit{free space path loss}
 ou FSPL) em função da distância e da frequência $f$~\cite{rf-design}. Seja a
 densidade de potência $S$ e a potência total $P_{tx}$, então temos:
 
-\begin{equation*}
+\begin{equation}
     S = P_{tx} \frac{1}{4\pi d^2}
-\end{equation*}
+\end{equation}
 
 A atenuação de sinal $R$ entre uma antena transmissora e uma antena receptora
 pode ser escrita como:
 
-\begin{equation*}
+\begin{equation}\label{eq:signal-attenuation}
     R = 20\cdot log_{10} \left( \frac{4\pi d^2}{\lambda} \right)
-\end{equation*}
+\end{equation}
 
 Onde $\lambda = \frac{c}{f}$ é o comprimento de onda eletromagnética. Em
-decibéis, reescrevemos como:
+decibéis, reescrevemos (\ref{eq:signal-attenuation}) como:
 
-\begin{equation*}
+\begin{equation}
     R = 32.4 + 20\cdot log_{10}(d) + 20\cdot log_{10}(f)
-\end{equation*}
+\end{equation}
 
 Com frequência em MHz e distância em km.
 
@@ -537,30 +552,30 @@ Em seguida, mapeamos cada nível a um valor do parâmetro. Sejam $min_t$ e $max_
 os valores máximo e mínimo do intervalo em estudo de um parâmetro $x_t$, e $s$ o
 número de níveis escolhido.
 
-\begin{equation*}
+\begin{equation}
     V_t^{(m)}=\frac{min_t+max_t}{2}
-\end{equation*}
+\end{equation}
 Definimos:
-\begin{equation*}
+\begin{equation}
     \beta_t^{(m)} = \frac{max_t-min_t}{s+1}
-\end{equation*}
+\end{equation}
 Na $m-$ésima iteração, a função de mapeamento é:
-\begin{equation*}
+\begin{equation}
     f_t^m(l) =
     \begin{cases}
         V_t^{(m)} - (s/2 - l).\beta_t^{(m)}, & 1 \leq l \leq [s/2] - 1 \\
         V_t^{(m)}, &  l = [s/2]\\
         V_t^{(m)} + (l - s/2).\beta_t^{(m)}, & [s/2] + 1 \leq l \leq s \\
     \end{cases}
-\end{equation*}
+\end{equation}
 Onde $s$ é a quantidade de níveis escolhida e $l$ é o número do nível.
 
 Depois disso, mapeamos cada valor da imagem da função objetivo para a razão
 sinal-ruído. A fórmula é:
 
-\begin{equation*}
+\begin{equation}
     SN_i = 10.log_{10}(y_i^2) [dB]
-\end{equation*}
+\end{equation}
 
 No próximo passo, calculamos o valor médio de $SN$ para cada parâmetro para cada
 nível. Para cada parâmetro $x_t$, o nível que tiver maior SN médio, é denotado
@@ -571,9 +586,9 @@ melhores valores de cada parâmetro são usados como valores centrais para a
 próxima iteração. Além disso, o valor de $\beta_t$ é reduzido de um fator
 $\epsilon < 1$, garantindo a convergência.
 
-\begin{equation*}
+\begin{equation}
     \beta_t^{(m+1)} = \epsilon\beta_t^{(m)}
-\end{equation*}
+\end{equation}
 
 \subsection{Função Escolhida}
 
@@ -589,13 +604,14 @@ Em cada iteração do método numérico, calculamos apenas a área adicionada po
 novas ERBs e somamos com a variável acumuladora. A área total será, portanto, o
 valor a ser maximizado pelos métodos numéricos.
 
+\NewPage
 \chapter{Tecnologias Utilizadas}
 
 Anteriormente, abordamos os dois componentes principais para compor nosso
 sistema: uma interface Web e um \textit{back-end} SIG. Além dessas ferramentas,
 utilizamos também dados específicos para o SIG na implementação de um dos
 algoritmos apresentados em \textbf{``Aspectos Conceituais''}. Neste capítulo,
-discutimos as decisões tomadas pelo grupo acerca de \emph{frameworks} e bases de
+discutimos as decisões tomadas pelo grupo acerca de \textit{framework} e bases de
 dados utilizadas no trabalho.Estas definições serão utilizadas no trabalho
 descrito no próximo capítulo.
 
@@ -620,7 +636,7 @@ Leaflet, escrita em JavaScript. Ela se comunica com a base de dados pela API
 REST que foi desenvolvida, tanto para requisições quanto para exibições.
 
 Optamos também pelo \textit{framework} JavaScript conhecido por Vue para
-realizar o controle \emph{single-page app} do nosso sistema, e a interface
+realizar o controle \textit{single-page app} do nosso sistema, e a interface
 gráfica Vuetify para elaborar as telas do nosso sistema.
 
 \section{Bases de Dados}
@@ -740,11 +756,12 @@ deixados de lado por fugirem do escopo do MVP, e estão listados na seção
 
 \section{Casos de Uso}
 
-Nesta seção apresentaremos os caso de usos que nortearam o desenvolvimento e as
+Nesta seção, apresentamos os caso de usos que nortearam o desenvolvimento e as
 decisões tomadas.
 
 \newcounter{usecasecounter}
-\newcommand{\usecase}[1]{\refstepcounter{usecasecounter}\label{usecase:#1}\arabic{usecasecounter}}
+\newcommand{\usecase}[1]{\refstepcounter{usecasecounter}\label{usecase:#1}
+\arabic{usecasecounter}}
 
 \subsection{Atores}
 \begin{itemize}
@@ -753,7 +770,7 @@ decisões tomadas.
 \item Usuário não-comercial
 \end{itemize}
 
-\subsection{Requisitos funcionais}
+\subsection{Requisitos Funcionais}
 \begin{itemize}
 \item Efetuar \textit{login}
 \item Efetuar \textit{logout}
@@ -770,7 +787,7 @@ decisões tomadas.
 \item Listar usuários
 \end{itemize}
 
-\subsection{Requisitos não-funcionais}
+\subsection{Requisitos Não-funcionais}
 \begin{itemize}
 \item Funcionalidades e código bem documentados
 \item Interface acessível e simples
@@ -780,29 +797,37 @@ decisões tomadas.
 \item Ser seguro
 \end{itemize}
 
-\subsection{Descrição dos casos de uso}
+\subsection{Descrição dos Casos de Uso}
 
-\noindent \textbf{Caso de Uso \usecase{login}}: Efetuar \textit{login} no sistema. \\
-\textbf{Descrição}: Este caso de uso descreve o processo de autenticação no sistema. \\
+\noindent \textbf{Caso de Uso \usecase{login}}: Efetuar \textit{login} no
+sistema. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de autenticação no
+sistema. \\
 \textbf{Evento iniciador:} Usuário informa seu nome de usuário e senha. \\
 \textbf{Atores:} Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições:} Usuário na página de login. \\
 \textbf{Sequência de Eventos:}
 \begin{enumerate}
-\item\label{step:login:enter-login} Usuário informa seu nome de usuário e sua senha.
+\item\label{step:login:enter-login} Usuário informa seu nome de usuário e sua
+senha.
 \item\label{step:login:authenticate} Sistema autentica o usuário e senha.
-\item Sistema exibe página inicial com opções correspondentes ao nível de privilégio do usuário.
+\item Sistema exibe página inicial com opções correspondentes ao nível de
+privilégio do usuário.
 \end{enumerate}
 \textbf{Pós-condições:} Usuário logado no sistema. \\
 \textbf{Extensões:}
 \begin{enumerate}
-\item Usuário ou senha estão incorretos: Sistema exibe mensagem de erro (passo \ref{step:login:authenticate}).
-\item Login por OAuth2: Sistema recebe token de autenticação externa para o acesso (passo \ref{step:login:enter-login}).
+\item Usuário ou senha estão incorretos: Sistema exibe mensagem de erro (passo
+\ref{step:login:authenticate}).
+\item Login por OAuth2: Sistema recebe token de autenticação externa para o
+acesso (passo \ref{step:login:enter-login}).
 \end{enumerate}
 \textbf{Inclusões}: -{}- \\
 
-\noindent \textbf{Caso de Uso \usecase{logout}}: Efetuar \textit{logout} no sistema. \\
-\textbf{Descrição}: Este caso de uso descreve o processo de \textit{logout} no sistema. \\
+\noindent \textbf{Caso de Uso \usecase{logout}}: Efetuar \textit{logout} no
+sistema. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de \textit{logout} no
+sistema. \\
 \textbf{Evento iniciador}: Usuário clica no botão de \textit{logout}. \\
 \textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
 \textbf{Pré-condições}: Usuário logado no sistema. \\
@@ -816,7 +841,8 @@ decisões tomadas.
 \textbf{Inclusões}: -{}- \\
 
 \noindent \textbf{Caso de Uso \usecase{show-map}}: Exibir mapa \\
-\textbf{Descrição}: Este caso de uso descreve o processo de exibição de um mapa centrado na localização do usuário. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de exibição de um mapa
+centrado na localização do usuário. \\
 \textbf{Evento iniciador}: Usuário requisita exibição de mapa. \\
 \textbf{Pré-condições}: Usuário logado no sistema. \\
 \textbf{Sequência de Eventos}:
@@ -824,11 +850,14 @@ decisões tomadas.
 \item Usuário requisita exibição de mapa.
 \item Sistema pede que o usuário permita acessar sua geolocalização.
 \item Usuário permite que o sistema acesse sua geolocalização.
-\item\label{step:show-map:user-centered-map} Sistema mostra um mapa centrado no usuário.
+\item\label{step:show-map:user-centered-map} Sistema mostra um mapa centrado no
+usuário.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs apresentado. \\
-\textbf{Extensões}: Usuário não permite: Sistema mostra mapa centrado numa localização padrão. (passo \ref{step:show-map:user-centered-map}) \\
-\textbf{Inclusões}: Busca de mapa no OpenStreetMap (passo \ref{step:show-map:user-centered-map}) \\
+\textbf{Extensões}: Usuário não permite: Sistema mostra mapa centrado em uma
+localização padrão. (passo \ref{step:show-map:user-centered-map}) \\
+\textbf{Inclusões}: Busca de mapa no OpenStreetMap (passo
+\ref{step:show-map:user-centered-map}) \\
 
 \noindent \textbf{Caso de Uso \usecase{show-map-bs}}: Exibir mapa com ERBs. \\
 \textbf{Descrição}: Este caso de uso descreve a exibição das ERBs em um mapa. \\
@@ -842,33 +871,44 @@ decisões tomadas.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs apresentado. \\
 \textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso \ref{usecase:show-map} ``Exibir mapa'' (passo \ref{step:show-map-bs:show-map}) \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map} ``Exibir mapa'' (passo
+\ref{step:show-map-bs:show-map}) \\
 
-\noindent \textbf{Caso de Uso \usecase{show-map-location}}: Exibir mapa centrado em localização dada \\
+\noindent \textbf{Caso de Uso \usecase{show-map-location}}: Exibir mapa centrado
+em localização dada \\
 \textbf{Descrição}: Este caso de uso descreve a exibição do mapa com ERBs
 centrado em uma localização dada pelo usuário.  \\
-\textbf{Evento iniciador}: Usuário insere a latitude e longitude e clica em ``Buscar''. \\
+\textbf{Evento iniciador}: Usuário insere a latitude e longitude e clica em
+``Buscar''. \\
 \textbf{Atores}: Administrador, Funcionário. \\
-\textbf{Pré-condições}: Usuário logado no sistema e na página com mapa de ERBs. \\
+\textbf{Pré-condições}: Usuário logado no sistema e na página com mapa de
+ERBs. \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Usuário insere a latitude e longitude e clica em ``Buscar''.
-\item\label{step:show-map-location:show-map} Sistema mostra o mapa de ERBs centrado na localização dada.
+\item\label{step:show-map-location:show-map} Sistema mostra o mapa de ERBs
+centrado na localização dada.
 \end{enumerate}
-\textbf{Pós-condições}: Mapa com ERBs centrado na localização dada apresentado. \\
-\textbf{Extensões}: Latitude ou longitude inválida: Sistema mostra uma mensagem de erro (passo \ref{step:show-map-location:show-map}) \\
+\textbf{Pós-condições}: Mapa com ERBs centrado na localização dada
+apresentado. \\
+\textbf{Extensões}: Latitude ou longitude inválida: Sistema mostra uma mensagem
+de erro (passo \ref{step:show-map-location:show-map}) \\
 \textbf{Inclusões}:
 \begin{enumerate}
-\item Busca de mapa no OpenStreetMap (passo \ref{step:show-map-location:show-map})
-\item Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição)
+\item Busca de mapa no OpenStreetMap (passo
+\ref{step:show-map-location:show-map})
+\item Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs''
+(pré-condição)
 \end{enumerate}
 
-\noindent \textbf{Caso de Uso \usecase{show-map-erb-operator}}: Exibir ERBs no mapa por operadora. \\
+\noindent \textbf{Caso de Uso \usecase{show-map-erb-operator}}: Exibir ERBs no
+mapa por operadora. \\
 \textbf{Descrição}: Este caso de uso descreve a exibição do mapa com ERBs para
 uma operadora definida pelo usuário. \\
 \textbf{Evento iniciador}: Usuário seleciona uma operadora. \\
 \textbf{Atores}: Administrador, Funcionário. \\
-\textbf{Pré-condições}: Usuário logado no sistema e na página com mapa de ERBs. \\
+\textbf{Pré-condições}: Usuário logado no sistema e na página com mapa de
+ERBs. \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Usuário seleciona uma operadora.
@@ -876,14 +916,18 @@ uma operadora definida pelo usuário. \\
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com ERBs da operadora escolhida. \\
 \textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição) \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com
+ERBs'' (pré-condição) \\
 
-\noindent \textbf{Caso de Uso \usecase{find-optimal-location}}: Encontrar local de instalação de ERBs. \\
+\noindent \textbf{Caso de Uso \usecase{find-optimal-location}}: Encontrar local
+de instalação de ERBs. \\
 \textbf{Descrição}: Este caso de uso descreve a exibição de posições otimizadas
 para instalação de ERBs. \\
-\textbf{Evento iniciador}: Usuário clica na opção ``Calcular posição para instalação''. \\
+\textbf{Evento iniciador}: Usuário clica na opção ``Calcular posição para
+instalação''. \\
 \textbf{Atores}: Administrador, Funcionário. \\
-\textbf{Pré-condições}: Usuário logado no sistema e na página ``Mapa de ERBs''. \\
+\textbf{Pré-condições}: Usuário logado no sistema e na página ``Mapa de
+ERBs''. \\
 \textbf{Sequência de Eventos}:
 \begin{enumerate}
 \item Usuário clica na opção ``Calcular posição para instalação''.
@@ -893,13 +937,17 @@ instaladas'' e ``Parâmetros a serem considerados no cálculo''.
 \item Sistema solicita para o usuário selecionar a região de interesse.
 \item Usuário seleciona a região de interesse.
 \item Sistema informa que operação pode demorar.
-\item\label{step:find-optimal-location:show-positions} Sistema indica os locais calculados no mapa e mostra número de usuários atendidos por cada nova antena.
+\item\label{step:find-optimal-location:show-positions} Sistema indica os locais
+calculados no mapa e mostra número de usuários atendidos por cada nova antena.
 \end{enumerate}
 \textbf{Pós-condições}: Mapa com posições otimizadas apresentadas. \\
 \textbf{Extensões}: Operação demora muito tempo: Sistema informa que não foi
-possível calcular a posição (passo \ref{step:find-optimal-location:show-positions}) \\
-\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição). \\
+possível calcular a posição (passo
+\ref{step:find-optimal-location:show-positions}) \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com
+ERBs'' (pré-condição). \\
 
+\NewPage
 \chapter{Projeto e Implementação}
 
 Definidos os requisitos e as tecnologias a serem utilizadas, e os conceitos
@@ -1218,8 +1266,8 @@ GeoDjango/PostGIS. Os passos tomados na configuração foram:
 \item Instalar dependências em Python do projeto.
 \item Obter a extensão do PostGIS para o PostgreSQL, e as bibliotecas GEOS,
 PROJ.4, GDAL, GeoIP2.
-\item Criar um \textit{schema} no banco de dados para a aplicação e aplicar migrações
-de modelos.
+\item Criar um \textit{schema} no banco de dados para a aplicação e aplicar
+migrações de modelos.
 \item Carregar dados de antenas apropriadas e identificadas.
 \item Gerar diretório de arquivos estáticos do Django.
 \item Obter arquivos de localização por IP para a biblioteca GeoIP2.
@@ -1711,186 +1759,10 @@ interessantes para uma empresa de telecomunicação em termos de análise de ris
 
 \subsection{Descrição dos Casos de Uso Adicionais}
 
-% Aviso para Bruno Albertini
-% Nós não nos decidimos se é melhor tirar ou deixar esta subseção na monografia
-% pois já tínhamos bolado esses casos de uso bem atrás.
-% Outra possibilidade que pensamos foi simplificar esta parte e só falar por
-% cima sobre os casos de uso pensados.
-% BALbertini: Ok ficar por mim. Considerem um apêndice.
-
-Os casos de uso a seguir foram elaborados na etapa de ``Especificação de
-Requisitos do Sistema'', porém foram deixados para uma implementação futura, já
-que não afetam a demonstração do MVP.
-
-\noindent \textbf{Caso de Uso \usecase{sign-up}}: Cadastrar usuário no sistema.  \\
-\textbf{Descrição}: Este caso de uso descreve o cadastro de usuários no sistema \\
-\textbf{Evento iniciador}: Usuário clica no botão ``Cadastrar usuário''. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
-\textbf{Pré-condições}: Usuário não logado no sistema. \\
-\textbf{Sequência de Eventos}:
-\begin{enumerate}
-\item Usuário clica no botão ``Cadastrar usuário''.
-\item Sistema exibe página de cadastro.
-\item Usuário digita nome, e-mail, senha e confirmação de senha.
-\item\label{step:sign-up:send-email} Sistema valida dados e envia e-mail de confirmação para usuário.
-\end{enumerate}
-\textbf{Pós-condições}: Usuário cadastrado no sistema com confirmação de e-mail pendente. \\
-\textbf{Extensões}:
-\begin{enumerate}
-\item Usuário já cadastrado: Sistema exibe mensagem de erro (passo \ref{step:sign-up:send-email})
-\item Senha não é igual à confirmação de senha: Sistema exibe mensagem de erro (passo \ref{step:sign-up:send-email})
-\end{enumerate}
-\textbf{Inclusões}: Buscar usuário (passo \ref{step:sign-up:send-email}) \\
-
-\noindent \textbf{Caso de Uso \usecase{confirm-email}}: Confirmação de e-mail. \\
-\textbf{Descrição}: Este caso de uso descreve o processo de confirmação de um e-mail. \\
-\textbf{Evento iniciador}: Usuário acessa a URL correspondente à confirmação de seu e-mail. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
-\textbf{Pré-condições}: Usuário cadastrado no sistema com e-mail não confirmado. \\
-\textbf{Sequência de Eventos}:
-\begin{enumerate}
-\item Usuário acessa a URL correspondente à confirmação de seu e-mail.
-\item\label{step:confirm-email:validate-email} Sistema confirma a validade do e-mail do usuário.
-\item Sistema redireciona o usuário para página inicial.
-\end{enumerate}
-\textbf{Extensões}: URL de confirmação inválida: Sistema mostra uma mensagem de
-erro e redireciona o usuário para a página de \textit{login} (passo \ref{step:confirm-email:validate-email}). \\
-\textbf{Inclusões}: -{}- \\
-
-\noindent \textbf{Caso de Uso \usecase{add-bs}}: Adicionar nova ERB \\
-\textbf{Descrição}: Este caso de uso descreve o processo de adição de novas
-ERBs na base de dados. \\
-\textbf{Evento iniciador}: Usuário clica na opção ``Adicionar ERB''. \\
-\textbf{Atores}: Administrador, Funcionário. \\
-\textbf{Pré-condições}: Usuário logado no sistema. \\
-\textbf{Sequência de Eventos}:
-\begin{enumerate}
-\item Usuário clica na opção ``Adicionar ERB'' e clica em um ponto no mapa.
-\item Sistema exibe formulário com dados a serem cadastrados sobre a nova ERB.
-\item Usuário preenche formulário e clica em ``Salvar''.
-\item\label{step:add-bs:save-bs} Sistema salva nova ERB.
-\item\label{step:add-bs:show-map} Sistema exibe mapa com ERBs.
-\end{enumerate}
-\textbf{Pós-condições}: Mapa com ERBs apresentado e nova ERB salva na base de
-dados. \\
-\textbf{Extensões}: Dados inválidos: Sistema exibe mensagem de erro e exibe
-formulário novamente (passo \ref{step:add-bs:save-bs}). \\
-\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição e passo \ref{step:add-bs:show-map}).\\
-
-\noindent \textbf{Caso de Uso \usecase{remove-bs}}: Remover ERB \\
-\textbf{Descrição}: Este caso de uso descreve o processo de remoção de uma ERB da
-base de dados. \\
-\textbf{Evento iniciador}: Usuário clica na opção ``Remover ERB''. \\
-\textbf{Atores}: Administrador, Funcionário. \\
-\textbf{Pré-condições}: Usuário logado no sistema. \\
-\textbf{Sequência de Eventos}:
-\begin{enumerate}
-\item Usuário clica na opção ``Remover ERB'' e seleciona uma ERB no mapa.
-\item Sistema pergunta se usuário realmente deseja remover ERB.
-\item Usuário responde ``Sim''.
-\item Sistema remove ERB.
-\item\label{step:remove-bs:show-map} Sistema exibe mapa com ERBs.
-\end{enumerate}
-\textbf{Pós-condições}: Mapa com ERBs apresentado e ERB escolhida pelo usuário
-removida da base de dados. \\
-\textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (pré-condição e passo \ref{step:remove-bs:show-map}). \\
-
-\noindent \textbf{Caso de Uso \usecase{show-connected-bs}}: Exibir ERBs às quais o celular do usuário está
-conectado \\
-\textbf{Descrição}: Este caso de uso descreve o processo de exibição de ERBs às
-quais o usuário está conectado \\
-\textbf{Evento iniciador}: Usuário clica na opção ``Antenas conectadas''. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
-\textbf{Pré-condições}: Usuário logado em um celular, na página inicial do
-sistema. \\
-\textbf{Sequência de Eventos}:
-\begin{enumerate}
-\item Usuário clica na opção ``Antenas conectadas''.
-\item\label{step:show-connected-bs:show-map} Sistema exibe um mapa com as ERBs conectadas em destaque.
-\end{enumerate}
-\textbf{Pós-condições}: Mapa com ERBs conectadas apresentado. \\
-\textbf{Extensões}: Celular não está conectado a ERB nenhuma: Sistema exibe
-mensagem de erro (passo \ref{step:show-connected-bs:show-map}). \\
-\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (passo \ref{step:show-connected-bs:show-map}). \\
-
-\noindent \textbf{Caso de Uso \usecase{map-quality}}: Exibir mapa com qualidade do sinal por
-operadora. \\
-\textbf{Descrição}: Este caso de uso descreve o processo de exibição de
-qualidade de sinal por operadora. \\
-\textbf{Evento iniciador}: Usuário clica na opção ``Qualidade de sinal''. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
-\textbf{Pré-condições}: Usuário logado, na página inicial do sistema. \\
-\textbf{Sequência de Eventos}:
-\begin{enumerate}
-\item Usuário clica na opção ``Qualidade de sinal''.
-\item\label{step:map-quality:show-map} Sistema exibe um mapa centrado na localização atual do usuário.
-\item Usuário clica em um ponto do mapa.
-\item Sistema exibe informações de qualidade de sinal por operadora.
-\end{enumerate}
-\textbf{Pós-condições}: Informações de qualidade de sinal apresentadas. \\
-\textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso \ref{usecase:show-map} ``Exibir mapa'' (passo \ref{step:map-quality:show-map}) \\
-
-\noindent \textbf{Caso de Uso \usecase{estimate-geolocation}}: Estimar geolocalização do usuário. \\
-\textbf{Descrição}: Este caso de uso descreve o processo de estimar a
-geolocalização do usuário a partir das antenas às quais ele está conectado. \\
-\textbf{Evento iniciador}: Usuário clica na opção ``Estimar geolocalização''. \\
-\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
-\textbf{Pré-condições}: Usuário logado em um celular, na página inicial do
-sistema. \\
-\textbf{Sequência de Eventos}:
-\begin{enumerate}
-\item Usuário clica na opção ``Estimar geolocalização''.
-\item\label{step:estimate-geolocation:show-map} Sistema exibe um mapa centrado na localização estimada do usuário.
-\item Sistema mostra as antenas aos quais o usuário está conectado em destaque.
-\end{enumerate}
-\textbf{Pós-condições}: Localização estimada do usuário e antenas conectadas são
-mostradas na tela. \\
-\textbf{Extensões}:
-\begin{enumerate}
-\item Número de ERBs conectadas são insuficientes para estimar posição exata:
-Sistema exibe um mapa com a localização estimada do usuário representada por um
-círculo. (passo \ref{step:estimate-geolocation:show-map})
-\item Usuário não está conectado a nenhuma ERB: Sistema exibe mensagem de erro.
-(passo \ref{step:estimate-geolocation:show-map})
-\end{enumerate}
-\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com ERBs'' (passo \ref{step:estimate-geolocation:show-map}). \\
-
-\noindent \textbf{Caso de Uso \usecase{list-users}}: Listar usuários do sistema \\
-\textbf{Descrição}: Este caso de uso descreve o processo de listar usuários do
-sistema. \\
-\textbf{Evento iniciador}: Administrador clica na opção ``Listar usuários''. \\
-\textbf{Atores}: Administrador \\
-\textbf{Pré-condições}: Administrador logado no sistema, na página inicial. \\
-\textbf{Sequência de Eventos}:
-\begin{enumerate}
-\item Administrador clica na opção ``Listar usuários''.
-\item\label{step:list-users:search} Sistema busca usuários e os exibe em uma lista.
-\end{enumerate}
-\textbf{Pós-condições}: Lista de usuários apresentada. \\
-\textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Buscar usuários no sistema (passo \ref{step:list-users:search}) \\
-
-\noindent \textbf{Caso de Uso \usecase{change-role}}: Modificar papel de usuário. \\
-\textbf{Descrição}: Este caso de uso descreve o processo de modificar papel de
-usuário. \\
-\textbf{Evento iniciador}: Administrador seleciona a opção ``Funcionário'' no campo
-``Papel do usuário'' \\
-\textbf{Atores}: Administrador \\
-\textbf{Pré-condições}: Administrador logado no sistema, na página listar
-usuários. \\
-\textbf{Sequência de Eventos}:
-\begin{enumerate}
-\item Administrador seleciona um usuário de interesse.
-\item Administrador seleciona a opção ``Funcionário'' no campo ``Papel do usuário''.
-\item Administrador clica em ``Aplicar''.
-\item Sistema modifica usuário escolhido para ele ter papel de Funcionário.
-\end{enumerate}
-\textbf{Pós-condições}: Usuário escolhido tem papel de Funcionário. \\
-\textbf{Extensões}: -{}- \\
-\textbf{Inclusões}: Caso de uso \ref{usecase:list-users} ``Listar usuários do sistema'' (pré-condição) \\
-
+Alguns casos de uso adicionais foram elaborados para complementar o capítulo
+``Especificação de Requisitos do Sistema'', porém foram deixados para uma
+implementação futura, já que não afetam a demonstração do MVP. Eles foram
+descritos no Apêndice \ref{additional-case-uses}.
 
 % ========== Referências ==========
 % --- IEEE ---
@@ -2019,7 +1891,8 @@ usuários. \\
     \bibitem{optimization-functions}
     Wikipedia.
     \textit{Test functions for optimization}.
-    Disponível em: https://en.wikipedia.org/wiki/Test\_functions\_for\_optimization.
+    Disponível em:
+    https://en.wikipedia.org/wiki/Test\_functions\_for\_optimization.
     Acesso em: 28 de novembro de 2018.
 
     \bibitem{repo-django}
@@ -2061,7 +1934,205 @@ usuários. \\
 \end{thebibliography}
 % ========== Apêndices (opcional) ==========
 \apendice
+\chapter{Casos de Uso Adicionais}\label{additional-case-uses}
 
+\noindent \textbf{Caso de Uso \usecase{sign-up}}: Cadastrar usuário no
+sistema.  \\
+\textbf{Descrição}: Este caso de uso descreve o cadastro de usuários no
+sistema \\
+\textbf{Evento iniciador}: Usuário clica no botão ``Cadastrar usuário''. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
+\textbf{Pré-condições}: Usuário não logado no sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica no botão ``Cadastrar usuário''.
+\item Sistema exibe página de cadastro.
+\item Usuário digita nome, e-mail, senha e confirmação de senha.
+\item\label{step:sign-up:send-email} Sistema valida dados e envia e-mail de
+confirmação para usuário.
+\end{enumerate}
+\textbf{Pós-condições}: Usuário cadastrado no sistema com confirmação de e-mail
+pendente. \\
+\textbf{Extensões}:
+\begin{enumerate}
+\item Usuário já cadastrado: Sistema exibe mensagem de erro (passo
+\ref{step:sign-up:send-email})
+\item Senha não é igual à confirmação de senha: Sistema exibe mensagem de erro
+(passo \ref{step:sign-up:send-email})
+\end{enumerate}
+\textbf{Inclusões}: Buscar usuário (passo \ref{step:sign-up:send-email}) \\
+
+\noindent \textbf{Caso de Uso \usecase{confirm-email}}: Confirmação de
+e-mail. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de confirmação de um
+e-mail. \\
+\textbf{Evento iniciador}: Usuário acessa a URL correspondente à confirmação de
+seu e-mail. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
+\textbf{Pré-condições}: Usuário cadastrado no sistema com e-mail não
+confirmado. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário acessa a URL correspondente à confirmação de seu e-mail.
+\item\label{step:confirm-email:validate-email} Sistema confirma a validade do
+e-mail do usuário.
+\item Sistema redireciona o usuário para página inicial.
+\end{enumerate}
+\textbf{Extensões}: URL de confirmação inválida: Sistema mostra uma mensagem de
+erro e redireciona o usuário para a página de \textit{login} (passo
+\ref{step:confirm-email:validate-email}). \\
+\textbf{Inclusões}: -{}- \\
+
+\noindent \textbf{Caso de Uso \usecase{add-bs}}: Adicionar nova ERB \\
+\textbf{Descrição}: Este caso de uso descreve o processo de adição de novas
+ERBs na base de dados. \\
+\textbf{Evento iniciador}: Usuário clica na opção ``Adicionar ERB''. \\
+\textbf{Atores}: Administrador, Funcionário. \\
+\textbf{Pré-condições}: Usuário logado no sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção ``Adicionar ERB'' e clica em um ponto no mapa.
+\item Sistema exibe formulário com dados a serem cadastrados sobre a nova ERB.
+\item Usuário preenche formulário e clica em ``Salvar''.
+\item\label{step:add-bs:save-bs} Sistema salva nova ERB.
+\item\label{step:add-bs:show-map} Sistema exibe mapa com ERBs.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs apresentado e nova ERB salva na base de
+dados. \\
+\textbf{Extensões}: Dados inválidos: Sistema exibe mensagem de erro e exibe
+formulário novamente (passo \ref{step:add-bs:save-bs}). \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com
+ERBs'' (pré-condição e passo \ref{step:add-bs:show-map}).\\
+
+\noindent \textbf{Caso de Uso \usecase{remove-bs}}: Remover ERB \\
+\textbf{Descrição}: Este caso de uso descreve o processo de remoção de uma ERB
+da base de dados. \\
+\textbf{Evento iniciador}: Usuário clica na opção ``Remover ERB''. \\
+\textbf{Atores}: Administrador, Funcionário. \\
+\textbf{Pré-condições}: Usuário logado no sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção ``Remover ERB'' e seleciona uma ERB no mapa.
+\item Sistema pergunta se usuário realmente deseja remover ERB.
+\item Usuário responde ``Sim''.
+\item Sistema remove ERB.
+\item\label{step:remove-bs:show-map} Sistema exibe mapa com ERBs.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs apresentado e ERB escolhida pelo usuário
+removida da base de dados. \\
+\textbf{Extensões}: -{}- \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com
+ERBs'' (pré-condição e passo \ref{step:remove-bs:show-map}). \\
+
+\noindent \textbf{Caso de Uso \usecase{show-connected-bs}}: Exibir ERBs às quais
+o celular do usuário está
+conectado \\
+\textbf{Descrição}: Este caso de uso descreve o processo de exibição de ERBs às
+quais o usuário está conectado \\
+\textbf{Evento iniciador}: Usuário clica na opção ``Antenas conectadas''. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
+\textbf{Pré-condições}: Usuário logado em um celular, na página inicial do
+sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção ``Antenas conectadas''.
+\item\label{step:show-connected-bs:show-map} Sistema exibe um mapa com as ERBs
+conectadas em destaque.
+\end{enumerate}
+\textbf{Pós-condições}: Mapa com ERBs conectadas apresentado. \\
+\textbf{Extensões}: Celular não está conectado a ERB nenhuma: Sistema exibe
+mensagem de erro (passo \ref{step:show-connected-bs:show-map}). \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com
+ERBs'' (passo \ref{step:show-connected-bs:show-map}). \\
+
+\noindent \textbf{Caso de Uso \usecase{map-quality}}: Exibir mapa com qualidade
+do sinal por
+operadora. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de exibição de
+qualidade de sinal por operadora. \\
+\textbf{Evento iniciador}: Usuário clica na opção ``Qualidade de sinal''. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
+\textbf{Pré-condições}: Usuário logado, na página inicial do sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção ``Qualidade de sinal''.
+\item\label{step:map-quality:show-map} Sistema exibe um mapa centrado na
+localização atual do usuário.
+\item Usuário clica em um ponto do mapa.
+\item Sistema exibe informações de qualidade de sinal por operadora.
+\end{enumerate}
+\textbf{Pós-condições}: Informações de qualidade de sinal apresentadas. \\
+\textbf{Extensões}: -{}- \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map} ``Exibir mapa'' (passo
+\ref{step:map-quality:show-map}) \\
+
+\noindent \textbf{Caso de Uso \usecase{estimate-geolocation}}: Estimar
+geolocalização do usuário. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de estimar a
+geolocalização do usuário a partir das antenas às quais ele está conectado. \\
+\textbf{Evento iniciador}: Usuário clica na opção ``Estimar geolocalização''. \\
+\textbf{Atores}: Administrador, Funcionário ou Usuário não-comercial. \\
+\textbf{Pré-condições}: Usuário logado em um celular, na página inicial do
+sistema. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Usuário clica na opção ``Estimar geolocalização''.
+\item\label{step:estimate-geolocation:show-map} Sistema exibe um mapa centrado
+na localização estimada do usuário.
+\item Sistema mostra as antenas aos quais o usuário está conectado em destaque.
+\end{enumerate}
+\textbf{Pós-condições}: Localização estimada do usuário e antenas conectadas são
+mostradas na tela. \\
+\textbf{Extensões}:
+\begin{enumerate}
+\item Número de ERBs conectadas são insuficientes para estimar posição exata:
+Sistema exibe um mapa com a localização estimada do usuário representada por um
+círculo. (passo \ref{step:estimate-geolocation:show-map})
+\item Usuário não está conectado a nenhuma ERB: Sistema exibe mensagem de erro.
+(passo \ref{step:estimate-geolocation:show-map})
+\end{enumerate}
+\textbf{Inclusões}: Caso de uso \ref{usecase:show-map-bs} ``Exibir mapa com
+ERBs'' (passo \ref{step:estimate-geolocation:show-map}). \\
+
+\noindent \textbf{Caso de Uso \usecase{list-users}}: Listar usuários do
+sistema \\
+\textbf{Descrição}: Este caso de uso descreve o processo de listar usuários do
+sistema. \\
+\textbf{Evento iniciador}: Administrador clica na opção ``Listar usuários''. \\
+\textbf{Atores}: Administrador \\
+\textbf{Pré-condições}: Administrador logado no sistema, na página inicial. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Administrador clica na opção ``Listar usuários''.
+\item\label{step:list-users:search} Sistema busca usuários e os exibe em uma
+lista.
+\end{enumerate}
+\textbf{Pós-condições}: Lista de usuários apresentada. \\
+\textbf{Extensões}: -{}- \\
+\textbf{Inclusões}: Buscar usuários no sistema (passo
+\ref{step:list-users:search}) \\
+
+\noindent \textbf{Caso de Uso \usecase{change-role}}: Modificar papel de
+usuário. \\
+\textbf{Descrição}: Este caso de uso descreve o processo de modificar papel de
+usuário. \\
+\textbf{Evento iniciador}: Administrador seleciona a opção ``Funcionário'' no
+campo ``Papel do usuário'' \\
+\textbf{Atores}: Administrador \\
+\textbf{Pré-condições}: Administrador logado no sistema, na página listar
+usuários. \\
+\textbf{Sequência de Eventos}:
+\begin{enumerate}
+\item Administrador seleciona um usuário de interesse.
+\item Administrador seleciona a opção ``Funcionário'' no campo ``Papel do
+usuário''.
+\item Administrador clica em ``Aplicar''.
+\item Sistema modifica usuário escolhido para ele ter papel de Funcionário.
+\end{enumerate}
+\textbf{Pós-condições}: Usuário escolhido tem papel de Funcionário. \\
+\textbf{Extensões}: -{}- \\
+\textbf{Inclusões}: Caso de uso \ref{usecase:list-users} ``Listar usuários do
+sistema'' (pré-condição) \\
 
 % ========== Anexos (opcional) ==========
 \anexo
