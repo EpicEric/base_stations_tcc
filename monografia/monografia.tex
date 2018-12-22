@@ -530,8 +530,9 @@ de qualidade de banda, se baseando em um algoritmo evolutivo para otimizar a
 cobertura da rede. Já KARULKAR \& OH (2016)~\cite{nao-linear} se baseia em uma
 abordagem de limites geográficos impostos no processo de projeto de antenas,
 utilizando programação não-linear para identificar a posição ótima. Por fim,
-WEGMANN et al. (2011)~\cite{taguchi} utilizam o método Taguchi, descrito em
-detalhes a seguir.
+WEGMANN et al. (2011)~\cite{taguchi} utilizam o método Taguchi -- embora seja
+utilizado para melhorar o sinal de antenas pré-existentes no trabalho original,
+e não para instalar novas antenas --, descrito em detalhes a seguir.
 
 \subsection{Método Taguchi}
 
@@ -594,17 +595,34 @@ $\epsilon < 1$, garantindo a convergência.
 
 \subsection{Função Escolhida}
 
-Usamos a área de cobertura como função a ser otimizada pelos algoritmos
-numéricos. Adotamos que cada ERB tem área de cobertura fixa. No algoritmo,
-definimos uma variável acumuladora que guarda a área de cobertura total das ERBs
-instaladas. As bibliotecas geoespaciais, como a GEOS, oferecem funções para
-cálculo da união de figuras geométricas, de modo que as áreas de intersecção não
-são somadas múltiplas vezes; esse cálculo é feito apenas uma vez, no início do
+No problema de otimização executado, as variáveis de entrada serão as
+coordenadas de latitude e longitude das antenas a serem instaladas, limitadas
+pelo domínio de uma área retangular a ser selecionada pelo usuário na tela.
+A função de saída a ser otimizada pelos algoritmos será a área de cobertura da
+rede composta pelas antenas atualmente instaladas, mais as antenas novas.
+
+Adotamos que cada ERB tem área de cobertura fixa, com um raio de aproximadamente
+500 metros (em graus decimais, $\frac{1}{220}$). No algoritmo, definimos uma
+variável acumuladora, que guarda a área de cobertura total das ERBs instaladas.
+As bibliotecas geoespaciais, como a GEOS, oferecem funções para cálculo da união
+de figuras geométricas, de modo que as áreas de intersecção não são somadas
+múltiplas vezes; esse cálculo será feito apenas uma vez, no início do
 algoritmo.
 
 Em cada iteração do método numérico, calculamos apenas a área adicionada por
 novas ERBs e somamos com a variável acumuladora. A área total será, portanto, o
 valor a ser maximizado pelos métodos numéricos.
+
+Uma possibilidade apontada pelo Prof. Dr. Glauber de Bona, para diminuir o
+domínio deste problema de otimização, seria considerar a área de cobertura das
+antenas com o dobro do raio (ou seja, 1000 metros ou $\frac{1}{110}$ graus
+decimais), e considerar que as novas antenas poderão ser apenas instaladas
+nos pontos não cobertos pela soma de áreas da rede de ERBs atual. Isso garante
+que as novas antenas necessariamente cobrirão áreas que nenhuma outra antena
+cobre, mas pode gerar muitos espaços vazios entre as antenas que não são
+cobertos. Uma ideia seria trabalhar com valores de raio menores que os
+efetivamente cobertos pelas antenas reais, para diminuir o domínio de busca, e
+utilizar análises mais aprofundadas nas iterações de otimização.
 
 \NewPage
 \chapter{Tecnologias Utilizadas}
@@ -1579,6 +1597,9 @@ Dos três algoritmos, o Método Taguchi encontrou o resultado correto com maior
 frequência. Dessa forma, ele foi utilizado nas etapas posteriores de projeto.
 
 \section{Cálculo da Posição Ideal para Instalação}
+
+Os parâmetros e variáveis do problema de otimização foram utilizados conforme o
+texto desenvolvido no capítulo ``Aspectos Conceituais''.
 
 Criamos testes para verificar se a função de cálculo de área total funcionava
 corretamente com os métodos numéricos. Selecionamos uma área retangular e a
