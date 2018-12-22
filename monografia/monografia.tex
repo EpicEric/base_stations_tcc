@@ -297,14 +297,14 @@ desenvolvemos um \textit{front-end} Web que permite selecionar a região na qual
 se pretende instalar alguma ERB. Esta interface se comunica com o
 \textit{back-end} do SIG, para obter e calcular os dados desejados.
 
-O design é responsivo, podendo ser utilizado em plataformas \textit{mobile} ou
-\textit{desktop}, e simples, com controles que suportam uma experiência de
-usuário (UX) intuitiva durante a tarefa de verificar a posição ótima para a
-instalação de antenas em determinada área escolhida pelo usuário. Para isso, a
-interface exibe um mapa com as informações do SIG, que permite ao usuário
-selecionar uma área desejada. Os dados são calculados no \textit{back-end} e
-exibidos ao usuário na tela. Para isso, o \textit{front-end} obtém os dados e
-atualiza a tela dinamicamente.
+O \textit{design} é responsivo, podendo ser utilizado em plataformas
+\textit{mobile} ou \textit{desktop}, e simples, com controles que suportam uma
+experiência de usuário (UX) intuitiva durante a tarefa de verificar a posição
+ótima para a instalação de antenas em determinada área escolhida pelo usuário.
+Para isso, a interface exibe um mapa com as informações do SIG, que permite ao
+usuário selecionar uma área desejada. Os dados são calculados no
+\textit{back-end} e exibidos ao usuário na tela. Para isso, o \textit{front-end}
+obtém os dados e atualiza a tela dinamicamente.
 
 \section{Motivação}
 
@@ -809,12 +809,21 @@ decisões tomadas.
 
 \subsection{Requisitos Não-funcionais}
 \begin{itemize}
-\item Funcionalidades e código bem documentados
-\item Interface acessível e simples
-\item Ser responsivo
-\item Ser dinâmico
-\item Ser rápido
-\item Ser seguro
+\item \textbf{Funcionalidades e código bem documentados}: O código deve estar
+desacoplado e coeso, de fácil legibilidade, e permitir refatorações.
+\item \textbf{Interface acessível e simples}: Os usuários devem ser capazes de
+utilizar o sistema com o mínimo de conhecimentos prévios, sem qualquer
+treinamento específico para o seu uso.
+\item \textbf{Ser responsivo}: O site deve ter as mesmas funcionalidades e mesma
+usabilidade em plataformas móveis e em \textit{desktop}.
+\item \textbf{Ser dinâmico}: Os elementos devem carregar sem transições de
+página.
+\item \textbf{Ser rápido}: Os dados requisitados devem aparecer na tela com
+baixa latência, e os algoritmos devem responder aos pedidos de clientes com o
+mínimo de espera.
+\item \textbf{Ser seguro}: Deve haver um sistema de permissionamento para
+garantir uma hierarquia de usuários no uso de dados, não permitindo qualquer
+tipo de acesso indevido aos dados.
 \end{itemize}
 
 \subsection{Descrição dos Casos de Uso}
@@ -1431,12 +1440,12 @@ experiência mais fluida para o usuário.
 Para tratar do visual do sistema, usamos a biblioteca Vuetify. Ela provê
 componentes com visual característico do Material Design para o Vue.js. O
 Material Design é uma linguagem visual criada pela Google que oferece um visual
-intuitivo que se aproxima do design do mundo real com tinta e papel, trabalhando
-com camadas e sombras que dão uma sensação tátil para o usuário. O uso do
-Vuetify facilitou muito o desenvolvimento, pois não precisamos nos preocupar
-muito com o estilo de cada elemento HTML.
+intuitivo que se aproxima do \textit{design} do mundo real com tinta e papel,
+trabalhando com camadas e sombras que dão uma sensação tátil para o usuário. O
+uso do Vuetify facilitou muito o desenvolvimento, pois não precisamos nos
+preocupar muito com o estilo de cada elemento HTML.
 
-Com relação às telas criadas, a tela de mapas usa um menu lateral, com opções de
+Com relação às telas criadas, a tela de mapa usa um menu lateral, com opções de
 filtro, um botão para executar o algoritmo de otimização, e um botão para exibir
 mapa de calor. As opções de menu são seleções retangulares, por círculo,
 tecnologia e cidades. Os filtros não implementados foram desabilitados. Com
@@ -1446,7 +1455,7 @@ planejada na etapa de projeto de telas.
 \begin{figure}[H]
     \centering
     \includegraphics[width=6in]{imagens/tela-mapas}
-    \caption{Tela de mapas.}
+    \caption{Tela de mapa.}
     \label{fig:tela_mapas}
 \end{figure}
 
@@ -1456,7 +1465,7 @@ circunferência no mapa (Figura~\ref{fig:tela_mapas_retangulo}).
 \begin{figure}[H]
     \centering
     \includegraphics[width=6in]{imagens/tela-mapas-retangulo}
-    \caption{Tela de mapas de seleção de área retangular.}
+    \caption{Tela de mapa com seleção de área retangular.}
     \label{fig:tela_mapas_retangulo}
 \end{figure}
 
@@ -1466,9 +1475,22 @@ com um campo de usuário e senha.
 \begin{figure}[H]
     \centering
     \includegraphics[width=4in]{imagens/tela-login}
-    \caption{Tela de login.}
+    \caption{Tela de \textit{login}.}
     \label{fig:tela_login}
 \end{figure}
+
+Por fim, para a \textit{landing page}, foi utilizado um \textit{template} aberto
+do site Cruip~\cite{cruip}. Ele permitiu elaborar uma página chamativa com as
+principais informações do projeto (Figura~\ref{fig:landing_page}), sem despender
+muito tempo de desenvolvimento para a criação da página.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{imagens/landing-page}
+    \caption{Tela de \textit{landing page}.}
+    \label{fig:landing_page}
+\end{figure}
+
 \subsection{Integração com \textit{Back-end}}
 
 O \textit{front-end} foi responsável por fazer as chamadas da API. Usamos o
@@ -1679,14 +1701,14 @@ novo objetivo, do ponto de vista dos requisitos, seria obter resultados mais
 rápidos e mais precisos, buscando-se alternativas à solução de otimização atual.
 
 Também conseguimos expandir nossos conhecimentos sobre aplicações web acerca do
-design, desenvolvimento e \textit{deployment}. Ainda melhoramos nossa confiança
-nos conhecimentos prévios dos \textit{frameworks} Django e Vue, além das
-ferramentas para disponibilizar serviços na web e PostgreSQL.
+\textit{design}, desenvolvimento e \textit{deployment}. Ainda melhoramos nossa
+confiança nos conhecimentos prévios dos \textit{frameworks} Django e Vue, além
+das ferramentas para disponibilizar serviços na web e PostgreSQL.
 
 Porém, não conseguimos verificar um dos objetivos iniciais: assegurar que
-o design do produto final é simples. Para tal, seria necessário realizar os
-testes de UX programados, com foco nesse parâmetro como objetivo, para verificar
-a facilidade de uso da interface.
+o \textit{design} do produto final é simples. Para tal, seria necessário
+realizar os testes de UX programados, com foco nesse parâmetro como objetivo,
+para verificar a facilidade de uso da interface.
 
 Houve dificuldades ao longo da implementação que o grupo conseguiu eventualmente
 resolver ou contornar. Sentimos que o principal fator que atrapalhou no projeto
@@ -1700,6 +1722,11 @@ de tempo. De qualquer forma, estes testes, mais os testes de UX, serão
 essenciais no futuro desenvolvimento do MVP, onde espera-se uma boa coleta de
 métricas para avaliar rigorosamente os objetivos e resultados do trabalho.
 
+Outro requisito não-funcional que não pode ser implementado no primeiro MVP foi
+o de segurança, especificamente com relação ao permissionamento de usuários.
+Ele está mais ligado aos casos de uso adicionais, que serão comentados na última
+seção deste capítulo.
+
 \section{Contribuições}
 
 Todo o código desenvolvido pelo grupo nos repositórios foi feito do zero. As
@@ -1712,7 +1739,7 @@ PROJ.4, GeoIP2.
 Google Earth Engine API.
 \item \textbf{Servidor}: Nginx, Gunicorn, Let's Encrypt.
 \item \textbf{Front-end}: Vue, Vuetify, axios, Leaflet, Leaflet.MarkerCluster,
-Leaflet.draw.
+Leaflet.draw, Cruip.
 \item \textbf{Ferramentas}: GitHub, Netlify, LaTeX.
 \item \textbf{Dados}: Telebrasil, OpenCelliD, Google Earth Engine.
 \end{itemize}
@@ -1903,13 +1930,18 @@ descritos no Apêndice \ref{additional-case-uses}.
 
     \bibitem{scipy}
     \textit{SciPy.org}.
-    Disponível em: https://www.scipy.org/.
+    Disponível em: https://www.scipy.org.
     Acesso em: 13 de março de 2018.
 
     \bibitem{numpy}
     \textit{NumPy}.
-    Disponível em: https://www.numpy.org/.
+    Disponível em: https://www.numpy.org.
     Acesso em: 13 de março de 2018.
+
+    \bibitem{cruip}
+    \textit{Cruip}.
+    Disponível em: https://cruip.com.
+    Acesso em: 12 de dezembro de 2018.
 
     \bibitem{netlify}
     \textit{Netlify}.
