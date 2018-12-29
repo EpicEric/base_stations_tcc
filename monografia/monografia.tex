@@ -1624,38 +1624,67 @@ Os parâmetros e variáveis do problema de otimização foram utilizados conform
 texto desenvolvido no capítulo ``Aspectos Conceituais''.
 
 Criamos testes para verificar se a função de cálculo de área total funcionava
-corretamente com os métodos numéricos. Selecionamos uma área retangular e a
-implementação com Método Taguchi, e rodamos o algoritmo para cálculo das
-posições de duas novas antenas. O resultado está na figura
+corretamente com os métodos numéricos. Selecionamos uma área retangular nas 
+proximidades da Cidade Universitária da USP. A área de cobertura atual na região 
+é de $19.85km^2$. Rodamos o algoritmo com o método Taguchi para cálculo das
+posições de duas novas antenas. A nova área de cobertura foi $21.21km^2$.
+O resultado está na figura
 \ref{fig:taguchi_exemplo}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=4in]{imagens/taguchi-exemplo}
+    \includegraphics[width=4in]{imagens/taguchi-2-erb}
     \caption{Cálculo da nova posição de otimização pelo método Taguchi.}
     \label{fig:taguchi_exemplo}
 \end{figure}
 
-Repetimos o processo para os métodos Basinhopping e SLSQP, e obtivemos os
-resultados das figuras \ref{fig:basinhopping_exemplo} e \ref{fig:slsqp_exemplo},
+Repetimos o processo para os métodos Basinhopping e SLSQP. O método primeiro
+conseguiu uma nova área de cobertura de $21.27km^2$, e o segundo conseguiu
+$20.99km^2$. Os resultados estão nas figuras \ref{fig:basinhopping_exemplo} e \ref{fig:slsqp_exemplo},
 respectivamente.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=4in]{imagens/basinhopping-exemplo}
+    \includegraphics[width=4in]{imagens/basinhopping-2-erb}
     \caption{Cálculo da nova posição de otimização pelo método Basinhopping.}
     \label{fig:basinhopping_exemplo}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=4in]{imagens/slsqp-exemplo}
+    \includegraphics[width=4in]{imagens/slsqp-2-erb}
     \caption{Cálculo da nova posição de otimização pelo método SLSQP.}
     \label{fig:slsqp_exemplo}
 \end{figure}
 
 Como visto anteriormente, optamos por seguir utilizando o Método Taguchi, pois
 havia se saído melhor nos testes de funções a serem minimizadas.
+
+Testamos também o caso de infraestrutura ausente, ou seja, quando não há antenas
+instaladas na região.
+
+O resultado do método Taguchi para duas novas antenas está na figura \ref{fig:taguchi-sem-infra}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{imagens/taguchi-2-erb-sem-infra}
+    \caption{Método Taguchi com infraestrutura ausente.}
+    \label{fig:taguchi-sem-infra}
+\end{figure}
+
+Repetimos o experimento para oito novas antenas. Como nossa implementação do 
+método Taguchi só suporta duas novas antenas, usamos o método \textit{Basinhopping}.
+O resultado está na figura \ref{fig:basinhopping-sem-infra}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{imagens/basinhopping-8-erb-sem-infra}
+    \caption{Método Taguchi com infraestrutura ausente.}
+    \label{fig:basinhopping-sem-infra}
+\end{figure}
+
+Como pode ser visto pelas figuras, nesses casos os algoritmos distribuem as 
+antenas evitando sobreposição entre elas.
 
 %\section{Desempenho}
 
