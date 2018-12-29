@@ -624,7 +624,6 @@ cobertos. Uma ideia seria trabalhar com valores de raio menores que os
 efetivamente cobertos pelas antenas reais, para diminuir o domínio de busca, e
 utilizar análises mais aprofundadas nas iterações de otimização.
 
-\NewPage
 \chapter{Tecnologias Utilizadas}
 
 Anteriormente, abordamos os dois componentes principais para compor nosso
@@ -1379,7 +1378,7 @@ outros filtros.
 \end{figure}
 
 Outra tela projetada foi a tela inicial, com imagens do sistema funcionando,
-textos explicativos e um formulário de contato (figura
+textos explicativos e um formulário de contato (Figura~
 \ref{fig:rascunho_landing}). O objetivo dessa tela é fornecer uma ideia inicial
 das funcionalidades do nosso projeto.
 
@@ -1541,6 +1540,7 @@ desenvolvimento \textit{client-side} para uso como HTML no pós-processamento do
 Netlify. Feitas estas alterações, testamos novamente o serviço, que funcionou
 conforme o esperado.
 
+\NewPage
 \chapter{Testes e Avaliação}
 
 Após a implementação de funcionalidades-chave do projeto, como os algoritmos de
@@ -1628,8 +1628,7 @@ corretamente com os métodos numéricos. Selecionamos uma área retangular nas
 proximidades da Cidade Universitária da USP. A área de cobertura atual na região 
 é de $19.85km^2$. Rodamos o algoritmo com o método Taguchi para cálculo das
 posições de duas novas antenas. A nova área de cobertura foi $21.21km^2$.
-O resultado está na figura
-\ref{fig:taguchi_exemplo}.
+O resultado está na Figura \ref{fig:taguchi_exemplo}.
 
 \begin{figure}[H]
     \centering
@@ -1640,7 +1639,8 @@ O resultado está na figura
 
 Repetimos o processo para os métodos Basinhopping e SLSQP. O método primeiro
 conseguiu uma nova área de cobertura de $21.27km^2$, e o segundo conseguiu
-$20.99km^2$. Os resultados estão nas figuras \ref{fig:basinhopping_exemplo} e \ref{fig:slsqp_exemplo},
+$20.99km^2$. Os resultados estão nas Figuras \ref{fig:basinhopping_exemplo} e
+\ref{fig:slsqp_exemplo},
 respectivamente.
 
 \begin{figure}[H]
@@ -1663,7 +1663,8 @@ havia se saído melhor nos testes de funções a serem minimizadas.
 Testamos também o caso de infraestrutura ausente, ou seja, quando não há antenas
 instaladas na região.
 
-O resultado do método Taguchi para duas novas antenas está na figura \ref{fig:taguchi-sem-infra}.
+O resultado do método Taguchi para duas novas antenas está na Figura
+\ref{fig:taguchi-sem-infra}.
 
 \begin{figure}[H]
     \centering
@@ -1673,13 +1674,13 @@ O resultado do método Taguchi para duas novas antenas está na figura \ref{fig:
 \end{figure}
 
 Repetimos o experimento para oito novas antenas. Como nossa implementação do 
-método Taguchi só suporta duas novas antenas, usamos o método \textit{Basinhopping}.
-O resultado está na figura \ref{fig:basinhopping-sem-infra}
+método Taguchi só suporta duas novas antenas, usamos o método Basinhopping.
+O resultado está na Figura \ref{fig:basinhopping-sem-infra}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=4in]{imagens/basinhopping-8-erb-sem-infra}
-    \caption{Método Taguchi com infraestrutura ausente.}
+    \caption{Basinhopping com infraestrutura ausente.}
     \label{fig:basinhopping-sem-infra}
 \end{figure}
 
@@ -1711,6 +1712,7 @@ desenvolvimento local~\cite{repo-django}; e outro para o \textit{framework} de
 \textit{front-end} escrito em Vue~\cite{repo-vue}. Além disso, esta monografia
 em si também está disponível no GitHub~\cite{repo-tcc}.
 
+\NewPage
 \chapter{Considerações Finais}
 
 Ao final do trabalho, conseguimos atingir o principal objetivo de criar o
